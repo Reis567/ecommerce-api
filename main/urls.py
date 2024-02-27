@@ -1,6 +1,6 @@
 from django.urls import path,include
-from . import views
+from .views import *
 
 urlpatterns = [
-
+    path('vendors/', VendorList.as_view(), name='vendor-list'),
 ]
