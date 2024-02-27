@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class Vendor(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    adress = models.TextField(null=True)
+    address = models.TextField(null=True)
 
 class ProductCategory(models.Model):
     title = models.CharField(max_length=255)
