@@ -9,8 +9,8 @@ class TestSetup(APITestCase):
         self.user = User.objects.create_user(username='testuser', password='testpassword')
 
         # Criação de fornecedores de teste
-        self.vendor1 = Vendor.objects.create(user=self.user, adress='Test Address 1')
-        self.vendor2 = Vendor.objects.create(user=self.user, adress='Test Address 2')
+        self.vendor1 = Vendor.objects.create(user=self.user, address='Test Address 1')
+        self.vendor2 = Vendor.objects.create(user=self.user, address='Test Address 2')
 
         # Configuração das URLs de teste
         self.vendor_list_url = reverse('vendor-list')
