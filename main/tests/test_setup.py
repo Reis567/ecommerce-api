@@ -1,6 +1,7 @@
 from rest_framework.test import APITestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 from ..models import Vendor
 
 class TestSetup(APITestCase):
@@ -14,4 +15,8 @@ class TestSetup(APITestCase):
 
         # Configuração das URLs de teste
         self.vendor_list_url = reverse('vendor-list')
+
+        # Autenticação do usuário para testes
+        self.token = Token.objects.create(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION=f'Token {self.token.key}')
 
