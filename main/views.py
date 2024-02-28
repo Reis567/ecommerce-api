@@ -8,3 +8,8 @@ class VendorList(generics.ListAPIView):
     queryset = Vendor.objects.all()
     serializer_class = VendorSerializer
     permission_classes=[permissions.IsAuthenticated]
+
+class VendorDetail(generics.RetrieveAPIView):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
+    permission_classes=[permissions.IsAuthenticated]
