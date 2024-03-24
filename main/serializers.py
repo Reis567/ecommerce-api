@@ -26,6 +26,12 @@ class VendorUpdateSerializer(serializers.ModelSerializer):
         model = Vendor
         fields = ['user', 'address']
 
+class VendorDestroySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vendor
+        fields = ['id', 'user', 'address']
+        depth = 1
+
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
