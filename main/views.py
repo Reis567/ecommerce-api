@@ -9,12 +9,17 @@ from rest_framework import status
 from .serializers import *
 from .models import *
 
-class VendorList(generics.ListCreateAPIView):
+class VendorListView(generics.ListAPIView):
     queryset = Vendor.objects.all()
     serializer_class = VendorSerializer
-    permission_classes=[permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
-class VendorDetail(generics.RetrieveAPIView):
+class VendorCreateView(generics.CreateAPIView):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class VendorDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Vendor.objects.all()
     serializer_class = VendorDetailSerializer
     permission_classes=[permissions.IsAuthenticated]
