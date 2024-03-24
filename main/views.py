@@ -11,30 +11,29 @@ from .models import *
 
 class VendorListView(generics.ListAPIView):
     queryset = Vendor.objects.all()
-    serializer_class = VendorSerializer
+    serializer_class = VendorListSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class VendorCreateView(generics.CreateAPIView):
     queryset = Vendor.objects.all()
-    serializer_class = VendorSerializer
+    serializer_class = VendorCreateSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class VendorRetrieveView(generics.RetrieveAPIView):
     queryset = Vendor.objects.all()
-    serializer_class = VendorSerializer
+    serializer_class = VendorRetrieveSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class VendorUpdateView(generics.UpdateAPIView):
     queryset = Vendor.objects.all()
-    serializer_class = VendorSerializer
+    serializer_class = VendorUpdateSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class VendorDestroyView(generics.DestroyAPIView):
     queryset = Vendor.objects.all()
-    serializer_class = VendorSerializer
+    serializer_class = VendorDestroySerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
