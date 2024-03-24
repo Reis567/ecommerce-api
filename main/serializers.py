@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class VendorSerializer(serializers.ModelSerializer):
     class Meta:
         model=Vendor
-        fields=['user','address']
+        fields = ['id','user', 'address']
 
 class VendorDetailSerializer(serializers.ModelSerializer):
     class Meta:
