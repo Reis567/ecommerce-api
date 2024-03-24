@@ -4,4 +4,5 @@ from .views import *
 urlpatterns = [
     path('vendors/', VendorListView.as_view(), name='vendor-list'),
     path('vendor/', VendorRetrieveView.as_view(), name='vendor-detail'),
+    path('vendors/create/', VendorCreateView.as_view(), name='vendor-create'),
 ]
