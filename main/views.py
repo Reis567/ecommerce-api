@@ -29,8 +29,12 @@ class VendorUpdateView(generics.UpdateAPIView):
     serializer_class = VendorSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+class VendorDestroyView(generics.DestroyAPIView):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-
+    
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
