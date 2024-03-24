@@ -2,11 +2,12 @@ from rest_framework import serializers
 from .models import *
 from django.contrib.auth.models import User
 
-class VendorSerializer(serializers.ModelSerializer):
+
+class VendorListSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Vendor
-        fields = ['id','user', 'address']
-        depth=1
+        model = Vendor
+        fields = ['id', 'user', 'address']
+        depth = 1
     
 
 class VendorDetailSerializer(serializers.ModelSerializer):
@@ -20,7 +21,7 @@ class VendorCreateSerializer(serializers.ModelSerializer):
         model = Vendor
         fields = ['user', 'address']
 
-        
+
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
