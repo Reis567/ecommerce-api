@@ -10,7 +10,7 @@ class VendorSerializer(serializers.ModelSerializer):
 class VendorDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vendor
-        fields = ['user', 'address']
+        fields = ['id','user', 'address']
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
