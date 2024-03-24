@@ -6,11 +6,14 @@ class VendorSerializer(serializers.ModelSerializer):
     class Meta:
         model=Vendor
         fields = ['id','user', 'address']
+        depth=1
+    
 
 class VendorDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vendor
         fields = ['id','user', 'address']
+        depth=1
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
