@@ -10,11 +10,11 @@ class VendorListSerializer(serializers.ModelSerializer):
         depth = 1
     
 
-class VendorDetailSerializer(serializers.ModelSerializer):
+class VendorRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vendor
-        fields = ['id','user', 'address']
-        depth=1
+        fields = ['id', 'user', 'address']
+        depth = 1
 
 class VendorCreateSerializer(serializers.ModelSerializer):
     class Meta:
