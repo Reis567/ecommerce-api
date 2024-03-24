@@ -1,12 +1,13 @@
 from django.shortcuts import render
-from .serializers import *
 from rest_framework import generics,permissions
-from .models import *
 from rest_framework.permissions import AllowAny
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status
 
+
+from .serializers import *
+from .models import *
 
 class VendorList(generics.ListAPIView):
     queryset = Vendor.objects.all()
@@ -15,7 +16,7 @@ class VendorList(generics.ListAPIView):
 
 class VendorDetail(generics.RetrieveAPIView):
     queryset = Vendor.objects.all()
-    serializer_class = VendorSerializer
+    serializer_class = VendorDetailSerializer
     permission_classes=[permissions.IsAuthenticated]
 
 class UserRegistrationView(generics.CreateAPIView):
