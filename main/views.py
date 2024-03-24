@@ -19,10 +19,17 @@ class VendorCreateView(generics.CreateAPIView):
     serializer_class = VendorSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class VendorDetail(generics.RetrieveUpdateDestroyAPIView):
+class VendorRetrieveView(generics.RetrieveAPIView):
     queryset = Vendor.objects.all()
-    serializer_class = VendorDetailSerializer
-    permission_classes=[permissions.IsAuthenticated]
+    serializer_class = VendorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class VendorUpdateView(generics.UpdateAPIView):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
 
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
