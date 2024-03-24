@@ -21,6 +21,11 @@ class VendorCreateSerializer(serializers.ModelSerializer):
         model = Vendor
         fields = ['user', 'address']
 
+class VendorUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vendor
+        fields = ['user', 'address']
+
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
