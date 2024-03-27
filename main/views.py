@@ -1,11 +1,12 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
+
 from rest_framework import generics,permissions
 from rest_framework.permissions import AllowAny
-from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status
-from drf_yasg.utils import swagger_auto_schema
 
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 
 from .serializers import *
 from .models import *
@@ -14,10 +15,13 @@ class VendorListView(generics.ListAPIView):
     queryset = Vendor.objects.all()
     serializer_class = VendorListSerializer
     permission_classes = [permissions.IsAuthenticated]
-
-    @swagger_auto_schema(
-        tags=['Vendors'],
-        operation_summary="List Vendors",
+   
+    @extend_schema(
+        description='List all vendors',
+        parameters=[
+            OpenApiParameter(name='user', description='Filter by user ID', required=False, type=int),
+            OpenApiParameter(name='address', description='Filter by address', required=False, type=str),
+        ],
         responses={200: VendorListSerializer(many=True)},
     )
     def get(self, request, *args, **kwargs):
@@ -26,19 +30,13 @@ class VendorListView(generics.ListAPIView):
 
         This endpoint retrieves a list of all vendors available.
         """
-        return super().get(request, *args, **kwargs)
 
 class VendorCreateView(generics.CreateAPIView):
     queryset = Vendor.objects.all()
     serializer_class = VendorCreateSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    @swagger_auto_schema(
-        tags=['Vendors'],
-        operation_summary="Create Vendor",
-        request_body=VendorCreateSerializer,
-        responses={201: VendorRetrieveSerializer},
-    )
+
     def post(self, request, *args, **kwargs):
         """
         Create a new vendor.
@@ -52,11 +50,7 @@ class VendorRetrieveView(generics.RetrieveAPIView):
     serializer_class = VendorRetrieveSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    @swagger_auto_schema(
-        tags=['Vendors'],
-        operation_summary="Retrieve Vendor",
-        responses={200: VendorRetrieveSerializer},
-    )
+
     def get(self, request, *args, **kwargs):
         """
         Retrieve a vendor.
@@ -70,12 +64,7 @@ class VendorUpdateView(generics.UpdateAPIView):
     serializer_class = VendorUpdateSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    @swagger_auto_schema(
-        tags=['Vendors'],
-        operation_summary="Update Vendor",
-        request_body=VendorUpdateSerializer,
-        responses={200: VendorRetrieveSerializer},
-    )
+
     def put(self, request, *args, **kwargs):
         """
         Update a vendor.
@@ -89,11 +78,7 @@ class VendorDestroyView(generics.DestroyAPIView):
     serializer_class = VendorDestroySerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    @swagger_auto_schema(
-        tags=['Vendors'],
-        operation_summary="Delete Vendor",
-        responses={204: "No Content"},
-    )
+
     def delete(self, request, *args, **kwargs):
         """
         Delete a vendor.
