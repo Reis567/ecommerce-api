@@ -74,6 +74,11 @@ class VendorUpdateView(generics.UpdateAPIView):
     serializer_class = VendorUpdateSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    @extend_schema(
+        description='Update a vendor',
+        request=VendorUpdateSerializer,
+        responses={200: VendorUpdateSerializer},
+    )
 
     def put(self, request, *args, **kwargs):
         """
