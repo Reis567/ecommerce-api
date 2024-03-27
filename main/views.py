@@ -109,8 +109,18 @@ class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
-
+    
+    @extend_schema(
+        description='Register a new user',
+        request=UserSerializer,
+        responses={201: UserSerializer},
+    )
     def create(self, request, *args, **kwargs):
+        """
+        Register a new user.
+
+        This endpoint allows you to register a new user.
+        """
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
