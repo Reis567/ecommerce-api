@@ -11,6 +11,25 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExampl
 from .serializers import *
 from .models import *
 
+class VendorRetrieveView(generics.RetrieveAPIView):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorRetrieveSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    @extend_schema(
+        description='Retrieve a vendor',
+        responses={200: VendorRetrieveSerializer},
+    )
+
+    def get(self, request, *args, **kwargs):
+        """
+        Retrieve a vendor.
+
+        This endpoint retrieves details of a specific vendor.
+        """
+        return super().get(request, *args, **kwargs)
+
+
 class VendorListView(generics.ListAPIView):
     queryset = Vendor.objects.all()
     serializer_class = VendorListSerializer
