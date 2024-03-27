@@ -36,7 +36,11 @@ class VendorCreateView(generics.CreateAPIView):
     serializer_class = VendorCreateSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-
+    @extend_schema(
+            description='Create a new vendor',
+            request=VendorCreateSerializer,
+            responses={201: VendorCreateSerializer},
+        )
     def post(self, request, *args, **kwargs):
         """
         Create a new vendor.
@@ -45,19 +49,6 @@ class VendorCreateView(generics.CreateAPIView):
         """
         return super().post(request, *args, **kwargs)
 
-class VendorRetrieveView(generics.RetrieveAPIView):
-    queryset = Vendor.objects.all()
-    serializer_class = VendorRetrieveSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-
-    def get(self, request, *args, **kwargs):
-        """
-        Retrieve a vendor.
-
-        This endpoint retrieves details of a specific vendor.
-        """
-        return super().get(request, *args, **kwargs)
 
 class VendorUpdateView(generics.UpdateAPIView):
     queryset = Vendor.objects.all()
