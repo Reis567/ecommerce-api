@@ -93,7 +93,10 @@ class VendorDestroyView(generics.DestroyAPIView):
     serializer_class = VendorDestroySerializer
     permission_classes = [permissions.IsAuthenticated]
 
-
+    @extend_schema(
+        description='Delete a vendor',
+        responses={204: 'No content'},
+    )
     def delete(self, request, *args, **kwargs):
         """
         Delete a vendor.
