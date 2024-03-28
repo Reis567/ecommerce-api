@@ -83,7 +83,6 @@ class VendorUpdateView(generics.UpdateAPIView):
         request=VendorUpdateSerializer,
         responses={200: VendorUpdateSerializer},
     )
-
     def put(self, request, *args, **kwargs):
         """
         Update a vendor.
@@ -91,6 +90,21 @@ class VendorUpdateView(generics.UpdateAPIView):
         This endpoint allows you to update details of a specific vendor.
         """
         return super().put(request, *args, **kwargs)
+
+    @extend_schema(
+        description='Partial update of a vendor',
+        tags=['Vendors'],
+        request=VendorUpdateSerializer,
+        responses={200: VendorUpdateSerializer},
+    )
+    def patch(self, request, *args, **kwargs):
+        """
+        Partial update of a vendor.
+
+        This endpoint allows you to partially update details of a specific vendor.
+        """
+        return super().patch(request, *args, **kwargs)
+
 
 class VendorDestroyView(generics.DestroyAPIView):
     queryset = Vendor.objects.all()
