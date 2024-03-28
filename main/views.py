@@ -19,6 +19,7 @@ class VendorRetrieveView(generics.RetrieveAPIView):
     @extend_schema(
         description='Retrieve a vendor',
         responses={200: VendorRetrieveSerializer},
+        tags=['Vendors'],
     )
 
     def get(self, request, *args, **kwargs):
@@ -37,6 +38,7 @@ class VendorListView(generics.ListAPIView):
    
     @extend_schema(
         description='List all vendors',
+        tags=['Vendors'],
         parameters=[
             OpenApiParameter(name='user', description='Filter by user ID', required=False, type=int),
             OpenApiParameter(name='address', description='Filter by address', required=False, type=str),
@@ -57,6 +59,7 @@ class VendorCreateView(generics.CreateAPIView):
 
     @extend_schema(
             description='Create a new vendor',
+            tags=['Vendors'],
             request=VendorCreateSerializer,
             responses={201: VendorCreateSerializer},
         )
@@ -76,6 +79,7 @@ class VendorUpdateView(generics.UpdateAPIView):
 
     @extend_schema(
         description='Update a vendor',
+        tags=['Vendors'],
         request=VendorUpdateSerializer,
         responses={200: VendorUpdateSerializer},
     )
@@ -95,6 +99,7 @@ class VendorDestroyView(generics.DestroyAPIView):
 
     @extend_schema(
         description='Delete a vendor',
+        tags=['Vendors'],
         responses={204: 'No content'},
     )
     def delete(self, request, *args, **kwargs):
