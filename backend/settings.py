@@ -166,3 +166,11 @@ SPECTACULAR_SETTINGS = {
         # Adicione outras tags aqui, se necessário
     ],
 }
+
+from datetime import timedelta
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=30), 
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     # Defina o tempo de expiração do token de atualização (refresh token)
+}
