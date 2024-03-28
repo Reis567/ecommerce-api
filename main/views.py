@@ -51,6 +51,7 @@ class VendorListView(generics.ListAPIView):
 
         This endpoint retrieves a list of all vendors available.
         """
+        return self.list(request, *args, **kwargs)
 
 class VendorCreateView(generics.CreateAPIView):
     queryset = Vendor.objects.all()
@@ -124,25 +125,3 @@ class VendorDestroyView(generics.DestroyAPIView):
         """
         return super().delete(request, *args, **kwargs)
 
-class UserRegistrationView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [AllowAny]
-    
-    @extend_schema(
-        description='Register a new user',
-        tags=['Auth',],
-        request=UserSerializer,
-        responses={201: UserSerializer},
-    )
-    def post(self, request, *args, **kwargs):
-        """
-        Register a new user.
-
-        This endpoint allows you to register a new user.
-        """
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
