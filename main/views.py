@@ -117,10 +117,11 @@ class UserRegistrationView(generics.CreateAPIView):
     
     @extend_schema(
         description='Register a new user',
+        tags=['Auth',],
         request=UserSerializer,
         responses={201: UserSerializer},
     )
-    def create(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         """
         Register a new user.
 
