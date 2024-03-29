@@ -125,3 +125,18 @@ class VendorDestroyView(generics.DestroyAPIView):
         """
         return super().delete(request, *args, **kwargs)
 
+class ProductListView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class ProductDetailView(generics.RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class ProductCategoryListView(generics.ListAPIView):
+    queryset = ProductCategory.objects.all()
+    serializer_class = ProductCategorySerializer
+
+class ProductCategoryDetailView(generics.RetrieveAPIView):
+    queryset = ProductCategory.objects.all()
+    serializer_class = ProductCategorySerializer
