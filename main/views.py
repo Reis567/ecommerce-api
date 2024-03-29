@@ -146,6 +146,19 @@ class ProductDetailView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+    @extend_schema(
+        description='Retrieve a product',
+        tags=['Products'],
+        responses={200: ProductSerializer()},
+    )
+    def get(self, request, *args, **kwargs):
+        """
+        Retrieve a product.
+
+        This endpoint retrieves details of a specific product.
+        """
+        return super().get(request, *args, **kwargs)
+
 class ProductCategoryListView(generics.ListAPIView):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
