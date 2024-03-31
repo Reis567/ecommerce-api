@@ -36,7 +36,7 @@ class VendorDestroySerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'price', 'title', 'detail']
+        fields = ['id', 'price', 'title','vendor','category', 'detail']
 
 class ProductCategorySerializer(serializers.ModelSerializer):
     class Meta:
