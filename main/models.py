@@ -33,3 +33,6 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Order(models.Model):
+    customer=models.ForeignKey(Customer, on_delete=models.CASCADE)
