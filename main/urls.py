@@ -20,4 +20,5 @@ urlpatterns = [
 
     ##Orders 
     path('customers/<int:customer_id>/orders/', CustomerOrderListView.as_view(), name='customer-order-list'),
+    path('orders/create/', OrderCreateView.as_view(), name='order-create'),
 ]
