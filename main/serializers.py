@@ -34,9 +34,11 @@ class VendorDestroySerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    condition = serializers.PrimaryKeyRelatedField(queryset=ProductCondition.objects.all())
+
     class Meta:
         model = Product
-        fields = ['id', 'price', 'title','vendor','category', 'detail']
+        fields = ['id', 'price', 'title','vendor','category', 'detail', 'condition']
 
 class ProductCategorySerializer(serializers.ModelSerializer):
     class Meta:
