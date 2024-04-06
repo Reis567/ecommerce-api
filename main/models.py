@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 # Vendor models
 
 class Vendor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.TextField(null=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now) 
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -17,7 +18,7 @@ class ProductCategory(models.Model):
     title = models.CharField(max_length=255)
     detail = models.TextField(blank=True, null=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now) 
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -31,7 +32,7 @@ class Product(models.Model):
     title = models.CharField(max_length=255, unique=True)
     detail = models.TextField(blank=True, null=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now) 
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -41,7 +42,7 @@ class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     mobile = models.PositiveBigIntegerField()
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now) 
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -51,7 +52,7 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order_time = models.DateTimeField(auto_now_add=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now) 
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -61,7 +62,7 @@ class OrderItems(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now) 
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
