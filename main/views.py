@@ -165,7 +165,7 @@ class ProductCategoryListView(generics.ListAPIView):
 
     @extend_schema(
         description='List all product categories',
-        tags=['Product Categories'],
+        tags=['Products'],
         responses={200: ProductCategorySerializer(many=True)},
     )
     def get(self, request, *args, **kwargs):
@@ -182,7 +182,7 @@ class ProductCategoryDetailView(generics.RetrieveAPIView):
 
     @extend_schema(
         description='Retrieve a product category',
-        tags=['Product Categories'],
+        tags=['Products'],
         responses={200: ProductCategorySerializer()},
     )
     def get(self, request, *args, **kwargs):
@@ -192,3 +192,18 @@ class ProductCategoryDetailView(generics.RetrieveAPIView):
         This endpoint retrieves details of a specific product category.
         """
         return super().get(request, *args, **kwargs)
+    
+class CustomerOrderListView(generics.ListAPIView):
+    serializer_class = OrderSerializer
+
+    @extend_schema(
+        description='Retrieve a List of orders from a especific customer',
+        tags=['Orders'],
+        responses={200: OrderSerializer()},
+    )
+    def get_queryset(self):
+        # Obtenha o ID do cliente da URL
+        customer_id = self.kwargs['customer_id']
+        # Filtrar os pedidos pelo ID do cliente
+        queryset = Order.objects.filter(customer_id=customer_id)
+        return queryset
