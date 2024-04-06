@@ -265,3 +265,16 @@ class OrderUpdateView(generics.UpdateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return Response(serializer.data)
+    
+class OrderDeleteView(generics.DestroyAPIView):
+    queryset = Order.objects.all()
+
+    @extend_schema(
+        description="Delete an existing order",
+        tags=["Orders"],
+        responses={204: "No content"},
+    )
+    def delete(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
