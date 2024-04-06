@@ -163,7 +163,11 @@ SPECTACULAR_SETTINGS = {
             'name':'Auth',
             'description':'Users auth'
         },
-        # Adicione outras tags aqui, se necessário
+        {
+            'name':'Products',
+            'description':'Operations of products'
+        },
+
     ],
 }
 
