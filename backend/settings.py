@@ -167,7 +167,10 @@ SPECTACULAR_SETTINGS = {
             'name':'Products',
             'description':'Operations of products'
         },
-
+        {
+            'name':'Order',
+            'description':'Operations of Orders'
+        },
     ],
 }
 
