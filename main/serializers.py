@@ -44,3 +44,8 @@ class ProductCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductCategory
         fields = ['id', 'title', 'detail']
+
+class ProductConditionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductCondition
+        fields = ['id', 'condition']
