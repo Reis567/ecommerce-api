@@ -207,3 +207,30 @@ class CustomerOrderListView(generics.ListAPIView):
         # Filtrar os pedidos pelo ID do cliente
         queryset = Order.objects.filter(customer_id=customer_id)
         return queryset
+    
+
+class OrderCreateView(generics.CreateAPIView):
+    serializer_class = OrderSerializer
+
+    @extend_schema(
+        description="Create a new order",
+        tags=['Orders'],
+        request=OrderSerializer,
+        responses={
+            201: OrderSerializer(),
+            400: "Bad Request - Invalid data provided"
+        },
+    )
+    def create(self, request, *args, **kwargs):
+        """
+        Create a new order.
+
+        This endpoint allows you to create a new order by providing the required data.
+        """
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            # Salvar o pedido no banco de dados
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
