@@ -17,4 +17,11 @@ urlpatterns = [
     ##Products category
     path('categories/', ProductCategoryListView.as_view(), name='category-list'),
     path('categories/<int:pk>/', ProductCategoryDetailView.as_view(), name='category-detail'),
+
+    ##Orders 
+    path('customers/<int:customer_id>/orders/', CustomerOrderListView.as_view(), name='customer-order-list'),
+    path('orders/create/', OrderCreateView.as_view(), name='order-create'),
+    path('orders/<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
+    path('orders/<int:pk>/update/', OrderUpdateView.as_view(), name='order-update'),
+    path('orders/<int:pk>/delete/', OrderDeleteView.as_view(), name='order-delete'),
 ]

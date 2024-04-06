@@ -165,7 +165,7 @@ class ProductCategoryListView(generics.ListAPIView):
 
     @extend_schema(
         description='List all product categories',
-        tags=['Product Categories'],
+        tags=['Products'],
         responses={200: ProductCategorySerializer(many=True)},
     )
     def get(self, request, *args, **kwargs):
@@ -182,7 +182,7 @@ class ProductCategoryDetailView(generics.RetrieveAPIView):
 
     @extend_schema(
         description='Retrieve a product category',
-        tags=['Product Categories'],
+        tags=['Products'],
         responses={200: ProductCategorySerializer()},
     )
     def get(self, request, *args, **kwargs):
@@ -192,3 +192,89 @@ class ProductCategoryDetailView(generics.RetrieveAPIView):
         This endpoint retrieves details of a specific product category.
         """
         return super().get(request, *args, **kwargs)
+    
+class CustomerOrderListView(generics.ListAPIView):
+    serializer_class = OrderSerializer
+
+    @extend_schema(
+        description='Retrieve a List of orders from a especific customer',
+        tags=['Orders'],
+        responses={200: OrderSerializer()},
+    )
+    def get_queryset(self):
+        # Obtenha o ID do cliente da URL
+        customer_id = self.kwargs['customer_id']
+        # Filtrar os pedidos pelo ID do cliente
+        queryset = Order.objects.filter(customer_id=customer_id)
+        return queryset
+    
+
+class OrderCreateView(generics.CreateAPIView):
+    serializer_class = OrderSerializer
+
+    @extend_schema(
+        description="Create a new order",
+        tags=['Orders'],
+        request=OrderSerializer,
+        responses={
+            201: OrderSerializer(),
+            400: "Bad Request - Invalid data provided"
+        },
+    )
+    def create(self, request, *args, **kwargs):
+        """
+        Create a new order.
+
+        This endpoint allows you to create a new order by providing the required data.
+        """
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            # Salvar o pedido no banco de dados
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+class OrderDetailView(generics.RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+    @extend_schema(
+        description="Retrieve details of a specific order",
+        tags=["Orders"],
+        responses={200: OrderSerializer()},
+    )
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
+    
+
+class OrderUpdateView(generics.UpdateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+    @extend_schema(
+        description="Update an existing order (full or partial update)",
+        tags=["Orders"],
+        responses={200: OrderSerializer()},
+    )
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)  # Permitir atualização parcial
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
+    
+class OrderDeleteView(generics.DestroyAPIView):
+    queryset = Order.objects.all()
+
+    @extend_schema(
+        description="Delete an existing order",
+        tags=["Orders"],
+        responses={204: "No content"},
+    )
+    def delete(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)

@@ -56,7 +56,6 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ['id', 'customer', 'order_time']
 
 
-
 class OrderItemsSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItems
