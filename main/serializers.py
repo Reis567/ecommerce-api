@@ -49,3 +49,15 @@ class ProductConditionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductCondition
         fields = ['id', 'condition']
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['id', 'customer', 'order_time']
+
+
+
+class OrderItemsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItems
+        fields = ['id', 'order', 'product']
