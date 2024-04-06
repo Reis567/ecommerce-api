@@ -48,11 +48,14 @@ class Customer(models.Model):
         return self.user.username
 
 class Order(models.Model):
-    customer=models.ForeignKey(Customer, on_delete=models.CASCADE)
-    order_time=models.DateTimeField(auto_now_add=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    order_time = models.DateTimeField(auto_now_add=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.order_time
+        return str(self.order_time)
 
 class OrderItems(models.Model):
     order = models.ForeignKey(Order,on_delete=models.CASCADE)
