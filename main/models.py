@@ -38,8 +38,11 @@ class Product(models.Model):
         return f"{self.title} - ${self.price}"
     
 class Customer(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    mobile=models.PositiveBigIntegerField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mobile = models.PositiveBigIntegerField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user.username
