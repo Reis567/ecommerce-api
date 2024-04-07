@@ -2,7 +2,6 @@ from django.urls import path,include
 from .views import *
 
 urlpatterns = [
-
     ##Vendors
     path('vendors/', VendorListView.as_view(), name='vendor-list'),
     path('vendor/<int:pk>', VendorRetrieveView.as_view(), name='vendor-detail'),

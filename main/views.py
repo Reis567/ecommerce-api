@@ -10,6 +10,11 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExampl
 
 from .serializers import *
 from .models import *
+from django.http import JsonResponse
+
+def welcome(request):
+    return JsonResponse({'message': 'Bem-vindo à API!'})
+
 
 class VendorRetrieveView(generics.RetrieveAPIView):
     queryset = Vendor.objects.all()
