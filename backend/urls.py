@@ -8,6 +8,7 @@ from main import views as mainViews
 
 
 urlpatterns = [
+    path('',mainViews.welcome,name='welcome'),
     path('admin/', admin.site.urls),
     path('api/v1/',include('main.urls')),
     path('api/auth/',include('Auth.urls')),
