@@ -143,6 +143,8 @@ REST_FRAMEWORK={
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication'
     ],
+    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.LimitOfsetPagination',
+    'PAGE_SIZE':1
     #Coloca IsAuthenticated no projeto todo
     #'DEFAULT_PERMISSION_CLASSES':[
     #    'rest_framework.permissions.IsAuthenticated',
