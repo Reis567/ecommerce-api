@@ -83,7 +83,7 @@ class OrderItems(models.Model):
         return self.product.title
     
 class CustomerAddress(models.Model):
-    Customer = models.ForeignKey(Customer, on_delete=models.CASCADE,relato_name='customer_addresses')
+    Customer = models.ForeignKey(Customer, on_delete=models.CASCADE,related_name='customer_addresses')
     address=models.TextField()
 
     def __str__(self):
