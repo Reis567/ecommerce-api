@@ -60,3 +60,9 @@ class OrderItemsSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItems
         fields = ['id', 'order', 'product']
+class CustomerAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomerAddress
+        fields = ['id','customer','product']
+        depth = 1
+        
