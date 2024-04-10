@@ -81,3 +81,11 @@ class OrderItems(models.Model):
 
     def __str__(self):
         return self.product.title
+    
+class CustomerAddress(models.Model):
+    Customer = models.ForeignKey(Customer, on_delete=models.CASCADE,relato_name='customer_addresses')
+    address=models.TextField()
+
+    def __str__(self):
+        return self.product.title
+    
