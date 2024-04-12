@@ -92,10 +92,17 @@ class CustomerAddress(models.Model):
         return self.address
     
 class ProductRating(models.Model):
+    RATING_CHOICES = [
+        (1, '1 Star'),
+        (2, '2 Stars'),
+        (3, '3 Stars'),
+        (4, '4 Stars'),
+        (5, '5 Stars'),
+    ]
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True,related_name='rating_customers')
     product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name='product_rating')
-    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    rating = models.IntegerField(choices=RATING_CHOICES, validators=[MinValueValidator(1), MaxValueValidator(5)])
     reviews=models.TextField(null=True,blank=True)
     add_time=models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return str(self.reviews)+str(self.rating)
+        return f'{self.rating} Stars - {self.reviews} '
