@@ -63,6 +63,11 @@ class OrderItemsSerializer(serializers.ModelSerializer):
 class CustomerAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerAddress
-        fields = ['id','customer','product']
+        fields = ['id','customer','address']
         depth = 1
         
+class ProductRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductRating
+        fields = ['id','customer','product','rating','reviews','add_time']
+        depth = 1
