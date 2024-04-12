@@ -41,10 +41,10 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'price', 'title','vendor','category', 'detail', 'condition']
 
 class ProductDetailSerializer(serializers.ModelSerializer):
-
+    rating_products = serializers.PrimaryKeyRelatedField(many=True)
     class Meta:
         model = Product
-        fields = ['id', 'price', 'title','vendor','category', 'detail']
+        fields = ['id', 'price', 'title','vendor','category', 'detail','rating_products']
 
 class ProductCategorySerializer(serializers.ModelSerializer):
     class Meta:
