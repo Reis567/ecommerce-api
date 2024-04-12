@@ -39,12 +39,19 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'price', 'title','vendor','category', 'detail', 'condition']
-
+        
+class ProductRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductRating
+        fields = ['id','customer','product','rating','reviews','add_time']
+        depth = 1
 class ProductDetailSerializer(serializers.ModelSerializer):
-    rating_products = serializers.PrimaryKeyRelatedField(many=True)
+    product_rating = ProductRatingSerializer(many=True, read_only=True)
+
     class Meta:
         model = Product
-        fields = ['id', 'price', 'title','vendor','category', 'detail','rating_products']
+        fields = ['id', 'price', 'title', 'vendor', 'category', 'detail', 'product_rating']
+
 
 class ProductCategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -72,8 +79,3 @@ class CustomerAddressSerializer(serializers.ModelSerializer):
         fields = ['id','customer','address']
         depth = 1
         
-class ProductRatingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProductRating
-        fields = ['id','customer','product','rating','reviews','add_time']
-        depth = 1
