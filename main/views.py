@@ -289,3 +289,9 @@ class CustomerAddressViewSet(ModelViewSet):
     serializer_class = CustomerAddressSerializer
     queryset = CustomerAddress.objects.all()
     
+
+
+class ProductRatingViewSet(ModelViewSet):
+    serializer_class = ProductRatingSerializer
+    queryset = ProductRating.objects.all()
+    
