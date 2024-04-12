@@ -1,6 +1,10 @@
 from django.urls import path,include
 from .views import *
+from rest_framework import routers
 
+
+router=routers.DefaultRouter()
+router.register(r'address' ,CustomerAddressViewSet)
 urlpatterns = [
     ##Vendors
     path('vendors/', VendorListView.as_view(), name='vendor-list'),
@@ -24,3 +28,4 @@ urlpatterns = [
     path('orders/<int:pk>/update/', OrderUpdateView.as_view(), name='order-update'),
     path('orders/<int:pk>/delete/', OrderDeleteView.as_view(), name='order-delete'),
 ]
+urlpatterns+=router.urls

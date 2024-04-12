@@ -5,8 +5,6 @@ from drf_spectacular.views import SpectacularAPIView,SpectacularSwaggerView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from main import views as mainViews
 
-
-
 urlpatterns = [
     path('',mainViews.welcome,name='welcome'),
     path('admin/', admin.site.urls),
