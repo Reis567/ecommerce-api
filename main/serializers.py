@@ -44,7 +44,6 @@ class ProductRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductRating
         fields = ['id','customer','product','rating','reviews','add_time']
-        depth = 1
 class ProductDetailSerializer(serializers.ModelSerializer):
     product_rating = ProductRatingSerializer(many=True, read_only=True)
     condition = serializers.PrimaryKeyRelatedField(queryset=ProductCondition.objects.all())
