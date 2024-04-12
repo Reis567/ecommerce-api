@@ -39,7 +39,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'price', 'title','vendor','category', 'detail', 'condition']
-        
+
 class ProductRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductRating
@@ -47,10 +47,11 @@ class ProductRatingSerializer(serializers.ModelSerializer):
         depth = 1
 class ProductDetailSerializer(serializers.ModelSerializer):
     product_rating = ProductRatingSerializer(many=True, read_only=True)
+    condition = serializers.PrimaryKeyRelatedField(queryset=ProductCondition.objects.all())
 
     class Meta:
         model = Product
-        fields = ['id', 'price', 'title', 'vendor', 'category', 'detail', 'product_rating']
+        fields = ['id', 'price', 'title', 'vendor', 'category', 'detail','condition', 'product_rating']
 
 
 class ProductCategorySerializer(serializers.ModelSerializer):
