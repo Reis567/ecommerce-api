@@ -35,10 +35,11 @@ class VendorDestroySerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     condition = serializers.PrimaryKeyRelatedField(queryset=ProductCondition.objects.all())
+    product_rating = serializers.StringRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Product
-        fields = ['id', 'price', 'title','vendor','category', 'detail', 'condition']
+        fields = ['id', 'price', 'title','vendor','category', 'detail', 'condition', 'product_rating']
 
 class ProductRatingSerializer(serializers.ModelSerializer):
     class Meta:
