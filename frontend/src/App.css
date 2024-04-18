@@ -3,9 +3,9 @@
   font-family: 'Bricolage Grotesque', sans-serif;
 }
 :root{
-  --white:#f7f2ee;
-  --black:#000000;
-  --brown:#341d08;
+  --white:#c2a893;
+  --black:#6e6e6e;
+  --brown:#FB7A1D;
 }
 #root {
   min-height: 100vh;
@@ -31,6 +31,9 @@ body {
   visibility: hidden;
   opacity: 0;
   font-size: 30px;
+  outline: None;
+  border: None;
+  background-color: var(--black);
 }
 .nav-close-btn{
   position: absolute;

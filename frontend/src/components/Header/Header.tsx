@@ -16,7 +16,7 @@ const Header: React.FC = () => {
 
     <NavTitle>
       <Link to={"/"}>
-        Matheus dos Reis
+       E-Commerce
       </Link>
     </NavTitle>
     
