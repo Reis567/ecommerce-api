@@ -22,7 +22,7 @@ const Header: React.FC = () => {
     
     <Nav isOpen={isNavOpen} as="div">
         <SLink to="/" onClick={toggleNavBar}>Inicio</SLink>
-        <SLink to="/sobre" onClick={toggleNavBar}>Sobre</SLink>
+        <SLink to="/sobre" onClick={toggleNavBar}>Categorias</SLink>
         <SLink to="/experiencia" onClick={toggleNavBar}>Experiência</SLink>
         <SLink to="/projetos" onClick={toggleNavBar}>Projetos</SLink>
         <SLink to="/contatos" onClick={toggleNavBar}>Contatos</SLink>
