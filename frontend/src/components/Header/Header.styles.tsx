@@ -4,13 +4,13 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   width: 100%;
-  background: #6e6e6e;
+  background: #2a2a2a;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   height: 80px;
   padding: 2rem;
-  color: #7E7D80;
+  color: #727377;
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
   
@@ -34,7 +34,7 @@ export const Nav = styled.nav<{isOpen:boolean}>`
     justify-content: space-evenly;
     flex-direction: column;
     gap: 1.5rem;
-    background-color: #6e6e6e;
+    background-color: #2a2a2a;
     transition: 1s;
     transform: translateY(${(props) => (props.isOpen ? '0' : '-100vh')});
     //display: none;  
@@ -45,7 +45,7 @@ export const Nav = styled.nav<{isOpen:boolean}>`
 
 export const SLink = styled(Link)`
   margin: 0 2rem;
-  color: #FB7A1D;
+  color: #faa757;
   font-weight: bolder;
   font-size: 20px;
   position: relative;
@@ -56,7 +56,7 @@ export const SLink = styled(Link)`
     content: " ";
     width: 0;
     height: 2px;
-    background: #f7f2ee;
+    background: #faa757;
     bottom: -20%;
     left: 0;
     transition: width 0.3s ease-in-out; 
@@ -71,7 +71,7 @@ export const NavTitle = styled.h3`
   font-size: 30px;
   font-weight: bolder;
   a{
-    color:#FB7A1D;
+    color:#faa757;
     text-decoration: None;
   }
 
