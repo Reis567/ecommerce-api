@@ -13,6 +13,11 @@ export const StyledCard = styled(Card)`
     &.ant-card div{
         color:#faa757;
     }
+    &.ant-card-body div{
+        gap: 5px;
+        height: auto;
+        width: 10px;
+    }
     `
 export const Container = styled.div`
     display: flex;
@@ -59,4 +64,11 @@ export const StyBtn = styled(Button)`
 
 export const InicioTitle = styled.h3`
     font-size: 45px;
+`
+
+
+export const SpnSty = styled.span`
+    font-size: 30px;
+    font-weight: bold;
+    padding: 10px;
 `
