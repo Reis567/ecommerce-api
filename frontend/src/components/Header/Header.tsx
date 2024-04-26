@@ -4,7 +4,7 @@ import { Container, Nav, NavTitle, SLink } from './Header.styles.tsx';
 import DropPerso from '../Dropdown/Dropdown.tsx'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping,faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 const Header: React.FC = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
@@ -33,10 +33,7 @@ const Header: React.FC = () => {
                     <FontAwesomeIcon icon={faCartShopping} />
                 </SLink>
                 <SLink to="/projetos" onClick={toggleNavBar}>Projetos</SLink>
-                <SLink to="/contatos" onClick={toggleNavBar}>
-                    Categorias
-                    <FontAwesomeIcon icon={faChevronDown} />
-                    </SLink>
+
                 <button className='nav-btn nav-close-btn' onClick={toggleNavBar}>
                     <FaTimes />
                 </button>
