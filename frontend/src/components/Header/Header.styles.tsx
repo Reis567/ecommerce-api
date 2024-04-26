@@ -2,6 +2,13 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
 
+
+export const HeaderCont = styled.div`
+  display:flex;
+  flex-direction: column;
+  width: 100%;
+`
+
 export const NavContainer = styled.div`
   width: 100%;
   background: #2a2a2a;
