@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
 
-export const Container = styled.div`
+export const NavContainer = styled.div`
   width: 100%;
   background: #2a2a2a;
   display: flex;

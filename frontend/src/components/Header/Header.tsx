@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { Container, Nav, NavTitle, SLink } from './Header.styles.tsx';
-import DropPerso from '../Dropdown/Dropdown.tsx'
+import {NavContainer, Nav, NavTitle, SLink } from './Header.styles.tsx';
+import SearchBar from '../SearchBar/SearchBar.tsx'; // Importe o componente de campo de pesquisa aqui
+import DropPerso from '../Dropdown/Dropdown.tsx';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -9,16 +10,13 @@ import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 const Header: React.FC = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
 
-
     const toggleNavBar = () => {
         setIsNavOpen(!isNavOpen);
     };
 
-
-
     return (
-        <Container>
-
+        <NavContainer>
+            <SearchBar />
             <NavTitle>
                 <Link to={"/"}>
                     E-Commerce
@@ -42,8 +40,7 @@ const Header: React.FC = () => {
             <button className='nav-btn' onClick={toggleNavBar}>
                 <FaBars />
             </button>
-
-        </Container>
+        </NavContainer>
     );
 };
 
