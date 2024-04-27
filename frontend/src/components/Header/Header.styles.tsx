@@ -28,6 +28,21 @@ export const NavContainer = styled.div`
   }
 `;
 
+export const SearchContainer = styled.div`
+  width: 100%;
+  background: #2a2a2a;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 1rem;
+  color: #727377;
+  
+
+  &.responsive_nav {
+    transform:none;
+  }
+`;
+
 export const Nav = styled.nav<{isOpen:boolean}>`
     position: relative;
 

@@ -1,12 +1,14 @@
 import React from 'react';
-import { Input } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+
+import { SearchOutlined } from '@ant-design/icons';
+import {InputSty} from './Searchbar.styles'
+
 
 const SearchBar: React.FC = () => (
-  <Input
+  <InputSty
     size="large"
     placeholder="Pesquisar produtos"
-    prefix={<UserOutlined />}
+    prefix={<SearchOutlined />}
   />
 );
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import {NavContainer,HeaderCont, Nav, NavTitle, SLink } from './Header.styles.tsx';
+import {NavContainer,SearchContainer,HeaderCont, Nav, NavTitle, SLink } from './Header.styles.tsx';
 import SearchBar from '../SearchBar/SearchBar.tsx'; // Importe o componente de campo de pesquisa aqui
 import DropPerso from '../Dropdown/Dropdown.tsx';
 import { Link } from 'react-router-dom';
@@ -15,16 +15,18 @@ const Header: React.FC = () => {
     };
 
     return (
-        <HeaderCont>
-            <SearchBar />
+            <HeaderCont>
+            <SearchContainer>
+                    <NavTitle>
+                        <Link to={"/"}>
+                            E-Commerce
+                        </Link>
+                    </NavTitle>
+                <SearchBar />
+            </SearchContainer>
 
             <NavContainer>
             
-                <NavTitle>
-                    <Link to={"/"}>
-                        E-Commerce
-                    </Link>
-                </NavTitle>
 
                 <Nav isOpen={isNavOpen} as="div">
                     <SLink to="/" onClick={toggleNavBar}>Inicio</SLink>
