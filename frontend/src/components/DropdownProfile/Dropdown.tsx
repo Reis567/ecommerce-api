@@ -1,18 +1,25 @@
 import React from 'react';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined,UserOutlined  } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Dropdown } from 'antd';
+import { Dropdown,Button } from 'antd';
 import {SpaceSty} from './DropdownProfile.styles';
 
 const items: MenuProps['items'] = [
   {
+    label: '1st menu item',
     key: '1',
+    icon: <UserOutlined />,
+  },
+  {
+    key: '2',
     label: (
       <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-        catego1
+        Compras
       </a>
     ),
+
   },
+
 
 
 ];
@@ -20,10 +27,12 @@ const items: MenuProps['items'] = [
 const DropdownProfile: React.FC = () => (
   <Dropdown menu={{ items }}>
     <a onClick={(e) => e.preventDefault()}>
-      <SpaceSty>
-        Categorias
-        <DownOutlined />
-      </SpaceSty>
+      <Button>
+          <SpaceSty>
+            Categorias
+            <DownOutlined />
+          </SpaceSty>
+      </Button>
     </a>
   </Dropdown>
 );
