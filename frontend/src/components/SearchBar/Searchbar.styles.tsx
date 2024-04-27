@@ -3,5 +3,5 @@ import styled from 'styled-components'
 
 
 export const InputSty = styled(Input)`
-width: 60%;
+width: 50%;
 `

@@ -34,7 +34,7 @@ export const SearchContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  padding: 1rem;
+  padding: 0.5rem;
   color: #727377;
   
 
