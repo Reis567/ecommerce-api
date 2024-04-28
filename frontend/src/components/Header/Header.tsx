@@ -3,6 +3,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import {NavContainer,SearchContainer,HeaderCont, Nav, NavTitle, SLink } from './Header.styles.tsx';
 import SearchBar from '../SearchBar/SearchBar.tsx'; // Importe o componente de campo de pesquisa aqui
 import DropPerso from '../Dropdown/Dropdown.tsx';
+import DropdownProfile from '../DropdownProfile/DropdownProfile.tsx';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -45,6 +46,7 @@ const Header: React.FC = () => {
                 <button className='nav-btn' onClick={toggleNavBar}>
                     <FaBars />
                 </button>
+                <DropdownProfile/>
             </NavContainer>
         </HeaderCont>
     );

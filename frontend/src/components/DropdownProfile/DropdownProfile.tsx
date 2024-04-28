@@ -1,7 +1,7 @@
 import React from 'react';
 import { DownOutlined,UserOutlined  } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Dropdown,Button } from 'antd';
+import { Dropdown } from 'antd';
 import {SpaceSty} from './DropdownProfile.styles';
 
 const items: MenuProps['items'] = [
@@ -27,12 +27,11 @@ const items: MenuProps['items'] = [
 const DropdownProfile: React.FC = () => (
   <Dropdown menu={{ items }}>
     <a onClick={(e) => e.preventDefault()}>
-      <Button>
           <SpaceSty>
-            Categorias
+          <UserOutlined />
+            Usuario
             <DownOutlined />
           </SpaceSty>
-      </Button>
     </a>
   </Dropdown>
 );
