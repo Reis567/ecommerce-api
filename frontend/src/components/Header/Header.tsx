@@ -36,7 +36,8 @@ const Header: React.FC = () => {
                         Carrinho
                         <FontAwesomeIcon icon={faCartShopping} />
                     </SLink>
-                    <SLink to="/projetos" onClick={toggleNavBar}>Projetos</SLink>
+                    <SLink to="/projetos" onClick={toggleNavBar}>Histórico</SLink>
+                    <SLink to="/projetos" onClick={toggleNavBar}>Favoritos</SLink>
 
                     <button className='nav-btn nav-close-btn' onClick={toggleNavBar}>
                         <FaTimes />
