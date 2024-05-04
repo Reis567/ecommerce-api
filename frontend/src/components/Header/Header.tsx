@@ -20,7 +20,7 @@ const Header: React.FC = () => {
             <SearchContainer>
                     <NavTitle>
                         <Link to={"/"}>
-                            E-Commerce
+                            Negócio fechado
                         </Link>
                     </NavTitle>
                 <SearchBar />

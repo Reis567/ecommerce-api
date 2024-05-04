@@ -4,7 +4,7 @@ import styled from 'styled-components';
 // Estilizando o componente do Carousel
 export const StyledCarousel = styled(Carousel)`
   position: relative;
-
+  
 
   &:after {
     content: '';
@@ -12,9 +12,10 @@ export const StyledCarousel = styled(Carousel)`
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 40px; // Altura do efeito de opacidade
+    height: 50px; // Altura do efeito de opacidade
     background: linear-gradient(to bottom, rgba(54, 77, 121, 0), #ffffff); // Gradiente de opacidade
-    pointer-events: none; // Garante que o gradiente não interfira nos eventos de clique no Carousel
+    pointer-events: none;
+
   }
 
   .slick-prev, .slick-next {
@@ -85,12 +86,14 @@ export const StyledCarousel = styled(Carousel)`
   }
 
   .slick-slide > div {
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 200px;
     color: #fff;
-    background: #a0aec9;
+    background: #2a2a2a;
     position: relative;
     overflow: hidden;
   }
