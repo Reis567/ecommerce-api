@@ -1,29 +1,27 @@
 import React from 'react';
-import { Carousel } from 'antd';
+import { StyledCarousel,Content } from './index.style';
 
-const contentStyle: React.CSSProperties = {
-  height: '200px',
-  color: '#fff',
-  lineHeight: '200px',
-  textAlign: 'center',
-  background: '#364d79',
+
+
+const CarouselHome: React.FC = () => {
+  return (
+    <>
+    <StyledCarousel dotPosition={'top'}>
+      <div>
+        <Content>1</Content>
+      </div>
+      <div>
+        <Content>2</Content>
+      </div>
+      <div>
+        <Content>3</Content>
+      </div>
+      <div>
+        <Content>4</Content>
+      </div>
+    </StyledCarousel>
+    </>
+  );
 };
-
-const CarouselHome: React.FC = () => (
-  <Carousel autoplay>
-    <div>
-      <h3 style={contentStyle}>1</h3>
-    </div>
-    <div>
-      <h3 style={contentStyle}>2</h3>
-    </div>
-    <div>
-      <h3 style={contentStyle}>3</h3>
-    </div>
-    <div>
-      <h3 style={contentStyle}>4</h3>
-    </div>
-  </Carousel>
-);
 
 export default CarouselHome;
