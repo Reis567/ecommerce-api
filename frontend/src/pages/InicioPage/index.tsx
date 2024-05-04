@@ -1,23 +1,16 @@
 import React from 'react';
 import { Button } from 'antd';
-import { Container, InicioTitle, StyledCard, ProdDiv, HeadProd, StyBtn , SpnSty} from './index.styles.tsx';
+import { Container, StyledCard, ProdDiv , SpnSty} from './index.styles.tsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faCartPlus, faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import CarouselHome from '../../components/Carousel/index.tsx'
 
 const { Meta } = StyledCard;
 
 const Inicio: React.FC = () => {
   return (
     <Container>
-      <HeadProd>
-        <InicioTitle>
-          Ultimos Produtos
-        </InicioTitle>
-        <StyBtn>
-          Todos os produtos
-          <FontAwesomeIcon icon={faArrowRightLong} />
-        </StyBtn>
-      </HeadProd>
+      <CarouselHome/>
       <ProdDiv>
         <StyledCard
           hoverable
