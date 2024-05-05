@@ -2,23 +2,25 @@ import React from 'react';
 import { StyledCarousel, Content } from './index.style';
 
 const CarouselHome: React.FC = () => {
+
   return (
     <>
-      <StyledCarousel dotPosition={'top'} autoplay autoplaySpeed={2000}>
+      <StyledCarousel arrows dotPosition={'top'} autoplay >
         <div>
-          <Content>1</Content>
+          <Content>Produto1</Content>
         </div>
         <div>
-          <Content>2</Content>
+          <Content>Produto2</Content>
         </div>
         <div>
-          <Content>3</Content>
+          <Content>Produto3</Content>
         </div>
         <div>
-          <Content>4</Content>
+          <Content>Produto4</Content>
         </div>
       </StyledCarousel>
     </>
   );
 };
+
 export default CarouselHome;
