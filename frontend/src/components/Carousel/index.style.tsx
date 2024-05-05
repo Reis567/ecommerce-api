@@ -22,7 +22,7 @@ export const StyledCarousel = styled(Carousel)`
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.5); // Definindo uma cor de fundo para as setas
+
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -44,9 +44,7 @@ export const StyledCarousel = styled(Carousel)`
     right: 10px; // Ajustando a posição da seta da direita
   }
 
-  .slick-prev:hover, .slick-next:hover {
-    background-color: rgba(255, 255, 255, 0.8); // Alterando a cor de fundo ao passar o mouse
-  }
+
 
   .slick-dots {
     position: absolute;
