@@ -9,7 +9,7 @@ import{
 }from 'react-router-dom'
 
 import Categoria from './pages/CategoriaPage';
-
+import ProdutoDetalhes from './pages/ProdutoPage';
 
 
 const router = createBrowserRouter([
