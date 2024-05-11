@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import {CategoContent} from './index.styles'
+import {CategoContent,CatTitle} from './index.styles'
 
 const CategoriaPage: React.FC = () => {
   const { id, slug } = useParams<{ id: string; slug: string }>(); // Obtendo o ID e o slug da categoria dos parâmetros de rota
@@ -9,7 +9,7 @@ const CategoriaPage: React.FC = () => {
 
   return (
     <CategoContent>
-      <h2>Itens da Categoria {id} ({slug})</h2>
+      <CatTitle>Itens da Categoria {id} ({slug})</CatTitle>
       {/* Lista de itens da categoria */}
     </CategoContent>
   );
