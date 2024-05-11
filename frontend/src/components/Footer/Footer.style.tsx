@@ -13,7 +13,6 @@ flex-direction: column;
 
 export const FooterItems = styled.footer`
 display:flex;
-
   width: 100%;
 `;
 

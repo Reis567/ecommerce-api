@@ -1,0 +1,17 @@
+import React from 'react';
+import { useParams } from 'react-router-dom';
+
+const CategoriaPage: React.FC = () => {
+  const { id, slug } = useParams<{ id: string; slug: string }>(); // Obtendo o ID e o slug da categoria dos parâmetros de rota
+
+  // Aqui você pode usar o ID e o slug da categoria para buscar e exibir os itens da categoria
+
+  return (
+    <div>
+      <h2>Itens da Categoria {id} ({slug})</h2>
+      {/* Lista de itens da categoria */}
+    </div>
+  );
+};
+
+export default CategoriaPage;
