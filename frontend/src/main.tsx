@@ -24,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: 'categoria/:id/:slug', // Incluindo o slug na rota da página de categoria
         element: <Categoria />
+      },
+      {
+        path: 'produto/:id/:slug', // Rota para a página de detalhes do produto
+        element: <ProdutoDetalhes />
       }
     ]
   }
