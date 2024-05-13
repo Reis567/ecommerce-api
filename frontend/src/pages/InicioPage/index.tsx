@@ -1,39 +1,25 @@
 import React from 'react';
-import { Button } from 'antd';
-import { Link } from 'react-router-dom'; // Importe o Link do React Router
-import { Container, StyledCard, ProdDiv, SpnSty } from './index.styles.tsx';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { Container, ProdDiv } from './index.styles.tsx';
+import ProductCard from '../../components/ProductCard/ProductCard';
+import { Link } from 'react-router-dom';
 import CarouselHome from '../../components/Carousel/index.tsx';
 
-const { Meta } = StyledCard;
+
 
 const Inicio: React.FC = () => {
   return (
     <Container>
       <CarouselHome />
       <ProdDiv>
-        {/* Envolve o StyledCard com o Link */}
-        <Link to="/produto/1/produto-1-slug"> {/* Passa o ID e o slug do produto */}
-          <StyledCard
-            hoverable
-            style={{ width: 240 }}
-            cover={<img alt="example" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTl9su24gdGNlP0Dh4CtT5G4f8KsijhjET9cOymhV8XKg&s" />}
-            actions={[
-              <Button key="favorite" icon={<FontAwesomeIcon icon={faHeart} />} />,
-              <Button key="cart" icon={<FontAwesomeIcon icon={faCartPlus} />} />
-            ]}
-          >
-            <Meta
-              title="Europe Street beat"
-              description="www.instagram.com"
-              style={{ marginBottom: 10 }}
-            />
-            <SpnSty>
-              R$ 99,99
-            </SpnSty>
-          </StyledCard>
-        </Link>
+
+          <Link to={''}>
+                <ProductCard
+                    imageUrl="https://example.com/product-image.jpg"
+                    title="Europe Street beat"
+                    description="www.instagram.com"
+                    price="99,99"
+                />
+          </Link>
       </ProdDiv>
     </Container>
   );
