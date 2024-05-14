@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Button } from 'antd';
 
 
 
@@ -43,3 +44,19 @@ export const ImgS = styled.img`
     max-width: 60%;
     max-height: 300px;
 `
+
+export const CartBtn = styled(Button)`
+    
+`
+
+
+export const FavBtn = styled(Button)`
+    
+`
+
+
+export const BuyBtn = styled(Button)`
+    
+`
+
+
