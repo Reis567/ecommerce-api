@@ -12,9 +12,10 @@ interface ProductCardProps {
   title: string;
   description: string;
   price: string;
+  id:string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, description, price }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, description, price,id }) => {
 
   const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -22,13 +23,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, description,
   };
 
   return (
-    <LinkS to={'produto/1/botafogo'}>
+    <LinkS to={`produto/${id}/botafogo`}>
       <StyledCard
         hoverable
         style={{ width: 240 }}
         cover={<img alt={title} src={imageUrl} />}
         actions={[
-          // Adicione onClick handlers para os botões para evitar a propagação do evento de clique
           <Button key="favorite" icon={<FontAwesomeIcon icon={faHeart} style={{ zIndex: 2 }} />} onClick={handleButtonClick} />,
           <Button key="cart" icon={<FontAwesomeIcon icon={faCartPlus} style={{ zIndex: 2 }} />} onClick={handleButtonClick} />
         ]}
