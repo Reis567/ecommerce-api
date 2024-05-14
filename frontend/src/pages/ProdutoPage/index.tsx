@@ -11,7 +11,8 @@ import {
   ImgS,
   BuyBtn,
   FavBtn,
-  CartBtn
+  CartBtn,
+  ContBtns
 } from  './index.styles.tsx';
 
 const ProdutoDetalhes: React.FC = () => {
@@ -31,16 +32,19 @@ const ProdutoDetalhes: React.FC = () => {
           </RightHead>
 
           <RightBody>
-          <CartBtn>
-          cart
-          </CartBtn>
-            <BuyBtn>
-            buy
-            </BuyBtn>
-            <FavBtn>
-            fav
-            </FavBtn>
+            <ContBtns>
+                <CartBtn>
+                    cart
+                </CartBtn>
+                
+                  <BuyBtn>
+                      buy
+                  </BuyBtn>
 
+                  <FavBtn>
+                      fav
+                  </FavBtn>
+            </ContBtns>
           </RightBody>
 
           <RightTags>

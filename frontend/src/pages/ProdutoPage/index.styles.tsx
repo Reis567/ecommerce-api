@@ -45,6 +45,10 @@ export const ImgS = styled.img`
     max-height: 300px;
 `
 
+export const ContBtns = styled.div`
+    
+`
+
 export const CartBtn = styled(Button)`
     
 `
