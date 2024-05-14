@@ -12,7 +12,9 @@ import {
   BuyBtn,
   FavBtn,
   CartBtn,
-  ContBtns
+  ContBtns,
+  ContPrice,
+  Price
 } from  './index.styles.tsx';
 
 const ProdutoDetalhes: React.FC = () => {
@@ -32,6 +34,12 @@ const ProdutoDetalhes: React.FC = () => {
           </RightHead>
 
           <RightBody>
+            <ContPrice>
+              <Price>
+              price
+              </Price>
+            </ContPrice>
+
             <ContBtns>
                 <CartBtn>
                     cart

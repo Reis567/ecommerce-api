@@ -44,10 +44,16 @@ export const ImgS = styled.img`
     max-width: 60%;
     max-height: 300px;
 `
-
+export const ContPrice = styled.div`
+    
+`
+export const Price = styled.h3`
+    
+`
 export const ContBtns = styled.div`
     
 `
+
 
 export const CartBtn = styled(Button)`
     
