@@ -19,7 +19,7 @@ const ProdutoDetalhes: React.FC = () => {
           </RightHead>
 
           <RightBody>
-
+            
           </RightBody>
 
           <RightTags>

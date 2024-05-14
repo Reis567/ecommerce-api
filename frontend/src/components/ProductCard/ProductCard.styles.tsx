@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Card } from 'antd';
+import { Link } from 'react-router-dom';
 
 export const StyledCard = styled(Card)`
     border:1px solid #2a2a2a;
@@ -24,4 +25,9 @@ export const SpnSty = styled.span`
     font-size: 30px;
     font-weight: bold;
     padding: 10px;
+`
+
+
+export const LinkS = styled(Link)`
+    text-decoration:none;
 `
