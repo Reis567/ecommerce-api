@@ -1,6 +1,15 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import {ProdContent,ProdTitle,ContentLeft,ContentRight,RightHead,RightBody,RightTags} from  './index.styles.tsx';
+import {
+  ProdContent,
+  ProdTitle,
+  ContentLeft,
+  ContentRight,
+  RightHead,
+  RightBody,
+  RightTags,
+  ImgS
+} from  './index.styles.tsx';
 
 const ProdutoDetalhes: React.FC = () => {
   const { id, slug } = useParams<{ id: string; slug: string }>();
@@ -8,7 +17,7 @@ const ProdutoDetalhes: React.FC = () => {
   return (
     <ProdContent>
       <ContentLeft>
-
+      <ImgS src='https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png'/>
       </ContentLeft>
 
       <ContentRight>
@@ -19,11 +28,11 @@ const ProdutoDetalhes: React.FC = () => {
           </RightHead>
 
           <RightBody>
-            
+            body
           </RightBody>
 
           <RightTags>
-            
+            tags
           </RightTags>
 
       </ContentRight>
