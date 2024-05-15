@@ -16,7 +16,13 @@ export const ProdContent = styled.div`
 
 export const ProdTitle = styled.h2`
     font-weight: bolder;
+    font-size: 40px;
 `
+
+export const ProdDesc = styled.p`
+    font-weight: bolder;
+`
+
 
 export const ContentLeft = styled.div`
     width: 40%;
@@ -116,6 +122,6 @@ export const ContPrice = styled.div`
 `;
 
 export const Price = styled.span`
-  font-size: 24px;
+  font-size: 44px;
   font-weight: bold;
 `;

@@ -18,7 +18,8 @@ import {
   ContPrice,
   Price,
   TagsTitle,
-  StyledTag
+  StyledTag,
+  ProdDesc
 } from './index.styles.tsx';
 
 const ProdutoDetalhes: React.FC = () => {
@@ -32,9 +33,10 @@ const ProdutoDetalhes: React.FC = () => {
 
       <ContentRight>
         <RightHead>
-          <ProdTitle>Detalhes do Produto</ProdTitle>
-          <p>ID: {id}</p>
-          <p>Slug: {slug}</p>
+          <ProdTitle>Produto 32151</ProdTitle>
+          <ProdDesc>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit, laborum debitis. Natus quos assumenda vero qui voluptatum pariatur impedit saepe corrupti magnam ut eligendi, consectetur ipsum suscipit quod facilis. Quisquam.
+          </ProdDesc>
         </RightHead>
 
         <RightBody>
