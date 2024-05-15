@@ -16,12 +16,14 @@ import {
   CartBtn,
   ContBtns,
   ContPrice,
-  Price
+  Price,
+  TagsTitle,
+  StyledTag
 } from './index.styles.tsx';
 
 const ProdutoDetalhes: React.FC = () => {
   const { id, slug } = useParams<{ id: string; slug: string }>();
-
+  const tags = ['Novo', 'Popular', 'Desconto', 'Limitado'];
   return (
     <ProdContent>
       <ContentLeft>
@@ -58,7 +60,10 @@ const ProdutoDetalhes: React.FC = () => {
         </RightBody>
 
         <RightTags>
-          tags
+          <TagsTitle>Tags</TagsTitle>
+          {tags.map((tag) => (
+            <StyledTag key={tag}>{tag}</StyledTag>
+          ))}
         </RightTags>
       </ContentRight>
     </ProdContent>

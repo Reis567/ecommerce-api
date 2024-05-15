@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Button } from 'antd';
+import { Tag } from 'antd';
 
 
 
@@ -37,9 +38,27 @@ export const RightHead = styled.div`
 export const RightBody = styled.div`
     width: 100%;
 `
+
 export const RightTags = styled.div`
-width: 100%;
-`
+  width: 100%;
+  margin-top: 20px;
+`;
+
+export const TagsTitle = styled.h5`
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+export const StyledTag = styled(Tag)`
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #727377;
+  color: #faa757;
+  font-size: 15px;
+  font-weight: bolder ;
+
+`;
 export const ImgS = styled.img`
     max-width: 60%;
     max-height: 300px;
