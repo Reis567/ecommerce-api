@@ -8,10 +8,10 @@ export const ProdContent = styled.div`
     min-height: 100vh;
     width: 100%;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    margin-top: 80px;
     text-align: center;
+
 `
 
 export const ProdTitle = styled.h2`
@@ -29,24 +29,28 @@ export const ContentLeft = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    height: 100vh;
 `
 export const ContentRight = styled.div`
     width: 60%;
+    height: 100vh;
     display: flex;
     justify-content: center;
     text-align: left;
     align-items: center;
     flex-direction: column;
+
 `
 export const RightHead = styled.div`
-    width: 100%;
+    width: 60%;
 `
 export const RightBody = styled.div`
-    width: 100%;
+    width: 60%;
 `
 
 export const RightTags = styled.div`
-  width: 100%;
+  width: 60%;
   margin-top: 20px;
 `;
 
@@ -65,9 +69,20 @@ export const StyledTag = styled(Tag)`
   font-weight: bolder ;
 
 `;
+export const Images = styled.div`
+  width: 65%;
+  height: 65%;
+  border: 2px solid ;
+  border-radius: 10px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+`
 export const ImgS = styled.img`
-    max-width: 60%;
-    max-height: 300px;
+
+    max-height: 400px;
+    padding: 20px;
+
 `
 export const ContBtns = styled.div`
   display: flex;

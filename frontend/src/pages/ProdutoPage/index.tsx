@@ -19,7 +19,8 @@ import {
   Price,
   TagsTitle,
   StyledTag,
-  ProdDesc
+  ProdDesc,
+  Images
 } from './index.styles.tsx';
 
 const ProdutoDetalhes: React.FC = () => {
@@ -28,7 +29,10 @@ const ProdutoDetalhes: React.FC = () => {
   return (
     <ProdContent>
       <ContentLeft>
+        <Images>
+
         <ImgS src='https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png' />
+        </Images>
       </ContentLeft>
 
       <ContentRight>
