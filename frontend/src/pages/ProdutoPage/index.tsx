@@ -1,5 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faShoppingCart, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import {
   ProdContent,
   ProdTitle,
@@ -15,7 +17,7 @@ import {
   ContBtns,
   ContPrice,
   Price
-} from  './index.styles.tsx';
+} from './index.styles.tsx';
 
 const ProdutoDetalhes: React.FC = () => {
   const { id, slug } = useParams<{ id: string; slug: string }>();
@@ -23,44 +25,42 @@ const ProdutoDetalhes: React.FC = () => {
   return (
     <ProdContent>
       <ContentLeft>
-      <ImgS src='https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png'/>
+        <ImgS src='https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png' />
       </ContentLeft>
 
       <ContentRight>
-          <RightHead>
-            <ProdTitle>Detalhes do Produto</ProdTitle>
-            <p>ID: {id}</p>
-            <p>Slug: {slug}</p>
-          </RightHead>
+        <RightHead>
+          <ProdTitle>Detalhes do Produto</ProdTitle>
+          <p>ID: {id}</p>
+          <p>Slug: {slug}</p>
+        </RightHead>
 
-          <RightBody>
-            <ContPrice>
-              <Price>
-              price
-              </Price>
-            </ContPrice>
+        <RightBody>
+          <ContPrice>
+            <Price>
+              R$ 99,99
+            </Price>
+          </ContPrice>
 
-            <ContBtns>
-                <CartBtn>
-                    cart
-                </CartBtn>
-                
-                  <BuyBtn>
-                      buy
-                  </BuyBtn>
+          <ContBtns>
+            <CartBtn>
+              <FontAwesomeIcon icon={faShoppingCart} /> Adicionar ao Carrinho
+            </CartBtn>
 
-                  <FavBtn>
-                      fav
-                  </FavBtn>
-            </ContBtns>
-          </RightBody>
+            <BuyBtn>
+              <FontAwesomeIcon icon={faDollarSign} /> Comprar
+            </BuyBtn>
 
-          <RightTags>
-            tags
-          </RightTags>
+            <FavBtn>
+              <FontAwesomeIcon icon={faHeart} /> Favoritar
+            </FavBtn>
+          </ContBtns>
+        </RightBody>
 
+        <RightTags>
+          tags
+        </RightTags>
       </ContentRight>
-
     </ProdContent>
   );
 };
