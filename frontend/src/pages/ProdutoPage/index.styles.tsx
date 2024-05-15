@@ -44,40 +44,59 @@ export const ImgS = styled.img`
     max-width: 60%;
     max-height: 300px;
 `
-export const ContPrice = styled.div`
-    
-`
-export const Price = styled.h3`
-    
-`
 export const ContBtns = styled.div`
-    
-`
-
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+`;
 
 export const CartBtn = styled(Button)`
-    background-color: #389c9c;
-    padding: 10px 20px;
-    width: auto;
-    height: auto;
-`
+  background-color: #389c9c;
+  padding: 10px 20px;
+  width: auto;
+  height: auto;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
+
+`;
 
 export const FavBtn = styled(Button)`
-    background-color: #9b3d2d;
-        padding: 10px 20px;
-    width: auto;
-    height: auto;
-    
-`
+  background-color: #9b3d2d;
+  padding: 10px 20px;
+  width: auto;
+  height: auto;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
+
+`;
 
 export const BuyBtn = styled(Button)`
-    background-color: #239271;
-        padding: 10px 20px;
-    width: auto;
-    height: auto;
-    
-`
+  background-color: #239271;
+  padding: 10px 20px;
+  width: auto;
+  height: auto;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
 
+`;
+
+export const ContPrice = styled.div`
+  margin-bottom: 20px;
+`;
+
+export const Price = styled.span`
+  font-size: 24px;
+  font-weight: bold;
+`;
