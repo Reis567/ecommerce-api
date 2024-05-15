@@ -56,16 +56,27 @@ export const ContBtns = styled.div`
 
 
 export const CartBtn = styled(Button)`
-    
+    background-color: #389c9c;
+    padding: 10px 20px;
+    width: auto;
+    height: auto;
 `
 
 
 export const FavBtn = styled(Button)`
+    background-color: #9b3d2d;
+        padding: 10px 20px;
+    width: auto;
+    height: auto;
     
 `
 
 
 export const BuyBtn = styled(Button)`
+    background-color: #239271;
+        padding: 10px 20px;
+    width: auto;
+    height: auto;
     
 `
 
