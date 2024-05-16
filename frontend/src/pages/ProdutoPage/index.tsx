@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Modal, Input, Button as AntButton } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faShoppingCart, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -20,10 +21,12 @@ import {
   TagsTitle,
   StyledTag,
   ProdDesc,
-
   Thumbnail,
   ThumbnailContainer,
-  BigImageContainer
+  BigImageContainer,
+  RightComments,
+  CommentsButton,
+  CommentsCount
 } from './index.styles.tsx';
 
 const ProdutoDetalhes: React.FC = () => {
@@ -41,6 +44,31 @@ const ProdutoDetalhes: React.FC = () => {
   const handleThumbnailClick = (thumbnail: string) => {
     setThumbnails([bigImage, ...thumbnails.filter(img => img !== thumbnail)]);
     setBigImage(thumbnail);
+  };
+
+  // Estado para gerenciar o modal de comentários e os comentários
+  const [comments, setComments] = useState<{ user: string, text: string }[]>([
+    { user: 'João', text: 'Excelente produto!' },
+    { user: 'Maria', text: 'Gostei muito, recomendo.' },
+    { user: 'Pedro', text: 'Ótima qualidade e preço justo.' }
+  ]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [newComment, setNewComment] = useState('');
+
+  const handleOpenModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleAddComment = () => {
+    const loggedInUser = 'Usuário Logado'; // Substitua pelo nome do usuário logado no futuro
+    if (newComment.trim()) {
+      setComments([...comments, { user: loggedInUser, text: newComment.trim() }]);
+      setNewComment('');
+    }
   };
 
   return (
@@ -90,6 +118,35 @@ const ProdutoDetalhes: React.FC = () => {
             <StyledTag key={tag}>{tag}</StyledTag>
           ))}
         </RightTags>
+
+        <RightComments>
+          <CommentsButton onClick={handleOpenModal}>Comentários</CommentsButton>
+          <CommentsCount>{comments.length} Comentários</CommentsCount>
+        </RightComments>
+
+        <Modal
+          title="Comentários"
+          visible={isModalVisible}
+          onCancel={handleCloseModal}
+          footer={null}
+        >
+          <Input
+            placeholder="Escreva seu comentário"
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+          />
+          <AntButton type="primary" onClick={handleAddComment} style={{ marginTop: '10px' }}>
+            Enviar
+          </AntButton>
+          <div style={{ marginTop: '20px' }}>
+            {comments.map((comment, index) => (
+              <div key={index} style={{ marginBottom: '10px' }}>
+                <strong>{comment.user}:</strong>
+                <p>{comment.text}</p>
+              </div>
+            ))}
+          </div>
+        </Modal>
       </ContentRight>
     </ProdContent>
   );

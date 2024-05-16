@@ -156,3 +156,28 @@ export const Price = styled.span`
   font-size: 44px;
   font-weight: bold;
 `;
+
+export const RightComments = styled.div`
+  width: 60%;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+export const CommentsButton = styled(Button)`
+  background-color: #389c9c;
+  padding: 10px 20px;
+  padding: 10px 20px;
+  width: auto;
+  height: auto;
+  color: white;
+  border: none;
+  cursor: pointer;
+`;
+
+export const CommentsCount = styled.span`
+  font-size: 16px;
+  font-weight: bold;
+  color: #727377;
+`;
