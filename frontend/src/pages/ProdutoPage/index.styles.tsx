@@ -1,53 +1,50 @@
-import styled from 'styled-components'
-import { Button } from 'antd';
-import { Tag } from 'antd';
-
-
+import styled from 'styled-components';
+import { Button, Tag } from 'antd';
 
 export const ProdContent = styled.div`
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-
-`
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
 
 export const ProdTitle = styled.h2`
-    font-weight: bolder;
-    font-size: 40px;
-`
+  font-weight: bolder;
+  font-size: 40px;
+`;
 
 export const ProdDesc = styled.p`
-    font-weight: bolder;
-`
-
+  font-weight: bolder;
+`;
 
 export const ContentLeft = styled.div`
-    width: 40%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+`;
 
-    height: 100vh;
-`
 export const ContentRight = styled.div`
-    width: 60%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    text-align: left;
-    align-items: center;
-    flex-direction: column;
+  width: 60%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  text-align: left;
+  align-items: center;
+  flex-direction: column;
+`;
 
-`
 export const RightHead = styled.div`
-    width: 60%;
-`
+  width: 60%;
+`;
+
 export const RightBody = styled.div`
-    width: 60%;
-`
+  width: 60%;
+`;
 
 export const RightTags = styled.div`
   width: 60%;
@@ -66,24 +63,49 @@ export const StyledTag = styled(Tag)`
   background-color: #727377;
   color: #faa757;
   font-size: 15px;
-  font-weight: bolder ;
-
+  font-weight: bolder;
 `;
+
 export const Images = styled.div`
-  width: 65%;
-  height: 65%;
-  border: 2px solid ;
-  border-radius: 10px;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-`
+  flex-direction: column;
+`;
+
 export const ImgS = styled.img`
+  max-height: 400px;
+  padding: 20px;
+  cursor: pointer;
+`;
 
-    max-height: 400px;
-    padding: 20px;
+export const ThumbnailContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+`;
 
-`
+export const Thumbnail = styled.img`
+  width: 80px;
+  height: 80px;
+  margin: 5px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  &:hover {
+    border-color: #000;
+  }
+`;
+
+export const BigImageContainer = styled.div`
+  width: 65%;
+  height: 65%;
+  border: 2px solid;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const ContBtns = styled.div`
   display: flex;
   gap: 10px;
@@ -100,8 +122,6 @@ export const CartBtn = styled(Button)`
   display: flex;
   align-items: center;
   gap: 10px;
-
-
 `;
 
 export const FavBtn = styled(Button)`
@@ -114,8 +134,6 @@ export const FavBtn = styled(Button)`
   display: flex;
   align-items: center;
   gap: 10px;
-
-
 `;
 
 export const BuyBtn = styled(Button)`
@@ -128,8 +146,6 @@ export const BuyBtn = styled(Button)`
   display: flex;
   align-items: center;
   gap: 10px;
-
-
 `;
 
 export const ContPrice = styled.div`
