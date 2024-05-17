@@ -12,7 +12,7 @@ const Inicio: React.FC = () => {
       <CarouselHome />
       <ProdDiv>
                 <ProductCard
-                    id="1"
+                    idProduto="1"
                     imageUrl="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png"
                     title="Europe Street beat"
                     description="www.instagram.com"

@@ -12,10 +12,10 @@ interface ProductCardProps {
   title: string;
   description: string;
   price: string;
-  id:string;
+  idProduto:string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, description, price,id }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, description, price,idProduto }) => {
 
   const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -23,7 +23,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, description,
   };
 
   return (
-    <LinkS to={`produto/${id}/botafogo`}>
+    <LinkS to={`/produto/${idProduto}/botafogo`}>
       <StyledCard
         hoverable
         style={{ width: 240 }}

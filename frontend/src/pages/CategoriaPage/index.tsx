@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import {CategoContent,CatTitle} from './index.styles'
 import ProductCard from '../../components/ProductCard/ProductCard';
-import { Link } from 'react-router-dom';
+
 
 const CategoriaPage: React.FC = () => {
   const { id, slug } = useParams<{ id: string; slug: string }>(); // Obtendo o ID e o slug da categoria dos parâmetros de rota
@@ -12,15 +12,13 @@ const CategoriaPage: React.FC = () => {
   return (
     <CategoContent>
       <CatTitle>Itens da Categoria {id} ({slug})</CatTitle>
-      <Link to={''}>
-            <ProductCard
-                imageUrl="https://example.com/product-image.jpg"
-                title="Europe Street beat"
-                description="www.instagram.com"
-                price="99,99"
-            />
-      </Link>
-
+      <ProductCard
+                    idProduto="1"
+                    imageUrl="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png"
+                    title="Europe Street beat"
+                    description="www.instagram.com"
+                    price="99,99"
+                />
     </CategoContent>
   );
 };
