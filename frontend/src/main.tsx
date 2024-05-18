@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import Inicio from './pages/InicioPage'
+import CheckoutPage from './pages/CheckoutPage'
 
 import{
   createBrowserRouter,RouterProvider
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: 'produto/:id/:slug', // Rota para a página de detalhes do produto
         element: <ProdutoDetalhes />
+      },
+      {
+        path: 'checkout',  // Adicionando a nova rota para a página de checkout
+        element: <CheckoutPage />
       },
     ]
   }
