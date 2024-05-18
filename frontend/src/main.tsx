@@ -28,7 +28,7 @@ const router = createBrowserRouter([
       {
         path: 'produto/:id/:slug', // Rota para a página de detalhes do produto
         element: <ProdutoDetalhes />
-      }
+      },
     ]
   }
 ]);
