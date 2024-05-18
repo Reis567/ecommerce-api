@@ -1,18 +1,76 @@
-// src/pages/index.styles.tsx
-
+// src/pages/CheckoutPage/index.styles.tsx
 import styled from 'styled-components';
+import { Button } from 'antd';
+
+export const CheckoutContent = styled.div`
+    width: 100%;
+    min-height: 100vh;
+`
+
 
 export const CheckoutContainer = styled.div`
-  min-height: 100vh;
-  width: 100%;
+  width: 80%;
+  margin: auto;
+  padding: 20px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   flex-direction: column;
+  align-items: center;
 `;
 
-export const CheckoutTitle = styled.h2`
-  font-size: 36px;
+export const CheckoutTitle = styled.h1`
   margin-bottom: 20px;
+`;
+
+export const CheckoutTable = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+`;
+
+export const TableHeader = styled.th`
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f4f4f4;
+`;
+
+export const TableCell = styled.td`
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+`;
+
+export const ProductCell = styled.td`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+`;
+
+export const ProductImage = styled.img`
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+`;
+
+export const ProductName = styled.span`
+  font-size: 16px;
+`;
+
+export const CheckoutButton = styled(Button)`
+  margin: 10px;
+  background-color: #239271;
+  color: white;
+  &:hover {
+    background-color: #1e8266;
+  }
+`;
+
+export const BackButton = styled(Button)`
+  margin: 10px;
+  background-color: #9b3d2d;
+  color: white;
+  &:hover {
+    background-color: #833527;
+  }
 `;
