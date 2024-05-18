@@ -28,8 +28,18 @@ const items: MenuProps['items'] = [
     ),
 
   },
+
   {
     key: '4',
+    label: (
+      <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+        Meus Endereços
+      </a>
+    ),
+
+  },
+  {
+    key: '5',
     label: (
       <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
         Sair <ArrowRightOutlined />
