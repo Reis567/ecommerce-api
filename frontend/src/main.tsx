@@ -23,15 +23,15 @@ const router = createBrowserRouter([
         element: <Inicio />
       },
       {
-        path: 'categoria/:id/:slug', // Incluindo o slug na rota da página de categoria
+        path: 'categoria/:id/:slug', 
         element: <Categoria />
       },
       {
-        path: 'produto/:id/:slug', // Rota para a página de detalhes do produto
+        path: 'produto/:id/:slug',
         element: <ProdutoDetalhes />
       },
       {
-        path: 'checkout',  // Adicionando a nova rota para a página de checkout
+        path: 'checkout',
         element: <CheckoutPage />
       },
     ]
