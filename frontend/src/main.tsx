@@ -11,6 +11,7 @@ import{
 
 import Categoria from './pages/CategoriaPage';
 import ProdutoDetalhes from './pages/ProdutoPage';
+import MyAddressesPage from './pages/MyAddressPage/index.tsx'
 
 
 const router = createBrowserRouter([
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: 'checkout',
         element: <CheckoutPage />
+      },
+      {
+        path: 'meus-enderecos', // Nova rota para a página de endereços
+        element: <MyAddressesPage />
       },
     ]
   }
