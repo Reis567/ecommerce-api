@@ -6,7 +6,8 @@ import {
   AddressTitle, 
   AddressList, 
   AddressItem, 
-  AddButton 
+  AddButton,
+  AddressContent
 } from './index.styles';
 
 const MyAddressesPage: React.FC = () => {
@@ -18,15 +19,18 @@ const MyAddressesPage: React.FC = () => {
   };
 
   return (
-    <AddressContainer>
-      <AddressTitle>Meus Endereços</AddressTitle>
-      <AddButton onClick={handleAddAddress}>Adicionar Novo Endereço</AddButton>
-      <AddressList>
-        <AddressItem>Rua Exemplo, 123, Cidade, Estado, CEP 12345-678</AddressItem>
-        <AddressItem>Avenida Exemplo, 456, Cidade, Estado, CEP 12345-678</AddressItem>
-        {/* Adicione mais endereços conforme necessário */}
-      </AddressList>
-    </AddressContainer>
+    <AddressContent>
+      <AddressContainer>
+        <AddressTitle>Meus Endereços</AddressTitle>
+        <AddButton onClick={handleAddAddress}>Adicionar Novo Endereço</AddButton>
+        <AddressList>
+          <AddressItem>Rua Exemplo, 123, Cidade, Estado, CEP 12345-678</AddressItem>
+          <AddressItem>Avenida Exemplo, 456, Cidade, Estado, CEP 12345-678</AddressItem>
+          {/* Adicione mais endereços conforme necessário */}
+        </AddressList>
+
+      </AddressContainer>
+    </AddressContent>
   );
 };
 

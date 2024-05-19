@@ -2,6 +2,11 @@
 import styled from 'styled-components';
 import { Button } from 'antd';
 
+
+export const AddressContent = styled.div`
+  width:100%;
+  min-height: 100vh;
+`
 export const AddressContainer = styled.div`
   width: 80%;
   margin: auto;
