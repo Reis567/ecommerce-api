@@ -1,8 +1,8 @@
 import React from 'react';
-import { DownOutlined } from '@ant-design/icons';
+
 import type { MenuProps } from 'antd';
 import { Dropdown } from 'antd';
-import { SpaceSty } from './Dropdown.styles';
+import { SpaceSty,DownStyled } from './Dropdown.styles';
 import { Link } from 'react-router-dom'; // Importe Link do react-router-dom
 
 const DropPerso: React.FC = () => {
@@ -26,7 +26,7 @@ const DropPerso: React.FC = () => {
       <a onClick={(e) => e.preventDefault()}>
         <SpaceSty>
           Categorias
-          <DownOutlined />
+          <DownStyled />
         </SpaceSty>
       </a>
     </Dropdown>

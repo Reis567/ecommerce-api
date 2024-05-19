@@ -1,10 +1,10 @@
 // src/components/DropdownProfile/index.tsx
 import React from 'react';
-import { DownOutlined, UserOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import {  UserOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Dropdown } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { SpaceSty } from './DropdownProfile.styles';
+import { SpaceSty ,DownStyled} from './DropdownProfile.styles';
 
 const DropdownProfile: React.FC = () => {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const DropdownProfile: React.FC = () => {
         <SpaceSty>
           <UserOutlined />
           Usuário
-          <DownOutlined />
+          <DownStyled />
         </SpaceSty>
       </a>
     </Dropdown>
