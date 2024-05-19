@@ -1,4 +1,3 @@
-// src/pages/CheckoutPage/index.styles.tsx
 import styled from 'styled-components';
 import { Button } from 'antd';
 
@@ -6,7 +5,6 @@ export const CheckoutContent = styled.div`
     width: 100%;
     min-height: 100vh;
 `
-
 
 export const CheckoutContainer = styled.div`
   width: 80%;
@@ -72,9 +70,14 @@ export const CheckoutButton = styled(Button)`
 
 export const BackButton = styled(Button)`
   margin: 10px;
-  background-color: #9b3d2d;
+  background-color: #239271; /* Verde similar ao botão de adicionar endereço */
   color: white;
   &:hover {
-    background-color: #833527;
+    background-color: #1e8266;
   }
+`;
+
+export const ButtonContainer = styled.div`
+  align-self: flex-start; /* Alinha o botão de voltar à esquerda */
+  margin-bottom: 20px;
 `;

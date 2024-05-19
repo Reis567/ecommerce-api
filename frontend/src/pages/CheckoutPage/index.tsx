@@ -1,4 +1,3 @@
-// src/pages/CheckoutPage/index.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -12,7 +11,8 @@ import {
   ProductName, 
   CheckoutButton, 
   BackButton ,
-  CheckoutContent
+  CheckoutContent,
+  ButtonContainer
 } from './index.styles.tsx';
 
 const CheckoutPage: React.FC = () => {
@@ -28,46 +28,41 @@ const CheckoutPage: React.FC = () => {
 
   return (
     <CheckoutContent>
-
-        <CheckoutContainer>
+      <CheckoutContainer>
         <CheckoutTitle>Checkout</CheckoutTitle>
-        <div>
-            <BackButton onClick={handleBackClick}>Voltar</BackButton>
-            <CheckoutButton onClick={handleCheckoutClick}>Concluir Compra</CheckoutButton>
-        </div>
+        <ButtonContainer>
+          <BackButton onClick={handleBackClick}>Voltar</BackButton>
+        </ButtonContainer>
         <CheckoutTable>
-            <thead>
+          <thead>
             <tr>
-                <TableHeader>Quantidade</TableHeader>
-                <TableHeader>Produto</TableHeader>
-                <TableHeader>Valor</TableHeader>
+              <TableHeader>Quantidade</TableHeader>
+              <TableHeader>Produto</TableHeader>
+              <TableHeader>Valor</TableHeader>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody>
             <tr>
-                <TableCell>1</TableCell>
-                <ProductCell>
+              <TableCell>1</TableCell>
+              <ProductCell>
                 <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto" />
                 <ProductName>Produto 1</ProductName>
-                </ProductCell>
-                <TableCell>R$ 99,99</TableCell>
+              </ProductCell>
+              <TableCell>R$ 99,99</TableCell>
             </tr>
             <tr>
-                <TableCell>2</TableCell>
-                <ProductCell>
+              <TableCell>2</TableCell>
+              <ProductCell>
                 <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto" />
                 <ProductName>Produto 2</ProductName>
-                </ProductCell>
-                <TableCell>R$ 199,98</TableCell>
+              </ProductCell>
+              <TableCell>R$ 199,98</TableCell>
             </tr>
             {/* Adicione mais itens conforme necessário */}
-            </tbody>
+          </tbody>
         </CheckoutTable>
-        <div>
-            <BackButton onClick={handleBackClick}>Voltar</BackButton>
-            <CheckoutButton onClick={handleCheckoutClick}>Concluir Compra</CheckoutButton>
-        </div>
-        </CheckoutContainer>
+        <CheckoutButton onClick={handleCheckoutClick}>Concluir Compra</CheckoutButton>
+      </CheckoutContainer>
     </CheckoutContent>
   );
 };
