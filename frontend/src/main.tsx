@@ -4,6 +4,7 @@ import App from './App.tsx'
 import './index.css'
 import Inicio from './pages/InicioPage'
 import CheckoutPage from './pages/CheckoutPage'
+import ShippingAddressPage from './pages/ShippingAddressPage'
 
 import{
   createBrowserRouter,RouterProvider
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: 'meus-enderecos', // Nova rota para a página de endereços
         element: <MyAddressesPage />
+      },
+      {
+        path: 'shipping-address', // Nova rota para a página de seleção de endereço
+        element: <ShippingAddressPage />
       },
     ]
   }
