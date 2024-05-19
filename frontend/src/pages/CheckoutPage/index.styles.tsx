@@ -23,44 +23,56 @@ export const CheckoutTitle = styled.h1`
   margin-bottom: 20px;
 `;
 
-export const CheckoutTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
+export const PaymentMethodContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+`;
+
+export const TotalAmount = styled.div`
+  font-size: 29px;
   margin-bottom: 20px;
+  color: #239271; /* Cor verde para o valor total */
 `;
 
-export const TableHeader = styled.th`
-  padding: 10px;
-  border: 1px solid #ddd;
-  background-color: #f4f4f4;
+export const PaymentMethodLabel = styled.label`
+  font-size: 18px; /* Aumenta o tamanho do texto da label */
+  margin-right: 10px;
 `;
 
-export const TableCell = styled.td`
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: center;
+export const PaymentMethodSelect = styled.select`
+  margin-left: 10px;
+  padding: 8px;
+  font-size: 16px;
 `;
 
-export const ProductCell = styled.td`
+export const PaymentFormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  border: 1px solid #ddd;
+  margin-top: 20px;
+  width: 40%;
 `;
 
-export const ProductImage = styled.img`
-  width: 50px;
-  height: 50px;
+export const FormLabel = styled.label`
+  font-size: 16px;
+  margin-bottom: 5px;
+`;
+
+export const FormInput = styled.input`
   margin-bottom: 10px;
+  padding: 8px;
+  font-size: 16px;
+  width: 100%;
 `;
 
-export const ProductName = styled.span`
+export const FormSelect = styled.select`
+  margin-bottom: 10px;
+  padding: 8px;
   font-size: 16px;
 `;
 
 export const CheckoutButton = styled(Button)`
-  margin: 10px;
+  margin-top: 20px;
   background-color: #239271;
   color: white;
   &:hover {
