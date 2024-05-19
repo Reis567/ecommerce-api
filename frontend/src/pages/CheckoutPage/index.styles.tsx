@@ -11,10 +11,14 @@ export const CheckoutContent = styled.div`
 export const CheckoutContainer = styled.div`
   width: 80%;
   margin: auto;
+  margin-top: 80px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 `;
 
 export const CheckoutTitle = styled.h1`
