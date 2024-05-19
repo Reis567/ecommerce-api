@@ -29,10 +29,10 @@ const CheckoutPage: React.FC = () => {
   return (
     <CheckoutContent>
       <CheckoutContainer>
-        <CheckoutTitle>Checkout</CheckoutTitle>
         <ButtonContainer>
           <BackButton onClick={handleBackClick}>Voltar</BackButton>
         </ButtonContainer>
+        <CheckoutTitle>Checkout</CheckoutTitle>
         <CheckoutTable>
           <thead>
             <tr>
