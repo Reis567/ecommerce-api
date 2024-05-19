@@ -5,6 +5,7 @@ import './index.css'
 import Inicio from './pages/InicioPage'
 import CheckoutPage from './pages/CheckoutPage'
 import ShippingAddressPage from './pages/ShippingAddressPage'
+import CartPage from './pages/CarrinhoPage/Index.tsx'
 
 import{
   createBrowserRouter,RouterProvider
@@ -44,6 +45,11 @@ const router = createBrowserRouter([
         path: 'enderecos-envio', // Nova rota para a página de seleção de endereço
         element: <ShippingAddressPage />
       },
+      {
+        path: 'carrinho',
+        element: <CartPage />
+      },
+      
     ]
   }
 ]);
