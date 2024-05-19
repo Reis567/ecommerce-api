@@ -19,6 +19,22 @@ export const AddressContainer = styled.div`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 `;
 
+export const BackButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+`;
+
+export const BackButton = styled(Button)`
+  background-color: #239271;
+  color: white;
+  margin-bottom: 20px;
+
+  &:hover {
+    background-color: #1e8266;
+  }
+`;
+
 export const AddressTitle = styled.h1`
   margin-bottom: 20px;
   color: #333;
@@ -59,21 +75,6 @@ export const AddressItem = styled.li<{ selected: boolean }>`
     color: #239271;
     position: absolute;
     right: 20px;
-  }
-`;
-
-export const AddressActions = styled.div`
-  display: flex;
-  gap: 10px;
-
-  .anticon {
-    font-size: 18px;
-    cursor: pointer;
-    color: #239271;
-
-    &:hover {
-      color: #1e8266;
-    }
   }
 `;
 

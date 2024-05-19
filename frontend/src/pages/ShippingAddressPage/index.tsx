@@ -7,7 +7,8 @@ import {
   AddressItem, 
   AddButton,
   AddressContent,
-
+  BackButtonContainer,
+  BackButton,
   ContinueButton
 } from './index.styles';
 import { CheckOutlined } from '@ant-design/icons';
@@ -23,6 +24,10 @@ const ShippingAddressPage: React.FC = () => {
   const handleSelectAddress = (address: string) => {
     setSelectedAddress(address);
   };
+  const handleBack = () => {
+    navigate(-1); // Navega para a página anterior
+  };
+
 
   const handleContinue = () => {
     if (selectedAddress) {
@@ -34,6 +39,9 @@ const ShippingAddressPage: React.FC = () => {
   return (
     <AddressContent>
       <AddressContainer>
+      <BackButtonContainer>
+          <BackButton onClick={handleBack}>Voltar</BackButton>
+        </BackButtonContainer>
         <AddressTitle>Selecione o Endereço de Envio</AddressTitle>
         <AddButton onClick={handleAddAddress}>Adicionar Novo Endereço</AddButton>
         <AddressList>
