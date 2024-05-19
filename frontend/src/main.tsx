@@ -41,7 +41,7 @@ const router = createBrowserRouter([
         element: <MyAddressesPage />
       },
       {
-        path: 'shipping-address', // Nova rota para a página de seleção de endereço
+        path: 'enderecos-envio', // Nova rota para a página de seleção de endereço
         element: <ShippingAddressPage />
       },
     ]
