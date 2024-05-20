@@ -3,8 +3,13 @@
 import styled from 'styled-components';
 import { Button } from 'antd';
 
+export const FavoritesContent=styled.div`
+    width: 100%;
+    min-height: 100vh;
+`
 export const FavoritesContainer = styled.div`
   width: 80%;
+  min-height: 80vh;
   margin: auto;
   margin-top: 80px;
   padding: 20px;
