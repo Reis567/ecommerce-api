@@ -3,6 +3,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
+  FavoritesContent,
   FavoritesContainer, 
   FavoritesTitle, 
   BackButton, 
@@ -14,8 +15,7 @@ import {
   Quantity, 
   Price, 
   RemoveButton, 
-  ButtonContainer,
-  FavoritesContent
+  ButtonContainer 
 } from './index.styles.tsx';
 
 const FavoritosPage: React.FC = () => {
@@ -31,8 +31,6 @@ const FavoritosPage: React.FC = () => {
 
     return (
         <FavoritesContent>
-
-
             <FavoritesContainer>
                 <ButtonContainer>
                     <BackButton onClick={handleBackClick}>Voltar</BackButton>

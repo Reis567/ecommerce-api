@@ -3,10 +3,11 @@
 import styled from 'styled-components';
 import { Button } from 'antd';
 
-export const FavoritesContent=styled.div`
+export const FavoritesContent = styled.div`
     width: 100%;
     min-height: 100vh;
-`
+`;
+
 export const FavoritesContainer = styled.div`
   width: 80%;
   min-height: 80vh;
@@ -37,15 +38,19 @@ export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  margin-bottom: 20px;
 `;
 
 export const TableRow = styled.tr`
-  border-bottom: 1px solid #ddd;
+  &:nth-child(even) {
+    background-color: #ffffff;
+  }
 `;
 
 export const TableCell = styled.td`
   padding: 10px;
   text-align: center;
+  vertical-align: middle;
 `;
 
 export const ProductImage = styled.img`
