@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Modal, Input, Button as AntButton } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faShoppingCart, faDollarSign } from '@fortawesome/free-solid-svg-icons';
@@ -31,6 +31,7 @@ import {
 
 const ProdutoDetalhes: React.FC = () => {
   const { id, slug } = useParams<{ id: string; slug: string }>();
+  const navigate = useNavigate();
   const tags = ['Novo', 'Popular', 'Desconto', 'Limitado'];
 
   // Estado para gerenciar a imagem grande e as imagens pequenas
@@ -70,6 +71,9 @@ const ProdutoDetalhes: React.FC = () => {
       setNewComment('');
     }
   };
+  const handleBuyClick = () => {
+    navigate('/enderecos-envio'); // Substitua '/shipping-address' pela rota correta para a página de endereço de entrega
+  };
 
   return (
     <ProdContent>
@@ -102,7 +106,7 @@ const ProdutoDetalhes: React.FC = () => {
               <FontAwesomeIcon icon={faShoppingCart} /> Adicionar ao Carrinho
             </CartBtn>
 
-            <BuyBtn>
+            <BuyBtn onClick={handleBuyClick}>
               <FontAwesomeIcon icon={faDollarSign} /> Comprar
             </BuyBtn>
 
