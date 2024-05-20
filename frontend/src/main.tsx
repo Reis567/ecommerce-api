@@ -14,6 +14,7 @@ import{
 import Categoria from './pages/CategoriaPage';
 import ProdutoDetalhes from './pages/ProdutoPage';
 import MyAddressesPage from './pages/MyAddressPage/index.tsx'
+import FavoritosPage from './pages/FavoritosPage/index.tsx'
 
 
 const router = createBrowserRouter([
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: 'carrinho',
         element: <CartPage />
+      },
+      {
+        path: 'favoritos',
+        element: <FavoritosPage />
       },
       
     ]
