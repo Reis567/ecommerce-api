@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Modal, Input, Button as AntButton } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faShoppingCart, faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import PopupNotification from '../../components/PopupNotification/PopupNotification.tsx';
 import {
   ProdContent,
   ProdTitle,
@@ -71,8 +72,18 @@ const ProdutoDetalhes: React.FC = () => {
       setNewComment('');
     }
   };
+
   const handleBuyClick = () => {
     navigate('/enderecos-envio'); // Substitua '/shipping-address' pela rota correta para a página de endereço de entrega
+  };
+
+  // Estado para gerenciar o popup de notificação
+  const [popupVisible, setPopupVisible] = useState(false);
+
+  const handleAddToCart = () => {
+    // Lógica para adicionar ao carrinho
+    setPopupVisible(true);
+    setTimeout(() => setPopupVisible(false), 3000); // Oculta o popup após 3 segundos
   };
 
   return (
@@ -102,7 +113,7 @@ const ProdutoDetalhes: React.FC = () => {
           </ContPrice>
 
           <ContBtns>
-            <CartBtn>
+            <CartBtn onClick={handleAddToCart}>
               <FontAwesomeIcon icon={faShoppingCart} /> Adicionar ao Carrinho
             </CartBtn>
 
@@ -152,6 +163,7 @@ const ProdutoDetalhes: React.FC = () => {
           </div>
         </Modal>
       </ContentRight>
+      <PopupNotification message="Produto 32151 adicionado ao carrinho" visible={popupVisible} />
     </ProdContent>
   );
 };
