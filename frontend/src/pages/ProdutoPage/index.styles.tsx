@@ -181,3 +181,18 @@ export const CommentsCount = styled.span`
   font-weight: bold;
   color: #727377;
 `;
+
+export const BackButtonContainer = styled.div`
+  align-self: flex-start;
+  margin-bottom: 20px;
+`;
+
+export const BackButton = styled(Button)`
+  background-color: #239271; 
+  color: white;
+  margin-left: 20px;
+  margin-top: 20px;
+  &:hover {
+    background-color: #1e8266;
+  }
+`;

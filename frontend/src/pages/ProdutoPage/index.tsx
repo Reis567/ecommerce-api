@@ -27,7 +27,9 @@ import {
   BigImageContainer,
   RightComments,
   CommentsButton,
-  CommentsCount
+  CommentsCount,
+  BackButtonContainer,
+  BackButton
 } from './index.styles.tsx';
 
 const ProdutoDetalhes: React.FC = () => {
@@ -86,8 +88,15 @@ const ProdutoDetalhes: React.FC = () => {
     setTimeout(() => setPopupVisible(false), 3000); // Oculta o popup após 3 segundos
   };
 
+  const handleBackClick = () => {
+    navigate(-1); // Volta para a página anterior
+  };
+
   return (
     <ProdContent>
+              <BackButtonContainer>
+          <BackButton onClick={handleBackClick}>Voltar</BackButton>
+        </BackButtonContainer>
       <ContentLeft>
         <BigImageContainer>
           <ImgS src={bigImage} />
@@ -100,6 +109,7 @@ const ProdutoDetalhes: React.FC = () => {
       </ContentLeft>
 
       <ContentRight>
+
         <RightHead>
           <ProdTitle>Produto 32151</ProdTitle>
           <ProdDesc>
