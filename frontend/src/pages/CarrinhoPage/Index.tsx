@@ -1,6 +1,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContainer, CartItemsContainer, CartSummaryContainer, Table, TableCell, TableRow, ProductImage, ProductName, Quantity, Price, RemoveButton, SummaryTitle, SummaryItem, SummaryTotal, CheckoutButton } from './index.styles.tsx';
+import { CartContainer,
+     CartItemsContainer,
+      CartSummaryContainer,
+       Table,
+        TableCell,
+         TableRow,
+          ProductImage,
+           ProductName,
+            Quantity,
+             Price,
+              RemoveButton,
+               SummaryTitle,
+                SummaryItem,
+                 SummaryTotal,
+                  CheckoutButton,
+                    ProdLink, } from './index.styles.tsx';
 
 const CartPage: React.FC = () => {
     const navigate = useNavigate();
@@ -21,8 +36,10 @@ const CartPage: React.FC = () => {
                     <tbody>
                         <TableRow>
                             <TableCell>
-                                <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 1" />
-                                <ProductName>Produto 1</ProductName>
+                                <ProdLink to={`/produto/1/botafogo`}>
+                                            <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 1" />
+                                            <ProductName>Produto 2</ProductName>
+                                </ProdLink>
                             </TableCell>
                             <TableCell>
                                 <Quantity>1</Quantity>
@@ -36,8 +53,10 @@ const CartPage: React.FC = () => {
                         </TableRow>
                         <TableRow>
                             <TableCell>
-                                <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 2" />
-                                <ProductName>Produto 2</ProductName>
+                            <ProdLink to={`/produto/1/botafogo`}>
+                                            <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 1" />
+                                            <ProductName>Produto 2</ProductName>
+                                </ProdLink>
                             </TableCell>
                             <TableCell>
                                 <Quantity>2</Quantity>

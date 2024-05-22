@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 export const CartContainer = styled.div`
     display: flex;
@@ -39,7 +40,14 @@ export const TableCell = styled.td`
     text-align: center;
     vertical-align: middle;
 `;
-
+export const ProdLink = styled(Link)`
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  text-decoration: None;
+`
 export const TableRow = styled.tr`
     &:nth-child(even) {
         background-color: #f9f9f9;
