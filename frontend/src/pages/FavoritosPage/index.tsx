@@ -1,7 +1,7 @@
 // FavoritosPage.tsx
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   FavoritesContent,
   FavoritesContainer, 
@@ -15,7 +15,8 @@ import {
   Quantity, 
   Price, 
   RemoveButton, 
-  ButtonContainer 
+  ButtonContainer,
+  ProdLink
 } from './index.styles.tsx';
 
 const FavoritosPage: React.FC = () => {
@@ -39,10 +40,14 @@ const FavoritosPage: React.FC = () => {
                 <Table>
                     <tbody>
                         <TableRow>
+                           
                             <TableCell>
-                                <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 1" />
-                                <ProductName>Produto 1</ProductName>
+                                <ProdLink to={`/produto/1/botafogo`}>
+                                    <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 1" />
+                                    <ProductName>Produto 1</ProductName>
+                                </ProdLink>
                             </TableCell>
+                            
                             <TableCell>
                                 <Quantity>1</Quantity>
                             </TableCell>
@@ -54,9 +59,11 @@ const FavoritosPage: React.FC = () => {
                             </TableCell>
                         </TableRow>
                         <TableRow>
-                            <TableCell>
-                                <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 2" />
-                                <ProductName>Produto 2</ProductName>
+                        <TableCell>
+                                <ProdLink to={`/produto/1/botafogo`}>
+                                    <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 1" />
+                                    <ProductName>Produto 2</ProductName>
+                                </ProdLink>
                             </TableCell>
                             <TableCell>
                                 <Quantity>2</Quantity>

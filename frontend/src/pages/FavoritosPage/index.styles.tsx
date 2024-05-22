@@ -2,6 +2,7 @@
 
 import styled from 'styled-components';
 import { Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 export const FavoritesContent = styled.div`
     width: 100%;
@@ -25,6 +26,15 @@ export const FavoritesContainer = styled.div`
 export const FavoritesTitle = styled.h1`
   margin-bottom: 20px;
 `;
+export const ProdLink = styled(Link)`
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  text-decoration: None;
+`
+
 
 export const BackButton = styled(Button)`
   background-color: #239271; 
