@@ -15,7 +15,10 @@ import Categoria from './pages/CategoriaPage';
 import ProdutoDetalhes from './pages/ProdutoPage';
 import MyAddressesPage from './pages/MyAddressPage/index.tsx'
 import FavoritosPage from './pages/FavoritosPage/index.tsx'
-
+import LoginCliente from './pages/LoginCliente';
+import RegistroCliente from './pages/RegistroCliente';
+import LoginVendedor from './pages/LoginVendedor';
+import RegistroVendedor from './pages/RegistroVendedor';
 
 const router = createBrowserRouter([
   {
@@ -53,6 +56,22 @@ const router = createBrowserRouter([
       {
         path: 'favoritos',
         element: <FavoritosPage />
+      },
+      {
+        path: 'login-cliente', // Nova rota para Login do Cliente
+        element: <LoginCliente />
+      },
+      {
+        path: 'registro-cliente', // Nova rota para Registro do Cliente
+        element: <RegistroCliente />
+      },
+      {
+        path: 'login-vendedor', // Nova rota para Login do Vendedor
+        element: <LoginVendedor />
+      },
+      {
+        path: 'registro-vendedor', // Nova rota para Registro do Vendedor
+        element: <RegistroVendedor />
       },
       
     ]
