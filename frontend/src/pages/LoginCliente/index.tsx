@@ -23,7 +23,7 @@ const LoginCliente: React.FC = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <AuthTitle>Login Cliente</AuthTitle>
+        <AuthTitle>Login</AuthTitle>
 
         <Form.Item
           name="email"

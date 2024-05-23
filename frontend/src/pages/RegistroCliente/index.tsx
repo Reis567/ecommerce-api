@@ -23,7 +23,7 @@ const RegistroCliente: React.FC = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <AuthTitle>Registro Cliente</AuthTitle>
+        <AuthTitle>Registro</AuthTitle>
 
         <Form.Item
           name="name"
