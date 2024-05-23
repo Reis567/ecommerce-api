@@ -15,10 +15,17 @@ import { CartContainer,
                 SummaryItem,
                  SummaryTotal,
                   CheckoutButton,
-                    ProdLink, } from './index.styles.tsx';
+                    ProdLink,
+                    ButtonContainer,
+                    BackButton } from './index.styles.tsx';
 
 const CartPage: React.FC = () => {
     const navigate = useNavigate();
+
+    const handleBackClick = () => {
+        navigate(-1);
+    };
+
 
     const handleRemoveItem = (itemId: string) => {
         // Lógica para remover o item do carrinho
@@ -32,6 +39,9 @@ const CartPage: React.FC = () => {
     return (
         <CartContainer>
             <CartItemsContainer>
+                <ButtonContainer>
+                    <BackButton onClick={handleBackClick}>Voltar</BackButton>
+                </ButtonContainer>
                 <Table>
                     <tbody>
                         <TableRow>

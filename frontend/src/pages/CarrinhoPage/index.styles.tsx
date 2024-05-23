@@ -107,3 +107,18 @@ export const CheckoutButton = styled(Button)`
     align-self: center;
     margin-top: 20px;
 `;
+
+
+export const BackButton = styled(Button)`
+  background-color: #239271; 
+  color: white;
+  &:hover {
+    background-color: #1e8266;
+  }
+`;
+
+
+export const ButtonContainer = styled.div`
+  align-self: flex-start; 
+  margin-bottom: 20px;
+`;
