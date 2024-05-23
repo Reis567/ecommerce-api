@@ -78,7 +78,9 @@ export const Quantity = styled.span`
 `;
 
 export const Price = styled.span`
-  font-size: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #239271;
 `;
 
 export const RemoveButton = styled(Button)`
