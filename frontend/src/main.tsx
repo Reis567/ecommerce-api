@@ -19,6 +19,7 @@ import LoginCliente from './pages/LoginCliente';
 import RegistroCliente from './pages/RegistroCliente';
 import LoginVendedor from './pages/LoginVendedor';
 import RegistroVendedor from './pages/RegistroVendedor';
+import PainelVendedor from './pages/PainelVendedor';
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: 'registro-vendedor', // Nova rota para Registro do Vendedor
         element: <RegistroVendedor />
+      },
+      {
+        path: 'painel-vendedor', // Nova rota para Painel do Vendedor
+        element: <PainelVendedor />
       },
       
     ]
