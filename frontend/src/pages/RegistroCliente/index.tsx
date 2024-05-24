@@ -31,7 +31,12 @@ const RegistroCliente: React.FC = () => {
         >
           <Input placeholder="Nome" />
         </Form.Item>
-
+        <Form.Item
+          name="last-name"
+          rules={[{ required: true, message: 'Por favor, insira seu sobrenome!' }]}
+        >
+          <Input placeholder="Nome" />
+        </Form.Item>
         <Form.Item
           name="email"
           rules={[{ required: true, message: 'Por favor, insira seu email!' }]}
