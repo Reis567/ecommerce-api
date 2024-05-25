@@ -43,11 +43,11 @@ const router = createBrowserRouter([
         element: <CheckoutPage />
       },
       {
-        path: 'meus-enderecos', // Nova rota para a página de endereços
+        path: 'meus-enderecos',
         element: <MyAddressesPage />
       },
       {
-        path: 'enderecos-envio', // Nova rota para a página de seleção de endereço
+        path: 'enderecos-envio',
         element: <ShippingAddressPage />
       },
       {
@@ -59,23 +59,23 @@ const router = createBrowserRouter([
         element: <FavoritosPage />
       },
       {
-        path: 'login-cliente', // Nova rota para Login do Cliente
+        path: 'login-cliente',
         element: <LoginCliente />
       },
       {
-        path: 'registro-cliente', // Nova rota para Registro do Cliente
+        path: 'registro-cliente', 
         element: <RegistroCliente />
       },
       {
-        path: 'login-vendedor', // Nova rota para Login do Vendedor
+        path: 'login-vendedor',
         element: <LoginVendedor />
       },
       {
-        path: 'registro-vendedor', // Nova rota para Registro do Vendedor
+        path: 'registro-vendedor',
         element: <RegistroVendedor />
       },
       {
-        path: 'painel-vendedor', // Nova rota para Painel do Vendedor
+        path: 'painel-vendedor',
         element: <PainelVendedor />
       },
       
