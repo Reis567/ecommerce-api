@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from 'antd';
 
 
 export const ComprasContent = styled.div`
@@ -61,4 +62,16 @@ export const NomeProduto = styled.p`
 export const Status = styled.span`
   font-size: 14px;
   color: #555;
+`;
+export const NotaFiscalButton = styled(Button)`
+  background-color: #389c9c;
+  padding: 10px 20px;
+  width: auto;
+  height: auto;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
 `;

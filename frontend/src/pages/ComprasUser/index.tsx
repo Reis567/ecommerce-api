@@ -10,6 +10,7 @@ NomeProduto,
 NumeroCompra,
 Status,
 ComprasContent,
+NotaFiscalButton
 
 } from './index.styles'
 
@@ -44,6 +45,7 @@ const ComprasUsuario: React.FC = () => {
                   <NomeProduto>{compra.produto}</NomeProduto>
                   <Status>{compra.status}</Status>
                 </Detalhes>
+                <NotaFiscalButton>Nota fiscal</NotaFiscalButton>
               </Compra>
             ))}
           </ListaCompras>
