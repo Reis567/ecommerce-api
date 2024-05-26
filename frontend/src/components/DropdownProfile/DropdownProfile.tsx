@@ -10,7 +10,7 @@ const DropdownProfile: React.FC = () => {
 
   const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
     if (key === '4') {
-      navigate('/meus-enderecos'); // Navega para a página de endereços
+      navigate('enderecos/meus_enderecos'); // Navega para a página de endereços
     } else if (key === '5') { // Adicione a navegação para o dashboard
       navigate('/vendedor/dashboard');
     }
