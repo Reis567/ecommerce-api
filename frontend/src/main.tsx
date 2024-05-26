@@ -1,20 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
-import Inicio from './pages/InicioPage'
-import CheckoutPage from './pages/CheckoutPage'
-import ShippingAddressPage from './pages/ShippingAddressPage'
-import CartPage from './pages/CarrinhoPage/Index.tsx'
-
-import{
-  createBrowserRouter,RouterProvider
-}from 'react-router-dom'
-
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
+import Inicio from './pages/InicioPage';
+import CheckoutPage from './pages/CheckoutPage';
+import ShippingAddressPage from './pages/ShippingAddressPage';
+import CartPage from './pages/CarrinhoPage/Index.tsx';
 import Categoria from './pages/CategoriaPage';
 import ProdutoDetalhes from './pages/ProdutoPage';
-import MyAddressesPage from './pages/MyAddressPage/index.tsx'
-import FavoritosPage from './pages/FavoritosPage/index.tsx'
+import MyAddressesPage from './pages/MyAddressPage/index.tsx';
+import FavoritosPage from './pages/FavoritosPage/index.tsx';
 import LoginCliente from './pages/LoginCliente';
 import RegistroCliente from './pages/RegistroCliente';
 import LoginVendedor from './pages/LoginVendedor';
@@ -25,19 +20,20 @@ import ComprasUsuario from './pages/ComprasUser';
 import PedidoConcluido from './pages/PedidoConcluido';
 import PedidoRecusado from './pages/PedidoRecusado';
 
-
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
+      // Rotas principais
       {
         path: '/',
         element: <Inicio />
       },
       {
-        path: 'categoria/:id/:slug', 
+        path: 'categoria/:id/:slug',
         element: <Categoria />
       },
       {
@@ -48,14 +44,18 @@ const router = createBrowserRouter([
         path: 'checkout',
         element: <CheckoutPage />
       },
+
+      // Rotas de endereço
       {
-        path: '/enderecos/meus_enderecos',
+        path: 'enderecos/meus_enderecos',
         element: <MyAddressesPage />
       },
       {
         path: 'enderecos/envio',
         element: <ShippingAddressPage />
       },
+
+      // Rotas do perfil do cliente
       {
         path: 'perfil/carrinho',
         element: <CartPage />
@@ -65,13 +65,21 @@ const router = createBrowserRouter([
         element: <FavoritosPage />
       },
       {
+        path: 'perfil/compras',
+        element: <ComprasUsuario />
+      },
+
+      // Rotas de autenticação do cliente
+      {
         path: 'login',
         element: <LoginCliente />
       },
       {
-        path: 'register', 
+        path: 'register',
         element: <RegistroCliente />
       },
+
+      // Rotas de autenticação do vendedor
       {
         path: 'vendedor/login',
         element: <LoginVendedor />
@@ -80,6 +88,8 @@ const router = createBrowserRouter([
         path: 'vendedor/register',
         element: <RegistroVendedor />
       },
+
+      // Rotas do painel do vendedor
       {
         path: 'vendedor/dashboard',
         element: <PainelVendedor />
@@ -88,11 +98,8 @@ const router = createBrowserRouter([
         path: 'vendedor/vendas',
         element: <VendasVendedor />
       },
-      {
-        path: 'perfil/compras',
-        element: <ComprasUsuario />
-      },
 
+      // Rotas de pedido
       {
         path: 'pedido/concluido',
         element: <PedidoConcluido />
@@ -108,5 +115,5 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router}/>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

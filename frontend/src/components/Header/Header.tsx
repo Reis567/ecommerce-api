@@ -45,19 +45,30 @@ const Header: React.FC = () => {
                     <FaBars />
                 </button>
                 <NavRight>
-                <DropdownProfile/>
-                    <SLink to="/favoritos">
+                    <DropdownProfile/>
+                    <SLink to="/perfil/favoritos">
                         <FontAwesomeIcon icon={faHeart} />
                     </SLink>
-                    <SLink to="/carrinho">
+                    <SLink to="/perfil/carrinho">
                         <FontAwesomeIcon icon={faCartShopping} />
                     </SLink>
-                    <SLink to="/compras">
-                       Compras
+                    <SLink to="/perfil/compras">
+                        Compras
                     </SLink>
-
-
-
+                    {/*
+                    <SLink to="/login">
+                        Login
+                    </SLink>
+                    <SLink to="/register">
+                        Registrar
+                    </SLink>
+                    <SLink to="/vendedor/login">
+                        Login Vendedor
+                    </SLink>
+                    <SLink to="/vendedor/register">
+                        Registrar Vendedor
+                    </SLink>
+                    */}
                 </NavRight>
             </NavContainer>
         </HeaderCont>
