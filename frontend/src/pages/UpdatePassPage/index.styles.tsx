@@ -12,8 +12,8 @@ export const Content = styled.div`
 
 export const Container = styled.div`
   width: 100%;
-  max-width: 400px;
-  padding: 20px;
+  max-width: 500px;
+  padding: 30px;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -21,7 +21,7 @@ export const Container = styled.div`
 
 export const Header = styled.h1`
   margin-bottom: 20px;
-  font-size: 24px;
+  font-size: 54px;
   text-align: center;
 `;
 
@@ -33,14 +33,16 @@ export const Form = styled.form`
 
 export const Input = styled.input`
   padding: 10px;
-  font-size: 16px;
+  font-size: 23px;
   border: 1px solid #ddd;
   border-radius: 4px;
 `;
 
 export const AntdButton = styled(Button)`
+height: auto;
+width: auto;
   padding: 10px;
-  font-size: 16px;
+  font-size: 26px;
   background-color: #4caf50;
   color: white;
   border: none;
