@@ -11,7 +11,7 @@ export const ComprasContent = styled.div`
 
 export const Container = styled.div`
   padding: 20px;
-  width: 55%;
+  width: 65%;
 `;
 
 export const Header = styled.h1`
@@ -83,4 +83,11 @@ export const Acoes = styled.div`
   justify-content: space-between;
   gap: 10px;
   height: 100%;
+`;
+export const BackButton = styled(Button)`
+  background-color: #239271; 
+  color: white;
+  &:hover {
+    background-color: #1e8266;
+  }
 `;
