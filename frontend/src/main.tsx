@@ -22,6 +22,7 @@ import PedidoRecusado from './pages/PedidoRecusado';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProfilePage from './pages/PerfilPage/index.tsx';
+import UpdatePasswordPage from './pages/UpdatePassPage/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
       {
         path: 'perfil/compras',
         element: <ComprasUsuario />
+      },
+      {
+        path: 'perfil/mudar_senha',
+        element: <UpdatePasswordPage />
       },
 
       // Rotas de autenticação do cliente
