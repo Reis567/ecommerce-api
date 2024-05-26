@@ -13,6 +13,8 @@ const DropdownProfile: React.FC = () => {
       navigate('enderecos/meus_enderecos'); // Navega para a página de endereços
     } else if (key === '5') { // Adicione a navegação para o dashboard
       navigate('/vendedor/dashboard');
+    }else if (key === '1') { // Adicione a navegação para o dashboard
+      navigate('/perfil');
     }
   };
 
