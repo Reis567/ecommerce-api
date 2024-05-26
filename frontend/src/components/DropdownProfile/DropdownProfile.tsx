@@ -1,10 +1,9 @@
-// src/components/DropdownProfile/index.tsx
 import React from 'react';
-import {  UserOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import { UserOutlined, ArrowRightOutlined, DashboardOutlined } from '@ant-design/icons'; // Import the Dashboard icon
 import type { MenuProps } from 'antd';
 import { Dropdown } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { SpaceSty ,DownStyled} from './DropdownProfile.styles';
+import { SpaceSty, DownStyled } from './DropdownProfile.styles';
 
 const DropdownProfile: React.FC = () => {
   const navigate = useNavigate();
@@ -12,6 +11,8 @@ const DropdownProfile: React.FC = () => {
   const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
     if (key === '4') {
       navigate('/meus-enderecos'); // Navega para a página de endereços
+    } else if (key === '5') { // Adicione a navegação para o dashboard
+      navigate('/vendedor/dashboard');
     }
   };
 
@@ -34,13 +35,19 @@ const DropdownProfile: React.FC = () => {
       label: 'Meus Endereços',
     },
     {
-      key: '5',
+      key: '5', // Chave única para o dashboard
+      label: 'Dashboard',
+      icon: <DashboardOutlined />, // Ícone do dashboard
+    },
+    {
+      key: '6',
       label: (
         <span>
           Sair <ArrowRightOutlined />
         </span>
       ),
     },
+
   ];
 
   return (
