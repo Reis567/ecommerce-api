@@ -1,59 +1,57 @@
 import React from 'react';
-
 import {
-Container,
-Detalhes,
-Header,
-Imagem,
-ListaVendas,
-NomeProduto,
-NotaFiscalButton,
-NumeroVenda,
-Status,
-Venda,
-ComprasContent
-
-
-} from './index.styles'
-
+  Compra,
+  Container,
+  Header,
+  Imagem,
+  ListaCompras,
+  ValorCP,
+  NumeroCompra,
+  Status,
+  ComprasContent,
+  NotaFiscalButton,
+  Informacoes,
+  Acoes
+} from './index.styles';
 
 const VendasVendedor: React.FC = () => {
   const vendas = [
     {
-      numero: '12345',
-      produto: 'Produto A',
+      numero: '54321',
+      produto: 'Produto C',
       imagem: 'https://via.placeholder.com/150',
-      status: 'Enviado'
+      valor: '200,00',
+      status: 'Entregue'
     },
     {
-      numero: '12346',
-      produto: 'Produto B',
+      numero: '54322',
+      produto: 'Produto D',
       imagem: 'https://via.placeholder.com/150',
-      status: 'Em Processamento'
+      valor: '250,00',
+      status: 'Aguardando Pagamento'
     }
   ];
 
   return (
-  <ComprasContent>
-
-
-        <Container>
-          <Header>Minhas Vendas</Header>
-          <ListaVendas>
-            {vendas.map((venda, index) => (
-              <Venda key={index}>
+    <ComprasContent>
+      <Container>
+        <Header>Minhas Vendas</Header>
+        <ListaCompras>
+          {vendas.map((venda, index) => (
+            <Compra key={index}>
+              <Informacoes>
+                <NumeroCompra>#{venda.numero}</NumeroCompra>
                 <Imagem src={venda.imagem} alt={venda.produto} />
-                <Detalhes>
-                  <NumeroVenda>Venda: {venda.numero}</NumeroVenda>
-                  <NomeProduto>{venda.produto}</NomeProduto>
-                  <Status>{venda.status}</Status>
-                </Detalhes>
+                <ValorCP>R$ {venda.valor}</ValorCP>
+              </Informacoes>
+              <Acoes>
                 <NotaFiscalButton>Nota Fiscal</NotaFiscalButton>
-              </Venda>
-            ))}
-          </ListaVendas>
-        </Container>
-
+                <Status>{venda.status}</Status>
+              </Acoes>
+            </Compra>
+          ))}
+        </ListaCompras>
+      </Container>
     </ComprasContent>
   );
 };

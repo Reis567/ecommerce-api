@@ -2,18 +2,16 @@ import styled from 'styled-components';
 import { Button } from 'antd';
 
 export const ComprasContent = styled.div`
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`
-
-
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export const Container = styled.div`
   padding: 20px;
-  width: 70%;
+  width: 55%;
 `;
 
 export const Header = styled.h1`
@@ -22,21 +20,25 @@ export const Header = styled.h1`
   font-size: 50px;
 `;
 
-
-
-export const ListaVendas = styled.div`
+export const ListaCompras = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
 `;
 
-export const Venda = styled.div`
+export const Compra = styled.div`
   display: flex;
-  gap: 20px;
-  align-items: center;
-  padding: 10px;
+  justify-content: space-between;
+  padding: 25px;
   border: 1px solid #ddd;
   border-radius: 10px;
+  height: 300px;
+`;
+
+export const Informacoes = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 export const Imagem = styled.img`
@@ -45,24 +47,20 @@ export const Imagem = styled.img`
   object-fit: cover;
 `;
 
-export const Detalhes = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const NumeroVenda = styled.h2`
-  font-size: 18px;
+export const NumeroCompra = styled.h2`
+  font-size: 26px;
   margin: 0;
 `;
 
-export const NomeProduto = styled.p`
-  font-size: 16px;
+export const ValorCP = styled.p`
+  font-size: 26px;
   margin: 5px 0;
 `;
 
 export const Status = styled.span`
-  font-size: 14px;
   color: #555;
+  font-size: 28px;
+  font-weight: bolder;
 `;
 
 export const NotaFiscalButton = styled(Button)`
@@ -72,8 +70,17 @@ export const NotaFiscalButton = styled(Button)`
   height: auto;
   color: white;
   border: none;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  font-size: 20px;
+  &:hover {
+    background-color: #2a7b7b;
+  }
+`;
 
+export const Acoes = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  height: 100%;
 `;
