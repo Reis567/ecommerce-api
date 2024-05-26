@@ -15,27 +15,26 @@ export const IconContainer = styled.div`
 `;
 
 export const ErrorIcon = styled.div`
-  font-size: 100px;
-  color: red;
-  border: 5px solid red;
-  border-radius: 50%;
-  padding: 20px;
+  font-size: 90px;
+  color: white;
+  border-radius: 30%;
+  padding: 25px 45px;
+  background-color: #830202;
 `;
 
 export const Message = styled.h1`
-  font-size: 24px;
+  font-size: 54px;
   margin-bottom: 20px;
 `;
 
 
 
 export const RetryButton = styled(Button)`
-  background-color: red;
+  background-color: #830202;
+  padding: 10px 20px;
+  width: auto;
+  height: auto;
   color: white;
   border: none;
-  font-size: 16px;
-  padding: 10px 20px;
-  &:hover {
-    background-color: darkred;
-  }
+  font-size: 20px;
 `;
