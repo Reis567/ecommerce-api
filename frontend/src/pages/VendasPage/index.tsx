@@ -11,6 +11,7 @@ NotaFiscalButton,
 NumeroVenda,
 Status,
 Venda,
+ComprasContent
 
 
 } from './index.styles'
@@ -33,22 +34,27 @@ const VendasVendedor: React.FC = () => {
   ];
 
   return (
-    <Container>
-      <Header>Minhas Vendas</Header>
-      <ListaVendas>
-        {vendas.map((venda, index) => (
-          <Venda key={index}>
-            <Imagem src={venda.imagem} alt={venda.produto} />
-            <Detalhes>
-              <NumeroVenda>Venda: {venda.numero}</NumeroVenda>
-              <NomeProduto>{venda.produto}</NomeProduto>
-              <Status>{venda.status}</Status>
-            </Detalhes>
-            <NotaFiscalButton>Nota Fiscal</NotaFiscalButton>
-          </Venda>
-        ))}
-      </ListaVendas>
-    </Container>
+  <ComprasContent>
+
+
+        <Container>
+          <Header>Minhas Vendas</Header>
+          <ListaVendas>
+            {vendas.map((venda, index) => (
+              <Venda key={index}>
+                <Imagem src={venda.imagem} alt={venda.produto} />
+                <Detalhes>
+                  <NumeroVenda>Venda: {venda.numero}</NumeroVenda>
+                  <NomeProduto>{venda.produto}</NomeProduto>
+                  <Status>{venda.status}</Status>
+                </Detalhes>
+                <NotaFiscalButton>Nota Fiscal</NotaFiscalButton>
+              </Venda>
+            ))}
+          </ListaVendas>
+        </Container>
+
+    </ComprasContent>
   );
 };
 

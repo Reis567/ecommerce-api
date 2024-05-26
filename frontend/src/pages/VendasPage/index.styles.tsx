@@ -1,17 +1,28 @@
 import styled from 'styled-components';
 import { Button } from 'antd';
 
+export const ComprasContent = styled.div`
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
 
 
 
 export const Container = styled.div`
   padding: 20px;
+  width: 70%;
 `;
 
 export const Header = styled.h1`
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
+  font-size: 50px;
 `;
+
+
 
 export const ListaVendas = styled.div`
   display: flex;
@@ -55,13 +66,14 @@ export const Status = styled.span`
 `;
 
 export const NotaFiscalButton = styled(Button)`
-  background-color: #239271;
+  background-color: #389c9c;
+  padding: 10px 20px;
+  width: auto;
+  height: auto;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  &:hover {
-    background-color: #1e8266;
-  }
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
 `;

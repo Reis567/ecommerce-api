@@ -1,16 +1,25 @@
 import styled from 'styled-components';
 
 
+export const ComprasContent = styled.div`
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
 
 
 
 export const Container = styled.div`
   padding: 20px;
+  width: 70%;
 `;
 
 export const Header = styled.h1`
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
+  font-size: 50px;
 `;
 
 export const ListaCompras = styled.div`

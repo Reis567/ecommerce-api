@@ -9,6 +9,7 @@ ListaCompras,
 NomeProduto,
 NumeroCompra,
 Status,
+ComprasContent,
 
 } from './index.styles'
 
@@ -31,21 +32,24 @@ const ComprasUsuario: React.FC = () => {
   ];
 
   return (
-    <Container>
-      <Header>Minhas Compras</Header>
-      <ListaCompras>
-        {compras.map((compra, index) => (
-          <Compra key={index}>
-            <Imagem src={compra.imagem} alt={compra.produto} />
-            <Detalhes>
-              <NumeroCompra>Compra: {compra.numero}</NumeroCompra>
-              <NomeProduto>{compra.produto}</NomeProduto>
-              <Status>{compra.status}</Status>
-            </Detalhes>
-          </Compra>
-        ))}
-      </ListaCompras>
-    </Container>
+    <ComprasContent>
+        <Container>
+          <Header>Minhas Compras</Header>
+          <ListaCompras>
+            {compras.map((compra, index) => (
+              <Compra key={index}>
+                <Imagem src={compra.imagem} alt={compra.produto} />
+                <Detalhes>
+                  <NumeroCompra>Compra: {compra.numero}</NumeroCompra>
+                  <NomeProduto>{compra.produto}</NomeProduto>
+                  <Status>{compra.status}</Status>
+                </Detalhes>
+              </Compra>
+            ))}
+          </ListaCompras>
+        </Container>
+    </ComprasContent>
+
   );
 };
 
