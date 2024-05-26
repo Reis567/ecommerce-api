@@ -15,27 +15,27 @@ export const IconContainer = styled.div`
 `;
 
 export const SuccessIcon = styled.div`
-  font-size: 100px;
-  color: green;
-  border: 5px solid green;
-  border-radius: 50%;
-  padding: 20px;
+  font-size: 90px;
+  color: white;
+  border-radius: 30%;
+  padding: 25px 45px;
+  background-color: #2a7b7b;
 `;
 
 export const Message = styled.h1`
-  font-size: 24px;
+  font-size: 54px;
   margin-bottom: 20px;
 `;
 
 export const HomeButton = styled(Button)`
   background-color: #389c9c;
+  padding: 10px 20px;
+  width: auto;
+  height: auto;
   color: white;
   border: none;
-  font-size: 16px;
-  padding: 10px 20px;
-  &:hover {
-    background-color: #2a7b7b;
-  }
+  font-size: 20px;
+  
 `;
 
 
