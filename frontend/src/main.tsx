@@ -49,49 +49,50 @@ const router = createBrowserRouter([
         element: <CheckoutPage />
       },
       {
-        path: 'meus-enderecos',
+        path: '/enderecos/meus_enderecos',
         element: <MyAddressesPage />
       },
       {
-        path: 'enderecos-envio',
+        path: 'enderecos/envio',
         element: <ShippingAddressPage />
       },
       {
-        path: 'carrinho',
+        path: 'perfil/carrinho',
         element: <CartPage />
       },
       {
-        path: 'favoritos',
+        path: 'perfil/favoritos',
         element: <FavoritosPage />
       },
       {
-        path: 'login-cliente',
+        path: 'login',
         element: <LoginCliente />
       },
       {
-        path: 'registro-cliente', 
+        path: 'register', 
         element: <RegistroCliente />
       },
       {
-        path: 'login-vendedor',
+        path: 'vendedor/login',
         element: <LoginVendedor />
       },
       {
-        path: 'registro-vendedor',
+        path: 'vendedor/register',
         element: <RegistroVendedor />
       },
       {
-        path: 'painel-vendedor',
+        path: 'vendedor/dashboard',
         element: <PainelVendedor />
       },
       {
-        path: 'compras',
-        element: <ComprasUsuario />
-      },
-      {
-        path: 'vendas',
+        path: 'vendedor/vendas',
         element: <VendasVendedor />
       },
+      {
+        path: 'perfil/compras',
+        element: <ComprasUsuario />
+      },
+
       {
         path: 'pedido/concluido',
         element: <PedidoConcluido />
