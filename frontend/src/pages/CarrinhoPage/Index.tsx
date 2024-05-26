@@ -83,7 +83,7 @@ const CartPage: React.FC = () => {
                 </Table>
             </CartItemsContainer>
             <CartSummaryContainer>
-                <SummaryTitle>Resumo do Pedido</SummaryTitle>
+                <SummaryTitle>Resumo do Carrinho</SummaryTitle>
                 <SummaryItem>
                     <span>Total do Carrinho:</span>
                     <span>R$ 299,97</span>
