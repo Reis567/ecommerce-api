@@ -21,6 +21,7 @@ import PedidoConcluido from './pages/PedidoConcluido';
 import PedidoRecusado from './pages/PedidoRecusado';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ProfilePage from './pages/PerfilPage/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       },
 
       // Rotas do perfil do cliente
+      {
+        path:'perfil',
+        element:<ProfilePage/>
+      },
       {
         path: 'perfil/carrinho',
         element: <CartPage />
