@@ -22,7 +22,8 @@ import RegistroVendedor from './pages/RegistroVendedor';
 import PainelVendedor from './pages/PainelVendedor';
 import VendasVendedor from './pages/VendasPage';
 import ComprasUsuario from './pages/ComprasUser';
-
+import PedidoConcluido from './pages/PedidoConcluido';
+import PedidoRecusado from './pages/PedidoRecusado';
 
 
 
@@ -90,6 +91,14 @@ const router = createBrowserRouter([
       {
         path: 'vendas',
         element: <VendasVendedor />
+      },
+      {
+        path: 'pedido/concluido',
+        element: <PedidoConcluido />
+      },
+      {
+        path: 'pedido/recusado',
+        element: <PedidoRecusado />
       },
     ]
   }
