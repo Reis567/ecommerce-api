@@ -20,6 +20,11 @@ import RegistroCliente from './pages/RegistroCliente';
 import LoginVendedor from './pages/LoginVendedor';
 import RegistroVendedor from './pages/RegistroVendedor';
 import PainelVendedor from './pages/PainelVendedor';
+import VendasVendedor from './pages/VendasPage';
+import ComprasUsuario from './pages/ComprasUser';
+
+
+
 
 const router = createBrowserRouter([
   {
@@ -78,7 +83,14 @@ const router = createBrowserRouter([
         path: 'painel-vendedor',
         element: <PainelVendedor />
       },
-      
+      {
+        path: 'compras',
+        element: <ComprasUsuario />
+      },
+      {
+        path: 'vendas',
+        element: <VendasVendedor />
+      },
     ]
   }
 ]);
