@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Container, Header, Form, Input, AntdButton, Content } from './index.styles';
+import { useNavigate } from 'react-router-dom';
+import { Container, Header, Form, Input, AntdButton, Content,BackButton } from './index.styles';
 
 const UpdatePasswordPage: React.FC = () => {
+    const navigate = useNavigate();
+
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -16,6 +19,7 @@ const UpdatePasswordPage: React.FC = () => {
 
   return (
     <Content>
+      <BackButton onClick={() => navigate(-1)}>Voltar</BackButton>
       <Header>Atualizar Senha</Header>
       <Container>
         <Form onSubmit={handleSubmit}>

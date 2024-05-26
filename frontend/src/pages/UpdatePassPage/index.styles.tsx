@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Button } from 'antd';
 
 export const Content = styled.div`
+position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -60,4 +61,16 @@ width: auto;
     font-size: inherit;
     padding: 0;
   }
+`;
+
+export const BackButton = styled(Button)`
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  background-color: #239271;
+  color: white;
+  height: auto;
+width: auto;
+font-size: 20px;
+
 `;
