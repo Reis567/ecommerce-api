@@ -41,7 +41,9 @@ export const Input = styled.input`
 
 export const AntdButton = styled(Button)`
   padding: 10px;
-  font-size: 16px;
+  height: auto;
+  width: auto;
+  font-size: 26px;
   background-color: #4caf50;
   color: white;
   border: none;

@@ -23,6 +23,7 @@ import PedidoRecusado from './pages/PedidoRecusado';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProfilePage from './pages/PerfilPage/index.tsx';
 import UpdatePasswordPage from './pages/UpdatePassPage/index.tsx';
+import AddAddressPage from './pages/AddEndereco/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: 'enderecos/envio',
         element: <ShippingAddressPage />
+      },
+      {
+        path: 'enderecos/adicionar',
+        element: <AddAddressPage />
       },
 
       // Rotas do perfil do cliente
