@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Button } from 'antd';
 
 export const Content = styled.div`
+position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -12,29 +13,31 @@ export const Content = styled.div`
 
 export const Container = styled.div`
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  
 `;
 
 export const Header = styled.h1`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  font-size: 24px;
+  font-size: 54px;
 `;
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 15px;
+
 `;
 
 export const Input = styled.input`
-  padding: 10px;
-  font-size: 16px;
+  padding: 15px;
+  font-size: 26px;
   border: 1px solid #ddd;
   border-radius: 4px;
 `;
@@ -51,5 +54,19 @@ export const AntdButton = styled(Button)`
   text-align: center;
   &:hover {
     background-color: #45a049;
+  }
+`;
+
+
+export const BackButton = styled(Button)`
+position: absolute;
+top: 80px;
+left: 80px;
+height: auto;
+font-size: 26px;
+  background-color: #239271; 
+  color: white;
+  &:hover {
+    background-color: #1e8266;
   }
 `;

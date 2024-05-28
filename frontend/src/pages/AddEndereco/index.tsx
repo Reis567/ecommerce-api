@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Header, Form, Input, AntdButton, Content } from './index.styles';
+import { Container, Header, Form, Input, AntdButton, Content,BackButton } from './index.styles';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 
@@ -12,8 +12,12 @@ const AddAddressPage: React.FC = () => {
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
 
-  const navigate = useNavigate();
 
+
+  const navigate = useNavigate();
+  const handleBackClick = () => {
+    navigate(-1);
+};
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Lógica para adicionar o endereço
@@ -28,8 +32,10 @@ const AddAddressPage: React.FC = () => {
 
   return (
     <Content>
+      <BackButton onClick={handleBackClick}>
+        Voltar
+      </BackButton>
       <Header>
-        <ArrowLeftOutlined onClick={() => navigate(-1)} style={{ cursor: 'pointer', marginRight: '10px' }} />
         Adicionar Endereço
       </Header>
       <Container>
