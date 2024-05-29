@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserOutlined, ArrowRightOutlined, DashboardOutlined } from '@ant-design/icons'; // Import the Dashboard icon
+import { UserOutlined, ArrowRightOutlined, DashboardOutlined,SkinOutlined } from '@ant-design/icons'; // Import the Dashboard icon
 import type { MenuProps } from 'antd';
 import { Dropdown } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -42,7 +42,12 @@ const DropdownProfile: React.FC = () => {
       icon: <DashboardOutlined />, // Ícone do dashboard
     },
     {
-      key: '6',
+      key: '6', 
+      label: 'Meus produtos',
+      icon: <SkinOutlined />,
+    },
+    {
+      key: '7',
       label: (
         <span>
           Sair <ArrowRightOutlined />
