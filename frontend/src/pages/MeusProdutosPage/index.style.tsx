@@ -50,6 +50,19 @@ export const PaginationContainer = styled.div`
 
 export const AddProductButton = styled(Button)`
   margin-bottom: 20px;
+  height: auto;
+  font-size: 26px;
+  align-self: flex-end;
+  background-color: #4caf50;
+  color: white;
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+export const BackButton = styled(Button)`
+  height: auto;
+  font-size: 26px;
+  margin-bottom: 20px;
   align-self: flex-end;
   background-color: #4caf50;
   color: white;
