@@ -16,6 +16,9 @@ const DropdownProfile: React.FC = () => {
     }else if (key === '1') { // Adicione a navegação para o dashboard
       navigate('/perfil');
     }
+    else if (key === '6') { // Adicione a navegação para o dashboard
+      navigate('/vendedor/meus-produtos');
+    }
   };
 
   const items: MenuProps['items'] = [
