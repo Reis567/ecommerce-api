@@ -25,33 +25,37 @@ const MyProductsPage: React.FC = () => {
   );
 
   return (
-    <Container>
-      <Header>Meus Produtos</Header>
-      <AddProductButton type="primary">Adicionar Produto</AddProductButton>
-      <FilterContainer>
-        <Input 
-          placeholder="Filtrar produtos..." 
-          value={filter} 
-          onChange={(e) => setFilter(e.target.value)} 
-        />
-      </FilterContainer>
-      <ProductList>
-        {paginatedProducts.map(product => (
-          <ProductItem key={product.id}>
-            <h3>{product.name}</h3>
-            <p>{product.description}</p>
-          </ProductItem>
-        ))}
-      </ProductList>
-      <PaginationContainer>
-        <Pagination 
-          current={currentPage} 
-          total={filteredProducts.length} 
-          pageSize={productsPerPage} 
-          onChange={page => setCurrentPage(page)}
-        />
-      </PaginationContainer>
-    </Container>
+    <Content>
+
+
+      <Container>
+        <Header>Meus Produtos</Header>
+        <AddProductButton type="primary">Adicionar Produto</AddProductButton>
+        <FilterContainer>
+          <Input 
+            placeholder="Filtrar produtos..." 
+            value={filter} 
+            onChange={(e) => setFilter(e.target.value)} 
+          />
+        </FilterContainer>
+        <ProductList>
+          {paginatedProducts.map(product => (
+            <ProductItem key={product.id}>
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+            </ProductItem>
+          ))}
+        </ProductList>
+        <PaginationContainer>
+          <Pagination 
+            current={currentPage} 
+            total={filteredProducts.length} 
+            pageSize={productsPerPage} 
+            onChange={page => setCurrentPage(page)}
+          />
+        </PaginationContainer>
+      </Container>
+    </Content>
   );
 };
 

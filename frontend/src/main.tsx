@@ -24,6 +24,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProfilePage from './pages/PerfilPage/index.tsx';
 import UpdatePasswordPage from './pages/UpdatePassPage/index.tsx';
 import AddAddressPage from './pages/AddEndereco/index.tsx';
+import MyProductsPage from './pages/MeusProdutosPage/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -112,6 +113,10 @@ const router = createBrowserRouter([
       {
         path: 'vendedor/vendas',
         element: <VendasVendedor />
+      },
+      {
+        path: 'vendedor/meus-produtos',
+        element: <MyProductsPage />
       },
 
       // Rotas de pedido
