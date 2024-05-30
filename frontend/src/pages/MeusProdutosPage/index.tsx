@@ -6,7 +6,8 @@ import { Container,
      ProductItem , 
      PaginationContainer,
       AddProductButton
-    ,Content } from './index.style';
+    ,Content,
+    BackButton } from './index.style';
 import { Input, Pagination } from 'antd';
 
 const MyProductsPage: React.FC = () => {
@@ -36,6 +37,7 @@ const MyProductsPage: React.FC = () => {
 
 
       <Container>
+        <BackButton>Voltar</BackButton>
         <Header>Meus Produtos</Header>
         <AddProductButton type="primary">Adicionar Produto</AddProductButton>
         <FilterContainer>

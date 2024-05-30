@@ -53,20 +53,16 @@ export const AddProductButton = styled(Button)`
   height: auto;
   font-size: 26px;
   align-self: flex-end;
-  background-color: #4caf50;
-  color: white;
-  &:hover {
-    background-color: #45a049;
-  }
+  background-color: #faa757;
+  color: black;
+  font-weight: bolder;
+
 `;
 export const BackButton = styled(Button)`
   height: auto;
   font-size: 26px;
   margin-bottom: 20px;
-  align-self: flex-end;
+  align-self: flex-start;
   background-color: #4caf50;
   color: white;
-  &:hover {
-    background-color: #45a049;
-  }
 `;
