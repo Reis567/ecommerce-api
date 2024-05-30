@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { Button } from 'antd';
 
+export const Content = styled.div`
+  min-height: 100vh;
+`
+
+
 export const Container = styled.div`
   padding: 20px;
   display: flex;
@@ -12,7 +17,7 @@ export const Container = styled.div`
 
 export const Header = styled.h1`
   margin-bottom: 20px;
-  font-size: 36px;
+  font-size: 66px;
 `;
 
 export const FilterContainer = styled.div`
@@ -23,14 +28,17 @@ export const FilterContainer = styled.div`
 
 export const ProductList = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-wrap:wrap;
   gap: 15px;
   width: 100%;
-  max-width: 600px;
+  justify-content: center;
+
+
 `;
 
 export const ProductItem = styled.div`
-  padding: 15px;
+  padding: 16px;
+  width: 200px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;

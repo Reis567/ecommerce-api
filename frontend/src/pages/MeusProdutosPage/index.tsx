@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Container, Header, FilterContainer, ProductList, ProductItem, PaginationContainer, AddProductButton } from './index.style';
+import { Container,
+   Header,
+    FilterContainer,
+     ProductList, 
+     ProductItem , 
+     PaginationContainer,
+      AddProductButton
+    ,Content } from './index.style';
 import { Input, Pagination } from 'antd';
 
 const MyProductsPage: React.FC = () => {
@@ -7,7 +14,7 @@ const MyProductsPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   // Dummy data for products
-  const products = Array.from({ length: 20 }, (_, i) => ({
+  const products = Array.from({ length: 70 }, (_, i) => ({
     id: i + 1,
     name: `Product ${i + 1}`,
     description: `Description for product ${i + 1}`,
@@ -18,7 +25,7 @@ const MyProductsPage: React.FC = () => {
     product.description.toLowerCase().includes(filter.toLowerCase())
   );
 
-  const productsPerPage = 5;
+  const productsPerPage = 34;
   const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * productsPerPage, 
     currentPage * productsPerPage
