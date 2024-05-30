@@ -9,6 +9,7 @@ import { Container,
     ,Content,
     BackButton } from './index.style';
 import { Input, Pagination } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const MyProductsPage: React.FC = () => {
   const [filter, setFilter] = useState('');
@@ -31,13 +32,20 @@ const MyProductsPage: React.FC = () => {
     (currentPage - 1) * productsPerPage, 
     currentPage * productsPerPage
   );
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+      navigate(-1);
+  };
 
   return (
     <Content>
 
 
       <Container>
-        <BackButton>Voltar</BackButton>
+
+
+                <BackButton onClick={handleBackClick}>Voltar</BackButton>
         <Header>Meus Produtos</Header>
         <AddProductButton type="primary">Adicionar Produto</AddProductButton>
         <FilterContainer>
