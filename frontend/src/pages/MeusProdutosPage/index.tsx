@@ -27,7 +27,7 @@ const MyProductsPage: React.FC = () => {
     product.description.toLowerCase().includes(filter.toLowerCase())
   );
 
-  const productsPerPage = 34;
+  const productsPerPage =40;
   const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * productsPerPage, 
     currentPage * productsPerPage
