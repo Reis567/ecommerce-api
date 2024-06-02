@@ -3,8 +3,7 @@ import { Button } from 'antd';
 
 export const Content = styled.div`
   min-height: 100vh;
-`
-
+`;
 
 export const Container = styled.div`
   padding: 20px;
@@ -28,12 +27,10 @@ export const FilterContainer = styled.div`
 
 export const ProductList = styled.div`
   display: flex;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
   gap: 15px;
   width: 100%;
   justify-content: center;
-
-
 `;
 
 export const ProductItem = styled.div`
@@ -42,6 +39,9 @@ export const ProductItem = styled.div`
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const PaginationContainer = styled.div`
@@ -56,8 +56,8 @@ export const AddProductButton = styled(Button)`
   background-color: #faa757;
   color: black;
   font-weight: bolder;
-
 `;
+
 export const BackButton = styled(Button)`
   height: auto;
   font-size: 26px;
@@ -65,4 +65,30 @@ export const BackButton = styled(Button)`
   align-self: flex-start;
   background-color: #4caf50;
   color: white;
+`;
+
+export const ProductActions = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+`;
+
+export const EditButton = styled(Button)`
+  height: auto;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
+export const DeleteButton = styled(Button)`
+  height: auto;
+  font-size: 16px;
+  background-color: #f44336;
+  color: white;
+  &:hover {
+    background-color: #e53935;
+  }
 `;
