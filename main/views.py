@@ -133,8 +133,6 @@ class VendorDestroyView(generics.DestroyAPIView):
 
 class ProductListView(generics.ListAPIView):
     queryset = Product.objects.all()
-    for product in queryset:
-        print(str(product))
         
     serializer_class = ProductSerializer
 

@@ -15,9 +15,8 @@ const RegistroCliente: React.FC = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: values.email,  // Assuming username is email
+          username: values.email,  // Supondo que o username seja o email
           password: values.password,
-          email: values.email,
           first_name: values.name,
           last_name: values.last_name
         }),

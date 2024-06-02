@@ -37,6 +37,7 @@ class CustomTokenRefreshView(TokenRefreshView):
         return super().post(request, *args, **kwargs)
 
 
+
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -44,7 +45,7 @@ class UserRegistrationView(generics.CreateAPIView):
     
     @extend_schema(
         description='Register a new user',
-        tags=['Auth',],
+        tags=['Auth'],
         request=UserSerializer,
         responses={201: UserSerializer},
     )
