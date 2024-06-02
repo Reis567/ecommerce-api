@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-bejhc2!+f-($3*)_*xuk9q*ye1=1wsna10asa=khp6-86p^&#(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'rest_framework.authtoken',
     'Auth',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -183,3 +186,11 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=30), 
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),   
 }
+
+
+CORS_ALLOW_ALL_ORIGINS = True  # Permite todas as origens, ideal para desenvolvimento
+# Use esta configuração para ambientes de produção
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+# ]
