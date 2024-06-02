@@ -25,6 +25,7 @@ import ProfilePage from './pages/PerfilPage/index.tsx';
 import UpdatePasswordPage from './pages/UpdatePassPage/index.tsx';
 import AddAddressPage from './pages/AddEndereco/index.tsx';
 import MyProductsPage from './pages/MeusProdutosPage/index.tsx';
+import AddProductPage from './pages/AddProdPage/index.tsx';
 
 const router = createBrowserRouter([
   {
@@ -117,6 +118,10 @@ const router = createBrowserRouter([
       {
         path: 'vendedor/meus-produtos',
         element: <MyProductsPage />
+      },
+      {
+        path: 'vendedor/meus-produtos/adicionar-produto',
+        element: <AddProductPage />
       },
 
       // Rotas de pedido
