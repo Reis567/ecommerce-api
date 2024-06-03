@@ -6,9 +6,32 @@ import { AuthContainer, AuthForm, AuthTitle, AuthButton } from './index.styles';
 const LoginCliente: React.FC = () => {
   const navigate = useNavigate();
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     console.log('Success:', values);
-    navigate('/'); // Redireciona para a página inicial ou qualquer outra página
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/auth/token/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: values.email,  // Supondo que o username seja o email
+          password: values.password,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('accessToken', data.access);
+        localStorage.setItem('refreshToken', data.refresh);
+        navigate('/'); // Redireciona para a página inicial ou qualquer outra página
+      } else {
+        const errorData = await response.json();
+        console.error('Failed:', errorData);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
