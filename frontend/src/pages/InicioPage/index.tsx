@@ -10,14 +10,23 @@ const Inicio: React.FC = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
+      const token = localStorage.getItem('accessToken'); // Recuperar o token do localStorage
+      console.log(token);
+
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/v1/products/');
+        const response = await fetch('http://127.0.0.1:8000/api/v1/products/', {
+          headers: {
+            'Authorization': `Bearer ${token}` // Adicionar o token no cabeçalho da requisição
+          }
+        });
+
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
+
         const data = await response.json();
-        if (Array.isArray(data)) {
-          setProducts(data);
+        if (data && Array.isArray(data.results)) {
+          setProducts(data.results);
         } else {
           throw new Error('Data format is not correct');
         }
@@ -47,7 +56,7 @@ const Inicio: React.FC = () => {
           <ProductCard
             key={product.id}
             idProduto={product.id.toString()}
-            imageUrl={product.imageUrl}
+            imageUrl={product.imageUrl || 'defaultImageUrl.jpg'} // Adicione uma imagem padrão se `imageUrl` não estiver disponível
             title={product.title}
             description={product.detail}
             price={product.price}
@@ -56,6 +65,6 @@ const Inicio: React.FC = () => {
       </ProdDiv>
     </Container>
   );
-}
+};
 
 export default Inicio;
