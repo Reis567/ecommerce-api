@@ -72,3 +72,19 @@ export const SpnSty = styled.span`
     font-weight: bold;
     padding: 10px;
 `
+
+
+
+export const PaginationButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  &:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+  }
+`;
