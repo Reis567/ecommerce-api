@@ -67,16 +67,19 @@ const Inicio: React.FC = () => {
     <Container>
       <CarouselHome />
       <ProdDiv>
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            idProduto={product.id.toString()}
-            imageUrl={product.imageUrl || 'defaultImageUrl.jpg'} // Adicione uma imagem padrão se `imageUrl` não estiver disponível
-            title={product.title}
-            description={product.detail}
-            price={product.price}
-          />
-        ))}
+        {products.map((product) => {
+          const imageUrl = product.photo_urls.length > 0 ? product.photo_urls[0] : 'defaultImageUrl.jpg';
+          return (
+            <ProductCard
+              key={product.id}
+              idProduto={product.id.toString()}
+              imageUrl={imageUrl}
+              title={product.title}
+              description={product.detail}
+              price={product.price}
+            />
+          );
+        })}
       </ProdDiv>
       <div>
         <PaginationButton onClick={handlePreviousPage} disabled={!previousPage}>
