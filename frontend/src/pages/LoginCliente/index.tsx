@@ -24,7 +24,8 @@ const LoginCliente: React.FC = () => {
         const data = await response.json();
         localStorage.setItem('accessToken', data.access);
         localStorage.setItem('refreshToken', data.refresh);
-        navigate('/'); // Redireciona para a página inicial ou qualquer outra página
+        navigate('/');
+        location.reload() // Redireciona para a página inicial ou qualquer outra página
       } else {
         const errorData = await response.json();
         console.error('Failed:', errorData);

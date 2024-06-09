@@ -11,13 +11,9 @@ const Inicio: React.FC = () => {
   const [previousPage, setPreviousPage] = useState<string | null>(null);
 
   const fetchProducts = async (url: string) => {
-    const token = localStorage.getItem('accessToken'); // Recuperar o token do localStorage
-
     try {
       const response = await fetch(url, {
-        headers: {
-          'Authorization': `Bearer ${token}` // Adicionar o token no cabeçalho da requisição
-        }
+
       });
 
       if (!response.ok) {

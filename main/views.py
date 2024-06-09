@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from django.contrib.auth.models import User
+
 
 from rest_framework import generics,permissions
-from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import *
@@ -133,7 +132,7 @@ class VendorDestroyView(generics.DestroyAPIView):
 
 class ProductListView(generics.ListAPIView):
     queryset = Product.objects.all()
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.AllowAny]
     serializer_class = ProductSerializer
 
     @extend_schema(
@@ -152,7 +151,7 @@ class ProductListView(generics.ListAPIView):
 class ProductDetailView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductDetailSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.AllowAny]
 
     @extend_schema(
         description='Retrieve a product',
@@ -170,7 +169,7 @@ class ProductDetailView(generics.RetrieveAPIView):
 class ProductCategoryListView(generics.ListAPIView):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.AllowAny]
 
     @extend_schema(
         description='List all product categories',
@@ -188,7 +187,7 @@ class ProductCategoryListView(generics.ListAPIView):
 class ProductCategoryDetailView(generics.RetrieveAPIView):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
-    permission_classes = [AllowAny]
+    permission_classes = [permissions.AllowAny]
 
     @extend_schema(
         description='Retrieve a product category',
