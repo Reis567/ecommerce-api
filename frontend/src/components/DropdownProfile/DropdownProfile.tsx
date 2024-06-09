@@ -26,7 +26,7 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({ username }) => {
 
   const items: MenuProps['items'] = [
     {
-      label: 'User',
+      label:username,
       key: '1',
       icon: <UserOutlined />,
     },
