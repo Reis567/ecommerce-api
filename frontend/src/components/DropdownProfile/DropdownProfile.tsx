@@ -1,22 +1,25 @@
 import React from 'react';
-import { UserOutlined, ArrowRightOutlined, DashboardOutlined,SkinOutlined } from '@ant-design/icons'; // Import the Dashboard icon
+import { UserOutlined, ArrowRightOutlined, DashboardOutlined, SkinOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Dropdown } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { SpaceSty, DownStyled } from './DropdownProfile.styles';
 
-const DropdownProfile: React.FC = () => {
+interface DropdownProfileProps {
+  username: string;
+}
+
+const DropdownProfile: React.FC<DropdownProfileProps> = ({ username }) => {
   const navigate = useNavigate();
 
   const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
     if (key === '4') {
-      navigate('/enderecos/meus_enderecos'); // Navega para a página de endereços
-    } else if (key === '5') { // Adicione a navegação para o dashboard
+      navigate('/enderecos/meus_enderecos');
+    } else if (key === '5') {
       navigate('/vendedor/dashboard');
-    }else if (key === '1') { // Adicione a navegação para o dashboard
+    } else if (key === '1') {
       navigate('/perfil');
-    }
-    else if (key === '6') { // Adicione a navegação para o dashboard
+    } else if (key === '6') {
       navigate('/vendedor/meus-produtos');
     }
   };
@@ -40,12 +43,12 @@ const DropdownProfile: React.FC = () => {
       label: 'Meus Endereços',
     },
     {
-      key: '5', // Chave única para o dashboard
+      key: '5',
       label: 'Dashboard',
-      icon: <DashboardOutlined />, // Ícone do dashboard
+      icon: <DashboardOutlined />,
     },
     {
-      key: '6', 
+      key: '6',
       label: 'Meus produtos',
       icon: <SkinOutlined />,
     },
@@ -57,7 +60,6 @@ const DropdownProfile: React.FC = () => {
         </span>
       ),
     },
-
   ];
 
   return (
@@ -65,7 +67,7 @@ const DropdownProfile: React.FC = () => {
       <a onClick={(e) => e.preventDefault()}>
         <SpaceSty>
           <UserOutlined />
-          Usuário
+          {username}
           <DownStyled />
         </SpaceSty>
       </a>

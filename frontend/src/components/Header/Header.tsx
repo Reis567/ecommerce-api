@@ -47,68 +47,59 @@ const Header: React.FC = () => {
 
     return (
         <HeaderCont>
-            <SearchContainer>
-                <NavTitle>
-                    <Link to="/">
-                        Negócio fechado
-                    </Link>
-                </NavTitle>
-                <SearchBar />
-            </SearchContainer>
+          <SearchContainer>
+            <NavTitle>
+              <Link to="/">
+                Negócio fechado
+              </Link>
+            </NavTitle>
+            <SearchBar />
+          </SearchContainer>
+    
+          <NavContainer>
+            <Nav isOpen={isNavOpen} as="div">
+              <DropPerso />
+              <SLink to="/ofertas" onClick={toggleNavBar}>Ofertas</SLink>
+              <SLink to="/supermercado" onClick={toggleNavBar}>Supermercado</SLink>
+              <SLink to="/moda" onClick={toggleNavBar}>Moda</SLink>
+              <SLink to="/historico" onClick={toggleNavBar}>Histórico</SLink>
+              <SLink to="/eletronicos" onClick={toggleNavBar}>Eletrônicos</SLink>
+              <SLink to="/contato" onClick={toggleNavBar}>Ajuda</SLink>
+    
+              <button className='nav-btn nav-close-btn' onClick={toggleNavBar}>
+                <FaTimes />
+              </button>
+            </Nav>
+    
+            <button className='nav-btn' onClick={toggleNavBar}>
+              <FaBars />
+            </button>
+            <NavRight>
+              {userData ? (
+                <>
+                  <DropdownProfile username={userData.username} />
 
-            <NavContainer>
-                <Nav isOpen={isNavOpen} as="div">
-                    <DropPerso />
-                    <SLink to="/ofertas" onClick={toggleNavBar}>Ofertas</SLink>
-                    <SLink to="/supermercado" onClick={toggleNavBar}>Supermercado</SLink>
-                    <SLink to="/moda" onClick={toggleNavBar}>Moda</SLink>
-                    <SLink to="/historico" onClick={toggleNavBar}>Histórico</SLink>
-                    <SLink to="/eletronicos" onClick={toggleNavBar}>Eletrônicos</SLink>
-                    <SLink to="/contato" onClick={toggleNavBar}>Ajuda</SLink>
-
-                    <button className='nav-btn nav-close-btn' onClick={toggleNavBar}>
-                        <FaTimes />
-                    </button>
-                </Nav>
-
-                <button className='nav-btn' onClick={toggleNavBar}>
-                    <FaBars />
-                </button>
-                <NavRight>
-                    {isAuthenticated ? (
-                        <>
-                            <DropdownProfile />
-                            <span>{userData?.username}</span>
-                            <SLink to="/perfil/favoritos">
-                                <FontAwesomeIcon icon={faHeart} />
-                            </SLink>
-                            <SLink to="/perfil/carrinho">
-                                <FontAwesomeIcon icon={faCartShopping} />
-                            </SLink>
-                            <SLink to="/perfil/compras">
-                                Compras
-                            </SLink>
-                        </>
-                    ) : (
-                        <>
-                            <SLink to="/login">
-                                Login
-                            </SLink>
-                            <SLink to="/register">
-                                Registrar
-                            </SLink>
-                            <SLink to="/vendedor/login">
-                                Login Vendedor
-                            </SLink>
-                            <SLink to="/vendedor/register">
-                                Registrar Vendedor
-                            </SLink>
-                        </>
-                    )}
-                </NavRight>
-            </NavContainer>
+                </>
+              ) : (
+                <>
+                  <SLink to="/login">Login</SLink>
+                  <SLink to="/register">Registrar</SLink>
+                </>
+              )}
+              <SLink to="/perfil/favoritos">
+                <FontAwesomeIcon icon={faHeart} />
+              </SLink>
+              <SLink to="/perfil/carrinho">
+                <FontAwesomeIcon icon={faCartShopping} />
+              </SLink>
+              <SLink to="/perfil/compras">
+                Compras
+              </SLink>
+            </NavRight>
+          </NavContainer>
         </HeaderCont>
-    );
-};
-
-export default Header;
+      );
+    };
+    
+    export default Header;
+    
