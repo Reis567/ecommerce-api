@@ -68,7 +68,7 @@ const Inicio: React.FC = () => {
       <CarouselHome />
       <ProdDiv>
         {products.map((product) => {
-          const imageUrl = product.photo_urls.length > 0 ? product.photo_urls[0] : 'defaultImageUrl.jpg';
+          const imageUrl = product.photo_urls && product.photo_urls.length > 0 ? product.photo_urls[0] : 'defaultImageUrl.jpg';
           return (
             <ProductCard
               key={product.id}

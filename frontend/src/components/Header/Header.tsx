@@ -26,7 +26,7 @@ const Header: React.FC = () => {
 
     const fetchUserData = async (token: string) => {
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/v1/user/', {
+            const response = await fetch('http://127.0.0.1:8000/api/auth/user/', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
