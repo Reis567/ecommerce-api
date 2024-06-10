@@ -32,14 +32,32 @@ class VendorDestroySerializer(serializers.ModelSerializer):
         depth = 1
 
 
-
 class ProductSerializer(serializers.ModelSerializer):
     condition = serializers.PrimaryKeyRelatedField(queryset=ProductCondition.objects.all())
     product_rating = serializers.StringRelatedField(many=True, read_only=True)
+    photo_urls = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ['id', 'price', 'title','vendor','category', 'detail', 'condition', 'product_rating']
+        fields = [
+            'id', 'price', 'title', 'vendor', 'category', 'detail', 
+            'condition', 'product_rating', 'photo_product1', 'photo_product2', 
+            'photo_product3', 'photo_product4', 'photo_product5', 'photo_urls'
+        ]
+
+    def get_photo_urls(self, obj):
+        urls = []
+        if obj.photo_product1:
+            urls.append(obj.photo_product1.url)
+        if obj.photo_product2:
+            urls.append(obj.photo_product2.url)
+        if obj.photo_product3:
+            urls.append(obj.photo_product3.url)
+        if obj.photo_product4:
+            urls.append(obj.photo_product4.url)
+        if obj.photo_product5:
+            urls.append(obj.photo_product5.url)
+        return urls
 
 class ProductRatingSerializer(serializers.ModelSerializer):
     class Meta:

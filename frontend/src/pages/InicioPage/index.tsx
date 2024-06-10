@@ -12,9 +12,7 @@ const Inicio: React.FC = () => {
 
   const fetchProducts = async (url: string) => {
     try {
-      const response = await fetch(url, {
-
-      });
+      const response = await fetch(url);
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -64,7 +62,10 @@ const Inicio: React.FC = () => {
       <CarouselHome />
       <ProdDiv>
         {products.map((product) => {
-          const imageUrl = product.photo_urls && product.photo_urls.length > 0 ? product.photo_urls[0] : 'https://static.vecteezy.com/ti/vetor-gratis/p1/3586230-sem-foto-sinal-adesivo-com-texto-inscricao-no-fundo-isolado-gratis-vetor.jpg';
+          const baseUrl = 'http://127.0.0.1:8000'; // URL base do backend
+          const imageUrl = product.photo_urls && product.photo_urls.length > 0
+            ? `${baseUrl}${product.photo_urls[0]}`
+            : 'https://static.vecteezy.com/ti/vetor-gratis/p1/3586230-sem-foto-sinal-adesivo-com-texto-inscricao-no-fundo-isolado-gratis-vetor.jpg';
           return (
             <ProductCard
               key={product.id}
