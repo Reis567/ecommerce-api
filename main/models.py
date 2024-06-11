@@ -114,3 +114,13 @@ class ProductRating(models.Model):
     add_time=models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f'{self.rating} Stars - {self.reviews} '
+    
+class ProductComment(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'Comment by {self.user.username} on {self.product.title}'
