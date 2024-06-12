@@ -297,4 +297,13 @@ class CustomerAddressViewSet(ModelViewSet):
 class ProductRatingViewSet(ModelViewSet):
     serializer_class = ProductRatingSerializer
     queryset = ProductRating.objects.all()
+
+
+class ProductCommentViewSet(viewsets.ModelViewSet):
+    queryset = ProductComment.objects.all()
+    serializer_class = ProductCommentSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
     
