@@ -98,3 +98,9 @@ class CustomerAddressSerializer(serializers.ModelSerializer):
         fields = ['id','customer','address']
         depth = 1
         
+class ProductCommentSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()  # Mostrar o nome do usuário no lugar do ID
+
+    class Meta:
+        model = ProductComment
+        fields = ['id', 'product', 'user', 'comment', 'created_at', 'updated_at']
