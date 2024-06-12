@@ -32,8 +32,10 @@ class VendorDestroySerializer(serializers.ModelSerializer):
         depth = 1
 
 
+
 class ProductSerializer(serializers.ModelSerializer):
     condition = serializers.PrimaryKeyRelatedField(queryset=ProductCondition.objects.all())
+    comments = serializers.ProductCommentSerializer(many=True, read_only=True)
     product_rating = serializers.StringRelatedField(many=True, read_only=True)
     photo_urls = serializers.SerializerMethodField()
 
@@ -41,8 +43,10 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = [
             'id', 'price', 'title', 'vendor', 'category', 'detail', 
-            'condition', 'product_rating', 'photo_product1', 'photo_product2', 
-            'photo_product3', 'photo_product4', 'photo_product5', 'photo_urls'
+            'condition', 'comments', 'product_rating', 
+            'photo_product1', 'photo_product2', 
+            'photo_product3', 'photo_product4', 
+            'photo_product5', 'photo_urls'
         ]
 
     def get_photo_urls(self, obj):

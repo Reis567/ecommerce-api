@@ -299,7 +299,7 @@ class ProductRatingViewSet(ModelViewSet):
     queryset = ProductRating.objects.all()
 
 
-class ProductCommentViewSet(viewsets.ModelViewSet):
+class ProductCommentViewSet(ModelViewSet):
     queryset = ProductComment.objects.all()
     serializer_class = ProductCommentSerializer
     permission_classes = [permissions.IsAuthenticated]
