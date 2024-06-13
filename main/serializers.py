@@ -30,12 +30,16 @@ class VendorDestroySerializer(serializers.ModelSerializer):
         model = Vendor
         fields = ['id', 'user', 'address']
         depth = 1
+class ProductCommentSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()  # Mostrar o nome do usuário no lugar do ID
 
-
+    class Meta:
+        model = ProductComment
+        fields = ['id', 'product', 'user', 'comment', 'created_at', 'updated_at']
 
 class ProductSerializer(serializers.ModelSerializer):
     condition = serializers.PrimaryKeyRelatedField(queryset=ProductCondition.objects.all())
-    comments = serializers.ProductCommentSerializer(many=True, read_only=True)
+    comments = ProductCommentSerializer(many=True, read_only=True)
     product_rating = serializers.StringRelatedField(many=True, read_only=True)
     photo_urls = serializers.SerializerMethodField()
 
@@ -102,9 +106,3 @@ class CustomerAddressSerializer(serializers.ModelSerializer):
         fields = ['id','customer','address']
         depth = 1
         
-class ProductCommentSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()  # Mostrar o nome do usuário no lugar do ID
-
-    class Meta:
-        model = ProductComment
-        fields = ['id', 'product', 'user', 'comment', 'created_at', 'updated_at']
