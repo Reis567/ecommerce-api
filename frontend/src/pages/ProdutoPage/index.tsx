@@ -29,7 +29,8 @@ import {
   CommentsButton,
   CommentsCount,
   BackButtonContainer,
-  BackButton
+  BackButton,
+  StarsContainer
 } from './index.styles.tsx';
 
 const ProdutoDetalhes: React.FC = () => {

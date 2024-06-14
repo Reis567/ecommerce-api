@@ -196,3 +196,7 @@ export const BackButton = styled(Button)`
     background-color: #1e8266;
   }
 `;
+export const StarsContainer = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+`;
