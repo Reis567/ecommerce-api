@@ -40,6 +40,12 @@ class ProductCondition(models.Model):
         return self.get_condition_display()
 
 
+class ProductTag(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
 
 class Product(models.Model):
     category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True)
@@ -53,7 +59,7 @@ class Product(models.Model):
     photo_product3 = models.ImageField(upload_to='products/', blank=True, null=True)
     photo_product4 = models.ImageField(upload_to='products/', blank=True, null=True)
     photo_product5 = models.ImageField(upload_to='products/', blank=True, null=True)
-
+    tags = models.ManyToManyField(ProductTag, related_name='products', blank=True)
 
     created_at = models.DateTimeField(default=timezone.now) 
     updated_at = models.DateTimeField(auto_now=True)
