@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Modal, Input, Button as AntButton } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faShoppingCart, faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faShoppingCart, faDollarSign,faStar } from '@fortawesome/free-solid-svg-icons';
 import PopupNotification from '../../components/PopupNotification/PopupNotification.tsx';
 import {
   ProdContent,
@@ -110,7 +110,12 @@ const ProdutoDetalhes: React.FC = () => {
 
       <ContentRight>
 
-        <RightHead>
+      <RightHead>
+          <StarsContainer>
+            {[...Array(5)].map((_, index) => (
+              <FontAwesomeIcon key={index} icon={faStar} style={{ color: '#FFD700', marginRight: '5px' }} />
+            ))}
+          </StarsContainer>
           <ProdTitle>Produto 32151</ProdTitle>
           <ProdDesc>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit, laborum debitis. Natus quos assumenda vero qui voluptatum pariatur impedit saepe corrupti magnam ut eligendi, consectetur ipsum suscipit quod facilis. Quisquam.
