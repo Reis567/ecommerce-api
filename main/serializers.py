@@ -42,6 +42,7 @@ class ProductSerializer(serializers.ModelSerializer):
     comments = ProductCommentSerializer(many=True, read_only=True)
     product_rating = serializers.StringRelatedField(many=True, read_only=True)
     photo_urls = serializers.SerializerMethodField()
+    is_favorite = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
@@ -50,7 +51,8 @@ class ProductSerializer(serializers.ModelSerializer):
             'condition', 'comments', 'product_rating', 
             'photo_product1', 'photo_product2', 
             'photo_product3', 'photo_product4', 
-            'photo_product5', 'photo_urls'
+            'photo_product5', 'photo_urls',
+            'is_favorite'
         ]
 
     def get_photo_urls(self, obj):
@@ -67,6 +69,11 @@ class ProductSerializer(serializers.ModelSerializer):
             urls.append(obj.photo_product5.url)
         return urls
 
+    def get_is_favorite(self, obj):
+        user = self.context.get('request').user
+        if user.is_authenticated:
+            return Favorite.objects.filter(user=user, product=obj).exists()
+        return False
 class ProductRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductRating
@@ -106,3 +113,10 @@ class CustomerAddressSerializer(serializers.ModelSerializer):
         fields = ['id','customer','address']
         depth = 1
         
+class FavoriteSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()  # Mostra o nome do usuário em vez do ID
+    product = serializers.StringRelatedField()  # Mostra o título do produto em vez do ID
+
+    class Meta:
+        model = Favorite
+        fields = ['id', 'user', 'product', 'created_at']
