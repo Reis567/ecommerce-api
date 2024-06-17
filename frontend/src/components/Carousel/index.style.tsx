@@ -15,7 +15,6 @@ export const StyledCarousel = styled(Carousel)`
     pointer-events: none;
   }
 
-
   .slick-dots {
     position: absolute;
     bottom: 20px;
@@ -56,9 +55,10 @@ export const StyledCarousel = styled(Carousel)`
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 200px;
+    height: 300px; // Aumente a altura conforme necessário
     color: #fff;
     background: #2a2a2a;
     position: relative;
@@ -66,7 +66,33 @@ export const StyledCarousel = styled(Carousel)`
   }
 `;
 
-export const Content = styled.h3`
+export const CarouselItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%; // Adicione esta linha para garantir que o item ocupe toda a largura do carrossel
+`;
+
+export const Image = styled.img`
+  width: 100%;
+  max-height: 200px; // Limite o tamanho da imagem
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 10px; // Espaço entre a imagem e o título
+`;
+
+export const Title = styled.h3`
   position: relative;
   z-index: 1;
+  color: #fff;
+  margin: 0;
+`;
+
+export const Price = styled.p`
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  margin: 0;
 `;

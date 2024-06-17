@@ -70,9 +70,11 @@ class ProductSerializer(serializers.ModelSerializer):
         return urls
 
     def get_is_favorite(self, obj):
-        user = self.context.get('request').user
-        if user.is_authenticated:
-            return Favorite.objects.filter(user=user, product=obj).exists()
+        request = self.context.get('request')
+        if request and hasattr(request, 'user'):
+            user = request.user
+            if user.is_authenticated:
+                return Favorite.objects.filter(user=user, product=obj).exists()
         return False
 class ProductRatingSerializer(serializers.ModelSerializer):
     class Meta:

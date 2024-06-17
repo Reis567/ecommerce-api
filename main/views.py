@@ -11,6 +11,7 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExampl
 from .serializers import *
 from .models import *
 from django.http import JsonResponse
+from django.db.models import Count
 
 def welcome(request):
     return JsonResponse({'message': 'Bem-vindo à API!'})
