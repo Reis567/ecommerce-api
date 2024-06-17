@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from rest_framework.decorators import api_view
 
 from rest_framework import generics,permissions
 from rest_framework.response import Response
@@ -306,4 +306,14 @@ class ProductCommentViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+
+
     
+@api_view(['GET'])
+def most_favorited_products(request):
+    # Query para obter os 4 produtos mais favoritados
+    products = Product.objects.annotate(favorite_count=Count('favorite')).order_by('-favorite_count')[:4]
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)
