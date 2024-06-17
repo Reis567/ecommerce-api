@@ -58,7 +58,7 @@ export const StyledCarousel = styled(Carousel)`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 300px; // Aumente a altura conforme necessário
+    height: 500px; // Aumente a altura conforme necessário
     color: #fff;
     background: #2a2a2a;
     position: relative;
@@ -77,7 +77,7 @@ export const CarouselItem = styled.div`
 
 export const Image = styled.img`
   width: 100%;
-  max-height: 200px; // Limite o tamanho da imagem
+  max-height: 400px; // Limite o tamanho da imagem
   object-fit: cover;
   border-radius: 15px;
   margin-bottom: 10px; // Espaço entre a imagem e o título
