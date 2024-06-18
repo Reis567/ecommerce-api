@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from rest_framework.decorators import api_view
-
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics,permissions
 from rest_framework.response import Response
 from rest_framework import status
@@ -318,3 +318,23 @@ def most_favorited_products(request):
     products = Product.objects.annotate(favorite_count=Count('favorite')).order_by('-favorite_count')[:4]
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def toggle_favorite(request, product_id):
+    user = request.user
+    try:
+        product = Product.objects.get(id=product_id)
+    except Product.DoesNotExist:
+        return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    favorite, created = Favorite.objects.get_or_create(user=user, product=product)
+
+    if not created:
+        # If the favorite already exists, remove it
+        favorite.delete()
+        return Response({'message': 'Product removed from favorites'}, status=status.HTTP_200_OK)
+
+    return Response({'message': 'Product added to favorites'}, status=status.HTTP_201_CREATED)
