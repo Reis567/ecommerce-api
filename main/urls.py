@@ -18,6 +18,7 @@ urlpatterns = [
     path('products/', ProductListView.as_view(), name='product-list'),
     path('products/<int:pk>/', ProductDetailView.as_view(), name='product-detail'),
     path('most-favorited-products/', most_favorited_products, name='most-favorited-products'),
+    path('toggle-favorite/<int:product_id>/', toggle_favorite, name='toggle-favorite'),
 
     ##Products category
     path('categories/', ProductCategoryListView.as_view(), name='category-list'),
