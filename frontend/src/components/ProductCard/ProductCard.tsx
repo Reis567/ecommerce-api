@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faCartPlus, faDollarSign } from '@fortawesome/free-solid-svg-icons';
@@ -14,11 +14,43 @@ interface ProductCardProps {
   description: string;
   price: string;
   idProduto: string;
+  initialFavorite: boolean; // Novo prop para estado inicial do favorito
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, description, price, idProduto }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, description, price, idProduto, initialFavorite }) => {
   const navigate = useNavigate();
   const [popupVisible, setPopupVisible] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(initialFavorite);
+
+  useEffect(() => {
+    setIsFavorite(initialFavorite);
+  }, [initialFavorite]);
+
+  const toggleFavorite = async () => {
+    const token = localStorage.getItem('accessToken');// Supondo que você armazena o token no localStorage
+    if (!token) {
+      console.error('Usuário não autenticado');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/v1/toggle-favorite/${idProduto}/`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        setIsFavorite((prev) => !prev);
+      } else {
+        console.error('Failed to toggle favorite');
+      }
+    } catch (error) {
+      console.error('Failed to toggle favorite', error);
+    }
+  };
 
   const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -41,7 +73,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, description,
         style={{ width: 240 }}
         cover={<img alt={title} src={imageUrl} />}
         actions={[
-          <Button key="favorite" icon={<FontAwesomeIcon icon={faHeart} style={{ zIndex: 2 }} />} onClick={handleButtonClick} />,
+          <Button 
+            key="favorite" 
+            icon={<FontAwesomeIcon icon={faHeart} style={{ color: isFavorite ? 'red' : 'gray'}} />} 
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleFavorite(); }} 
+          />,
           <Button key="cart" icon={<FontAwesomeIcon icon={faCartPlus} style={{ zIndex: 2 }} />} onClick={handleButtonClick} />,
           <Button key="buy" icon={<FontAwesomeIcon icon={faDollarSign} style={{ zIndex: 2 }} />} onClick={handleNavigateToAddress} />
         ]}
