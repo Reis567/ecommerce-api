@@ -14,6 +14,10 @@ urlpatterns = [
     path('vendor/<int:pk>/update/', VendorUpdateView.as_view(), name='vendor-update'),
     path('vendor/<int:pk>/delete/', VendorDestroyView.as_view(), name='vendor-delete'),
 
+
+    ##User
+    path('user-favorites/', user_favorites, name='user-favorites'),
+
     #Products
     path('products/', ProductListView.as_view(), name='product-list'),
     path('products/<int:pk>/', ProductDetailView.as_view(), name='product-detail'),
