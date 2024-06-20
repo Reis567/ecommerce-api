@@ -1,86 +1,119 @@
-// FavoritosPage.tsx
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { 
+import {
   FavoritesContent,
-  FavoritesContainer, 
-  FavoritesTitle, 
-  BackButton, 
-  Table, 
-  TableRow, 
-  TableCell, 
-  ProductImage, 
-  ProductName, 
-  Quantity, 
-  Price, 
-  RemoveButton, 
+  FavoritesContainer,
+  FavoritesTitle,
+  BackButton,
+  Table,
+  TableRow,
+  TableCell,
+  ProductImage,
+  ProductName,
+  Quantity,
+  Price,
+  RemoveButton,
   ButtonContainer,
   ProdLink
 } from './index.styles.tsx';
 
 const FavoritosPage: React.FC = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [favorites, setFavorites] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-    const handleBackClick = () => {
-        navigate(-1);
-    };
+  const fetchFavorites = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/user-favorites/', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}` // Ajuste para o seu método de autenticação
+        }
+      });
 
-    const handleRemoveItem = (id: string) => {
-        // Lógica para remover o item dos favoritos
-    };
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
 
-    return (
-        <FavoritesContent>
-            <FavoritesContainer>
-                <ButtonContainer>
-                    <BackButton onClick={handleBackClick}>Voltar</BackButton>
-                </ButtonContainer>
-                <FavoritesTitle>Favoritos</FavoritesTitle>
-                <Table>
-                    <tbody>
-                        <TableRow>
-                           
-                            <TableCell>
-                                <ProdLink to={`/produto/1/botafogo`}>
-                                    <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 1" />
-                                    <ProductName>Produto 1</ProductName>
-                                </ProdLink>
-                            </TableCell>
-                            
-                            <TableCell>
-                                <Quantity>1</Quantity>
-                            </TableCell>
-                            <TableCell>
-                                <Price>R$ 99,99</Price>
-                            </TableCell>
-                            <TableCell>
-                                <RemoveButton onClick={() => handleRemoveItem('1')}>X</RemoveButton>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                        <TableCell>
-                                <ProdLink to={`/produto/1/botafogo`}>
-                                    <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 1" />
-                                    <ProductName>Produto 2</ProductName>
-                                </ProdLink>
-                            </TableCell>
-                            <TableCell>
-                                <Quantity>2</Quantity>
-                            </TableCell>
-                            <TableCell>
-                                <Price>R$ 199,98</Price>
-                            </TableCell>
-                            <TableCell>
-                                <RemoveButton onClick={() => handleRemoveItem('2')}>X</RemoveButton>
-                            </TableCell>
-                        </TableRow>
-                        {/* Adicione mais itens conforme necessário */}
-                    </tbody>
-                </Table>
-            </FavoritesContainer>
-        </FavoritesContent>
-    );
+      const data = await response.json();
+      setFavorites(data);
+    } catch (error) {
+      setError('Failed to fetch favorite products');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRemoveItem = async (productId: string) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/v1/toggle-favorite/${productId}/`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`, // Ajuste para o seu método de autenticação
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      // Remover o item da lista localmente após a remoção bem-sucedida
+      setFavorites(favorites.filter(favorite => favorite.id !== productId));
+    } catch (error) {
+      setError('Failed to remove favorite product');
+    }
+  };
+
+  useEffect(() => {
+    fetchFavorites();
+  }, []);
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  return (
+    <FavoritesContent>
+      <FavoritesContainer>
+        <ButtonContainer>
+          <BackButton onClick={handleBackClick}>Voltar</BackButton>
+        </ButtonContainer>
+        <FavoritesTitle>Favoritos</FavoritesTitle>
+        <Table>
+          <tbody>
+            {favorites.map(favorite => (
+              <TableRow key={favorite.id}>
+                <TableCell>
+                  <ProdLink to={`/produto/${favorite.id}/botafogo`}>
+                    <ProductImage src={favorite.photo_urls[0] || 'https://via.placeholder.com/150'} alt={favorite.title} />
+                    <ProductName>{favorite.title}</ProductName>
+                  </ProdLink>
+                </TableCell>
+                <TableCell>
+                  <Quantity>1</Quantity>
+                </TableCell>
+                <TableCell>
+                  <Price>R$ {favorite.price}</Price>
+                </TableCell>
+                <TableCell>
+                  <RemoveButton onClick={() => handleRemoveItem(favorite.id)}>X</RemoveButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </tbody>
+        </Table>
+      </FavoritesContainer>
+    </FavoritesContent>
+  );
 };
 
 export default FavoritosPage;
