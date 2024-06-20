@@ -338,3 +338,13 @@ def toggle_favorite(request, product_id):
         return Response({'message': 'Product removed from favorites'}, status=status.HTTP_200_OK)
 
     return Response({'message': 'Product added to favorites'}, status=status.HTTP_201_CREATED)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def user_favorites(request):
+    user = request.user
+    favorites = Favorite.objects.filter(user=user)
+    products = [favorite.product for favorite in favorites]
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)
