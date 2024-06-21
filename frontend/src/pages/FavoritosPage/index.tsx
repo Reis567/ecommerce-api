@@ -24,10 +24,15 @@ const FavoritosPage: React.FC = () => {
   const [error, setError] = useState('');
 
   const fetchFavorites = async () => {
+    const token = localStorage.getItem('accessToken');// Supondo que você armazena o token no localStorage
+    if (!token) {
+      console.error('Usuário não autenticado');
+      return;
+    }
     try {
       const response = await fetch('http://127.0.0.1:8000/api/v1/user-favorites/', {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}` // Ajuste para o seu método de autenticação
+          Authorization: `Bearer ${token}`
         }
       });
 
@@ -97,9 +102,6 @@ const FavoritosPage: React.FC = () => {
                     <ProductImage src={favorite.photo_urls[0] || 'https://via.placeholder.com/150'} alt={favorite.title} />
                     <ProductName>{favorite.title}</ProductName>
                   </ProdLink>
-                </TableCell>
-                <TableCell>
-                  <Quantity>1</Quantity>
                 </TableCell>
                 <TableCell>
                   <Price>R$ {favorite.price}</Price>
