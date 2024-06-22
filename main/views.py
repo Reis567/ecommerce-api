@@ -348,3 +348,17 @@ def user_favorites(request):
     products = [favorite.product for favorite in favorites]
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data)
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def is_favorite(request, product_id):
+    user = request.user
+    try:
+        product = Product.objects.get(id=product_id)
+    except Product.DoesNotExist:
+        return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    is_favorite = Favorite.objects.filter(user=user, product=product).exists()
+    return Response({'is_favorite': is_favorite})
