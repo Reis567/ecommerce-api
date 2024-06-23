@@ -10,7 +10,6 @@ import {
   TableCell,
   ProductImage,
   ProductName,
-  Quantity,
   Price,
   RemoveButton,
   ButtonContainer,
@@ -24,7 +23,7 @@ const FavoritosPage: React.FC = () => {
   const [error, setError] = useState('');
 
   const fetchFavorites = async () => {
-    const token = localStorage.getItem('accessToken');// Supondo que você armazena o token no localStorage
+    const token = localStorage.getItem('accessToken'); // Supondo que você armazena o token no localStorage
     if (!token) {
       console.error('Usuário não autenticado');
       return;
@@ -50,11 +49,16 @@ const FavoritosPage: React.FC = () => {
   };
 
   const handleRemoveItem = async (productId: string) => {
+    const token = localStorage.getItem('accessToken'); // Supondo que você armazena o token no localStorage
+    if (!token) {
+      console.error('Usuário não autenticado');
+      return;
+    }
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/v1/toggle-favorite/${productId}/`, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`, // Ajuste para o seu método de autenticação
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       });
