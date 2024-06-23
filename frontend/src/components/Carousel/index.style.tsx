@@ -60,7 +60,7 @@ export const StyledCarousel = styled(Carousel)`
     justify-content: center;
     height: 500px; // Aumente a altura conforme necessário
     color: #fff;
-    background: #2a2a2a;
+
     position: relative;
     overflow: hidden;
   }
@@ -86,13 +86,16 @@ export const Image = styled.img`
 export const Title = styled.h3`
   position: relative;
   z-index: 1;
-  color: #fff;
+  color: black;
   margin: 0;
+  font-size: 25px;
 `;
 
 export const Price = styled.p`
   position: relative;
   z-index: 1;
-  color: #fff;
+  color: black;
   margin: 0;
+  font-size: 20px;
+  font-weight: bolder;
 `;

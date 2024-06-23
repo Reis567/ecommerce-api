@@ -46,7 +46,7 @@ const CarouselHome: React.FC = () => {
           <CarouselItem key={product.id}>
             <Image src={imageUrl} alt={product.title} />
             <Title>{product.title}</Title>
-            <Price>{product.price}</Price>
+            <Price>R$ {product.price}</Price>
           </CarouselItem>
         );
       })}
