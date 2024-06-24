@@ -362,3 +362,16 @@ def is_favorite(request, product_id):
 
     is_favorite = Favorite.objects.filter(user=user, product=product).exists()
     return Response({'is_favorite': is_favorite})
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def vendor_products(request):
+    user = request.user
+    try:
+        vendor = user.vendor  # Supondo que o usuário tenha um atributo 'vendor'
+        products = Product.objects.filter(vendor=vendor)
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
+    except Vendor.DoesNotExist:
+        return Response({'error': 'Vendor not found'}, status=status.HTTP_404_NOT_FOUND)
