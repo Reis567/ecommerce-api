@@ -13,7 +13,7 @@ urlpatterns = [
     path('vendor/create/', VendorCreateView.as_view(), name='vendor-create'),
     path('vendor/<int:pk>/update/', VendorUpdateView.as_view(), name='vendor-update'),
     path('vendor/<int:pk>/delete/', VendorDestroyView.as_view(), name='vendor-delete'),
-
+    path('vendor-products/', vendor_products, name='vendor_products'),
 
 
     #Products
