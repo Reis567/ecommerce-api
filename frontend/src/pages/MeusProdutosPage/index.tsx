@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Header,
@@ -19,17 +19,44 @@ import { useNavigate } from 'react-router-dom';
 const MyProductsPage: React.FC = () => {
   const [filter, setFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  // Dummy data for products
-  const products = Array.from({ length: 70 }, (_, i) => ({
-    id: i + 1,
-    name: `Product ${i + 1}`,
-    description: `Description for product ${i + 1}`,
-  }));
+  const fetchProducts = async () => {
+    const token = localStorage.getItem('accessToken'); // Supondo que você armazena o token no localStorage
+    if (!token) {
+      console.error('Usuário não autenticado');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/vendor-products/', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      setProducts(data);
+    } catch (error) {
+      setError('Failed to fetch vendor products');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const filteredProducts = products.filter(product => 
-    product.name.toLowerCase().includes(filter.toLowerCase()) || 
-    product.description.toLowerCase().includes(filter.toLowerCase())
+    product.title.toLowerCase().includes(filter.toLowerCase()) || 
+    product.detail.toLowerCase().includes(filter.toLowerCase())
   );
 
   const productsPerPage = 40;
@@ -54,6 +81,14 @@ const MyProductsPage: React.FC = () => {
     console.log('Delete product', id);
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
     <Content>
       <Container>
@@ -70,8 +105,8 @@ const MyProductsPage: React.FC = () => {
         <ProductList>
           {paginatedProducts.map(product => (
             <ProductItem key={product.id}>
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
+              <h3>{product.title}</h3>
+              <p>{product.detail}</p>
               <ProductActions>
                 <EditButton onClick={() => handleEditProduct(product.id)}>Editar</EditButton>
                 <DeleteButton onClick={() => handleDeleteProduct(product.id)}>Excluir</DeleteButton>
