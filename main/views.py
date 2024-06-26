@@ -369,9 +369,12 @@ def is_favorite(request, product_id):
 def vendor_products(request):
     user = request.user
     try:
-        vendor = user.vendor  # Supondo que o usuário tenha um atributo 'vendor'
+        vendor = Vendor.objects.get(user=user)
         products = Product.objects.filter(vendor=vendor)
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
     except Vendor.DoesNotExist:
         return Response({'error': 'Vendor not found'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        print(e)
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
