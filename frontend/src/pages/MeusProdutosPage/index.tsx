@@ -13,7 +13,7 @@ import {
   EditButton,
   DeleteButton
 } from './index.style';
-import { Input, Pagination, Modal, Form, Input as AntdInput, Button } from 'antd';
+import { Input, Pagination, Modal, Form, Input as AntdInput } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 const MyProductsPage: React.FC = () => {
