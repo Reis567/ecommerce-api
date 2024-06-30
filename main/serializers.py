@@ -2,6 +2,20 @@ from rest_framework import serializers
 from .models import *
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']
+class CustomerSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Customer
+        fields = ['user', 'mobile', 'created_at', 'updated_at']
+
+
+
+
 class VendorListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vendor
@@ -122,3 +136,4 @@ class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = ['id', 'user', 'product', 'created_at']
+
