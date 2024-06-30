@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import *
 from django.contrib.auth.models import User
+from ..main.models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -25,3 +26,11 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+    
+
+class CustomerSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Customer
+        fields = ['user', 'mobile', 'created_at', 'updated_at']
