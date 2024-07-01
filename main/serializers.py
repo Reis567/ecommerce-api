@@ -1,7 +1,14 @@
 from rest_framework import serializers
 from .models import *
 
+from ..Auth.serializers import *
 
+class CustomerSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Customer
+        fields = ['user', 'mobile', 'created_at', 'updated_at']
 
 
 
