@@ -6,9 +6,32 @@ import { AuthContainer, AuthForm, AuthTitle, AuthButton } from './index.styles';
 const RegistroVendedor: React.FC = () => {
   const navigate = useNavigate();
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     console.log('Success:', values);
-    navigate('/login-vendedor'); // Redireciona para a página de login do vendedor
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/auth/user/register/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: values.email,  // Supondo que o username seja o email
+          password: values.password,
+          first_name: values.name,
+          last_name: values.last_name,
+          user_type: 'vendor' // Adicionando o tipo de usuário
+        }),
+      });
+
+      if (response.ok) {
+        navigate('/login-vendedor'); // Redireciona para a página de login do vendedor
+      } else {
+        const errorData = await response.json();
+        console.error('Failed:', errorData);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -33,10 +56,10 @@ const RegistroVendedor: React.FC = () => {
         </Form.Item>
 
         <Form.Item
-          name="last-name"
+          name="last_name"
           rules={[{ required: true, message: 'Por favor, insira seu sobrenome!' }]}
         >
-          <Input placeholder="Nome" />
+          <Input placeholder="Sobrenome" />
         </Form.Item>
 
         <Form.Item
