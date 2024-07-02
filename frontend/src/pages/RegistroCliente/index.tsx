@@ -18,7 +18,9 @@ const RegistroCliente: React.FC = () => {
           username: values.email,  // Supondo que o username seja o email
           password: values.password,
           first_name: values.name,
-          last_name: values.last_name
+          last_name: values.last_name,
+          user_type: 'customer', // Adicionando o tipo de usuário
+          mobile: values.mobile // Adicionando o campo mobile
         }),
       });
 
@@ -65,12 +67,17 @@ const RegistroCliente: React.FC = () => {
         >
           <Input placeholder="Email" />
         </Form.Item>
-
         <Form.Item
           name="password"
           rules={[{ required: true, message: 'Por favor, insira sua senha!' }]}
         >
           <Input.Password placeholder="Senha" />
+        </Form.Item>
+        <Form.Item
+          name="mobile"
+          rules={[{ required: true, message: 'Por favor, insira seu número de celular!' }]}
+        >
+          <Input placeholder="Número de Celular" />
         </Form.Item>
 
         <Form.Item>
