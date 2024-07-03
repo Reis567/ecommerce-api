@@ -10,7 +10,7 @@ import Categoria from './pages/CategoriaPage';
 import ProdutoDetalhes from './pages/ProdutoPage';
 import MyAddressesPage from './pages/MyAddressPage/index.tsx';
 import FavoritosPage from './pages/FavoritosPage/index.tsx';
-import LoginCliente from './pages/LoginCliente';
+import LoginCliente from './pages/LoginPage/index.tsx';
 import RegistroCliente from './pages/RegistroCliente';
 import LoginVendedor from './pages/LoginVendedor';
 import RegistroVendedor from './pages/RegistroVendedor';
