@@ -12,7 +12,6 @@ import MyAddressesPage from './pages/MyAddressPage/index.tsx';
 import FavoritosPage from './pages/FavoritosPage/index.tsx';
 import LoginCliente from './pages/LoginPage/index.tsx';
 import RegistroCliente from './pages/RegistroCliente';
-import LoginVendedor from './pages/LoginVendedor';
 import RegistroVendedor from './pages/RegistroVendedor';
 import PainelVendedor from './pages/PainelVendedor';
 import VendasVendedor from './pages/VendasPage';
@@ -97,10 +96,6 @@ const router = createBrowserRouter([
       },
 
       // Rotas de autenticação do vendedor
-      {
-        path: 'vendedor/login',
-        element: <LoginVendedor />
-      },
       {
         path: 'vendedor/register',
         element: <RegistroVendedor />

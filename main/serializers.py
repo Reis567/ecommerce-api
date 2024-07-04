@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from .models import *
 
-from ..Auth.serializers import *
+from Auth import serializers as AuthSeri
+
+
 
 class CustomerSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = AuthSeri.UserSerializer()
 
     class Meta:
         model = Customer
