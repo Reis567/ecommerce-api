@@ -4,44 +4,56 @@ from .models import *
 from Auth import serializers as AuthSeri
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'first_name', 'last_name', 'email']
 
+# Serializer for Customer model
 class CustomerSerializer(serializers.ModelSerializer):
-    user = AuthSeri.UserSerializer()
+    user = UserSerializer()
 
     class Meta:
         model = Customer
-        fields = ['user', 'mobile', 'created_at', 'updated_at']
+        fields = ['user', 'mobile', 'street', 'city', 'state', 'zip_code', 'created_at', 'updated_at']
 
-
-
-
+# List serializer for Vendor model
 class VendorListSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
     class Meta:
         model = Vendor
-        fields = ['id', 'user', 'address']
+        fields = ['id', 'user', 'address', 'street', 'city', 'state', 'zip_code']
         depth = 1
-    
 
+# Retrieve serializer for Vendor model
 class VendorRetrieveSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
     class Meta:
         model = Vendor
-        fields = ['id', 'user', 'address']
+        fields = ['id', 'user', 'address', 'street', 'city', 'state', 'zip_code']
         depth = 1
 
+# Create serializer for Vendor model
 class VendorCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vendor
-        fields = ['user', 'address']
+        fields = ['user', 'address', 'street', 'city', 'state', 'zip_code']
 
+# Update serializer for Vendor model
 class VendorUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vendor
-        fields = ['user', 'address']
+        fields = ['user', 'address', 'street', 'city', 'state', 'zip_code']
 
+# Destroy serializer for Vendor model
 class VendorDestroySerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
     class Meta:
         model = Vendor
-        fields = ['id', 'user', 'address']
+        fields = ['id', 'user', 'address', 'street', 'city', 'state', 'zip_code']
         depth = 1
 class ProductCommentSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()  # Mostrar o nome do usuário no lugar do ID
