@@ -1,21 +1,18 @@
 import styled from 'styled-components';
 import { Button } from 'antd';
 
-
 export const Content = styled.div`
   min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-margin-top: 100px;
-position: relative;
+  margin-top: 100px;
+  position: relative;
 `;
 
-
-
 export const Container = styled.div`
-    width: 80%;
+  width: 80%;
   margin: 0 auto;
   padding: 20px;
   display: flex;
@@ -36,7 +33,7 @@ export const InfoSection = styled.div`
   border: 1px solid #ddd;
   border-radius: 10px;
   background-color: #f9f9f9;
-  width:50%;
+  width: 50%;
 `;
 
 export const InfoHeader = styled.div`
@@ -54,9 +51,9 @@ export const InfoContent = styled.div`
 `;
 
 export const EditButton = styled(Button)`
-height: auto;
-width: auto;
-font-size: 20px;
+  height: auto;
+  width: auto;
+  font-size: 20px;
   background-color: #4caf50;
   color: white;
   &:hover {
@@ -65,9 +62,9 @@ font-size: 20px;
 `;
 
 export const AddButton = styled(Button)`
-height: auto;
-width: auto;
-font-size: 20px;
+  height: auto;
+  width: auto;
+  font-size: 20px;
   margin-top: 15px;
   background-color: #008cba;
   color: white;
@@ -83,6 +80,7 @@ export const UserImage = styled.img`
   object-fit: cover;
   margin-bottom: 10px;
 `;
+
 export const BackButton = styled(Button)`
   position: absolute;
   top: 0px;
@@ -90,7 +88,6 @@ export const BackButton = styled(Button)`
   background-color: #239271;
   color: white;
   height: auto;
-width: auto;
-font-size: 20px;
-
+  width: auto;
+  font-size: 20px;
 `;

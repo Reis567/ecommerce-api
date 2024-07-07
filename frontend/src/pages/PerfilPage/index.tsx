@@ -1,23 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Header, InfoSection, InfoHeader, InfoContent, EditButton, AddButton, UserImage, Content, BackButton } from './index.styles';
 
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const user = {
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    phone: '123-456-7890',
-    photo: 'https://via.placeholder.com/150',
-    address: {
-      street: '123 Main St',
-      city: 'Anytown',
-      state: 'CA',
-      zip: '12345',
-    },
-  };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem('accessToken'); // Ajuste para obter o token do localStorage
+      if (!token) {
+        setError('Usuário não autenticado');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/auth/user/', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
+        setError('Failed to fetch user data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <Content>
@@ -30,8 +59,8 @@ const ProfilePage: React.FC = () => {
             <EditButton>Editar</EditButton>
           </InfoHeader>
           <InfoContent>
-            <UserImage src={user.photo} alt={`${user.firstName} ${user.lastName}`} />
-            <p><strong>Nome:</strong> {user.firstName} {user.lastName}</p>
+            <UserImage src={user.photo || 'https://via.placeholder.com/150'} alt={`${user.first_name} ${user.last_name}`} />
+            <p><strong>Nome:</strong> {user.first_name} {user.last_name}</p>
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Telefone:</strong> {user.phone}</p>
           </InfoContent>
@@ -42,10 +71,10 @@ const ProfilePage: React.FC = () => {
             <EditButton>Editar</EditButton>
           </InfoHeader>
           <InfoContent>
-            <p><strong>Rua:</strong> {user.address.street}</p>
-            <p><strong>Cidade:</strong> {user.address.city}</p>
-            <p><strong>Estado:</strong> {user.address.state}</p>
-            <p><strong>CEP:</strong> {user.address.zip}</p>
+            <p><strong>Rua:</strong> </p>
+            <p><strong>Cidade:</strong></p>
+            <p><strong>Estado:</strong></p>
+            <p><strong>CEP:</strong></p>
           </InfoContent>
           <AddButton>Adicionar Novo Endereço</AddButton>
         </InfoSection>
