@@ -71,6 +71,10 @@ class Product(models.Model):
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     mobile = models.PositiveBigIntegerField()
+    street = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
+    state = models.CharField(max_length=100, null=True, blank=True)
+    zip_code = models.CharField(max_length=20, null=True, blank=True)
 
     created_at = models.DateTimeField(default=timezone.now) 
     updated_at = models.DateTimeField(auto_now=True)
