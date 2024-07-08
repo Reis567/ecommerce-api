@@ -3,15 +3,32 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
+
+
+
+
+
+
+
+class UserAddress(models.Model):
+    street = models.CharField(max_length=255)
+    number = models.CharField(max_length=20, null=True, blank=True)
+    complement = models.CharField(max_length=255, null=True, blank=True)
+    state = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    zip_code = models.CharField(max_length=20)
+    country = models.CharField(max_length=100)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.street}, {self.number} - {self.city}, {self.state}, {self.zip_code}"
+
 # Vendor models
 
 class Vendor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    address = models.TextField(null=True)
-    street = models.CharField(max_length=255, null=True, blank=True)
-    city = models.CharField(max_length=100, null=True, blank=True)
-    state = models.CharField(max_length=100, null=True, blank=True)
-    zip_code = models.CharField(max_length=20, null=True, blank=True)
+    addresses = models.ManyToManyField(UserAddress, blank=True)
 
     created_at = models.DateTimeField(default=timezone.now) 
     updated_at = models.DateTimeField(auto_now=True)
@@ -19,6 +36,16 @@ class Vendor(models.Model):
     def __str__(self):
         return self.user.username
 
+class Customer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mobile = models.PositiveBigIntegerField()
+    addresses = models.ManyToManyField(UserAddress, blank=True)
+
+    created_at = models.DateTimeField(default=timezone.now) 
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user.username
 
 class ProductCategory(models.Model):
     title = models.CharField(max_length=255)
@@ -72,19 +99,8 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.title} - ${self.price}"
 
-class Customer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    mobile = models.PositiveBigIntegerField()
-    street = models.CharField(max_length=255, null=True, blank=True)
-    city = models.CharField(max_length=100, null=True, blank=True)
-    state = models.CharField(max_length=100, null=True, blank=True)
-    zip_code = models.CharField(max_length=20, null=True, blank=True)
 
-    created_at = models.DateTimeField(default=timezone.now) 
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.user.username
+    
 
 class Favorite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
