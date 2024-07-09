@@ -34,7 +34,7 @@ import {
 } from './index.styles.tsx';
 
 const ProdutoDetalhes: React.FC = () => {
-  const { id, slug } = useParams<{ id: string; slug: string }>();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const tags = ['Novo', 'Popular', 'Desconto', 'Limitado'];
 

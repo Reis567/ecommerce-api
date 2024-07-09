@@ -105,13 +105,29 @@ class ProductRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductRating
         fields = ['id','customer','product','rating','reviews','add_time']
+class ProductTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductTag
+        fields = ['name']
+
 class ProductDetailSerializer(serializers.ModelSerializer):
     product_rating = serializers.StringRelatedField(many=True, read_only=True)
     condition = serializers.PrimaryKeyRelatedField(queryset=ProductCondition.objects.all())
+    tags = ProductTagSerializer(many=True, read_only=True)
+    images = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ['id', 'price', 'title', 'vendor', 'category', 'detail','condition', 'product_rating']
+        fields = ['id', 'price', 'title', 'vendor', 'category', 'detail', 'condition', 'product_rating', 'tags', 'images']
+
+    def get_images(self, obj):
+        return [
+            obj.photo_product1.url if obj.photo_product1 else None,
+            obj.photo_product2.url if obj.photo_product2 else None,
+            obj.photo_product3.url if obj.photo_product3 else None,
+            obj.photo_product4.url if obj.photo_product4 else None,
+            obj.photo_product5.url if obj.photo_product5 else None,
+        ]
 
 
 class ProductCategorySerializer(serializers.ModelSerializer):
