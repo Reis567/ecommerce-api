@@ -46,7 +46,7 @@ const CartPage: React.FC = () => {
                     <tbody>
                         <TableRow>
                             <TableCell>
-                                <ProdLink to={`/produto/1/botafogo`}>
+                                <ProdLink to={`/produto/1`}>
                                             <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 1" />
                                             <ProductName>Produto 2</ProductName>
                                 </ProdLink>
@@ -63,7 +63,7 @@ const CartPage: React.FC = () => {
                         </TableRow>
                         <TableRow>
                             <TableCell>
-                            <ProdLink to={`/produto/1/botafogo`}>
+                            <ProdLink to={`/produto/1`}>
                                             <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 1" />
                                             <ProductName>Produto 2</ProductName>
                                 </ProdLink>

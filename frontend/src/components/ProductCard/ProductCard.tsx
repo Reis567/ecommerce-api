@@ -92,7 +92,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, description,
   };
 
   return (
-    <LinkS to={`/produto/${idProduto}/botafogo`}>
+    <LinkS to={`/produto/${idProduto}`}>
       <StyledCard
         hoverable
         style={{ width: 240 }}
