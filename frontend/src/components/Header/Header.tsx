@@ -4,7 +4,7 @@ import { NavContainer, SearchContainer, HeaderCont, Nav, NavTitle, SLink, NavRig
 import SearchBar from '../SearchBar/SearchBar.tsx';
 import DropPerso from '../Dropdown/Dropdown.tsx';
 import DropdownProfile from '../DropdownProfile/DropdownProfile.tsx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faHeart } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,6 +12,7 @@ const Header: React.FC = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [userData, setUserData] = useState<any>(null);
+    const navigate = useNavigate();
 
     const toggleNavBar = () => {
         setIsNavOpen(!isNavOpen);
@@ -45,13 +46,20 @@ const Header: React.FC = () => {
         }
     };
 
+    const handleAuthLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+        e.preventDefault();
+        if (!isAuthenticated) {
+            navigate('/login');
+        } else {
+            navigate(path);
+        }
+    };
+
     return (
         <HeaderCont>
           <SearchContainer>
             <NavTitle>
-              <Link to="/">
-                Negócio fechado
-              </Link>
+              <Link to="/">Negócio fechado</Link>
             </NavTitle>
             <SearchBar />
           </SearchContainer>
@@ -78,7 +86,6 @@ const Header: React.FC = () => {
               {userData ? (
                 <>
                   <DropdownProfile username={userData.username} />
-
                 </>
               ) : (
                 <>
@@ -86,10 +93,10 @@ const Header: React.FC = () => {
                   <SLink to="/register">Registrar</SLink>
                 </>
               )}
-              <SLink to="/perfil/favoritos">
+              <SLink to="/perfil/favoritos" onClick={(e) => handleAuthLinkClick(e, '/perfil/favoritos')}>
                 <FontAwesomeIcon icon={faHeart} />
               </SLink>
-              <SLink to="/perfil/carrinho">
+              <SLink to="/perfil/carrinho" onClick={(e) => handleAuthLinkClick(e, '/perfil/carrinho')}>
                 <FontAwesomeIcon icon={faCartShopping} />
               </SLink>
               <SLink to="/perfil/compras">
@@ -98,8 +105,7 @@ const Header: React.FC = () => {
             </NavRight>
           </NavContainer>
         </HeaderCont>
-      );
-    };
-    
-    export default Header;
-    
+    );
+};
+
+export default Header;
