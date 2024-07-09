@@ -99,9 +99,10 @@ const Header: React.FC = () => {
               <SLink to="/perfil/carrinho" onClick={(e) => handleAuthLinkClick(e, '/perfil/carrinho')}>
                 <FontAwesomeIcon icon={faCartShopping} />
               </SLink>
-              <SLink to="/perfil/compras">
+              <SLink to="/perfil/compras" onClick={(e) => handleAuthLinkClick(e, '/perfil/compras')}>
                 Compras
               </SLink>
+
             </NavRight>
           </NavContainer>
         </HeaderCont>
