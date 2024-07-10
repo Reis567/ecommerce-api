@@ -48,6 +48,9 @@ const ProdutoDetalhes: React.FC = () => {
 
   const [popupVisible, setPopupVisible] = useState(false);
 
+  const baseUrl = 'http://127.0.0.1:8000'; // URL base do backend
+  const defaultImageUrl = 'https://static.vecteezy.com/ti/vetor-gratis/p1/3586230-sem-foto-sinal-adesivo-com-texto-inscricao-no-fundo-isolado-gratis-vetor.jpg';
+
   useEffect(() => {
     const fetchProductData = async () => {
       try {
@@ -57,8 +60,9 @@ const ProdutoDetalhes: React.FC = () => {
         }
         const data = await response.json();
         setProduct(data);
-        setBigImage(data.images[0] || '');
-        setThumbnails(data.images.slice(1).filter(Boolean) || []);
+        const imageUrls = data.images.map((url: string) => url ? `${baseUrl}${url}` : defaultImageUrl);
+        setBigImage(imageUrls[0] || defaultImageUrl);
+        setThumbnails(imageUrls.slice(1) || []);
         setComments(data.comments || []);
         setIsLoading(false);
       } catch (error) {
