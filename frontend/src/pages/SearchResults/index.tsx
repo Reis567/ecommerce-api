@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ProductCard } from './ProductCard'; // Assumindo que você tem um componente ProductCard
+import ProductCard from '../../components/ProductCard/ProductCard'; // Assumindo que você tem um componente ProductCard
 
 const SearchResults: React.FC = () => {
   const location = useLocation();
