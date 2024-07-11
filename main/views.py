@@ -5,6 +5,7 @@ from rest_framework import generics,permissions
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import *
+from rest_framework.filters import SearchFilter
 
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 
@@ -167,6 +168,21 @@ class ProductDetailView(generics.RetrieveAPIView):
         """
         return super().get(request, *args, **kwargs)
 
+
+class ProductSearchView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    permission_classes = [permissions.AllowAny]
+    serializer_class = ProductSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['title', 'detail', 'tags__name']
+
+    def get(self, request, *args, **kwargs):
+        """
+        Search for products.
+
+        This endpoint retrieves a list of products that match the search query.
+        """
+        return super().get(request, *args, **kwargs)
 class ProductCategoryListView(generics.ListAPIView):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
