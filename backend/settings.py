@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
 
 # Diretórios estáticos e de mídia
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'Auth',
     'corsheaders',
+    'django_filters',  # Adicione esta linha
 ]
 
 MIDDLEWARE = [
@@ -87,10 +89,10 @@ DATABASES = {
     'default': {
         #'ENGINE': 'django.db.backends.sqlite3',
         #'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE':'django.db.backends.postgresql',
-        'NAME':'ecommerce_db',
-        'USER':'postgres',
-        'PASSWORD':'Matheus123',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ecommerce_db',
+        'USER': 'postgres',
+        'PASSWORD': 'Matheus123',
         'HOST': 'localhost',  
         'PORT': '5432', 
     }
@@ -131,8 +133,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
@@ -145,21 +145,25 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
-REST_FRAMEWORK={
-    'DEFAULT_SCHEMA_CLASS':'drf_spectacular.openapi.AutoSchema',
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication'
     ],
-    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE':5
-    #Coloca IsAuthenticated no projeto todo
-    #'DEFAULT_PERMISSION_CLASSES':[
-    #    'rest_framework.permissions.IsAuthenticated',
-    #]
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 5,
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
+    # Uncomment this to enforce authentication globally
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ]
 }
 
 SPECTACULAR_SETTINGS = {
@@ -173,28 +177,24 @@ SPECTACULAR_SETTINGS = {
             'description': 'Operations related to Vendors',
         },
         {
-            'name':'Auth',
-            'description':'Users auth'
+            'name': 'Auth',
+            'description': 'Users auth'
         },
         {
-            'name':'Products',
-            'description':'Operations of products'
+            'name': 'Products',
+            'description': 'Operations of products'
         },
         {
-            'name':'Orders',
-            'description':'Operations of Orders'
+            'name': 'Orders',
+            'description': 'Operations of Orders'
         },
     ],
 }
 
-from datetime import timedelta
-
-
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=30), 
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),   
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
-
 
 CORS_ALLOW_ALL_ORIGINS = True  # Permite todas as origens, ideal para desenvolvimento
 # Use esta configuração para ambientes de produção
@@ -202,4 +202,3 @@ CORS_ALLOW_ALL_ORIGINS = True  # Permite todas as origens, ideal para desenvolvi
 #     "http://localhost:3000",
 #     "http://127.0.0.1:3000",
 # ]
-

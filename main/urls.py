@@ -23,7 +23,7 @@ urlpatterns = [
     path('toggle-favorite/<int:product_id>/', toggle_favorite, name='toggle-favorite'),
     path('user-favorites/', user_favorites, name='user-favorites'),
     path('is-favorite/<int:product_id>/', is_favorite, name='is_favorite'),
-    path('search-products/', ProductSearchView.as_view(), name='product-search'),
+    path('search-products/', product_search_view, name='product-search'),
 
     ##Products category
     path('categories/', ProductCategoryListView.as_view(), name='category-list'),

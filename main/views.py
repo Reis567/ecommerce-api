@@ -6,7 +6,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import *
 from rest_framework.filters import SearchFilter
-
+from django.db.models import Q
+from rest_framework.permissions import AllowAny
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 
 from .serializers import *
@@ -169,20 +170,30 @@ class ProductDetailView(generics.RetrieveAPIView):
         return super().get(request, *args, **kwargs)
 
 
-class ProductSearchView(generics.ListAPIView):
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def product_search_view(request):
+    """
+    Search for products.
+
+    This endpoint retrieves a list of products that match the search query.
+    """
+    search_query = request.query_params.get('search', '')
+    print(f"Search query: {search_query}")
+
     queryset = Product.objects.all()
-    permission_classes = [permissions.AllowAny]
-    serializer_class = ProductSerializer
-    filter_backends = [SearchFilter]
-    search_fields = ['title', 'detail', 'tags__name']
+    if search_query:
+        queryset = queryset.filter(
+            Q(title__icontains=search_query) |
+            Q(detail__icontains=search_query) |
+            Q(tags__name__icontains=search_query)
+        ).distinct()
 
-    def get(self, request, *args, **kwargs):
-        """
-        Search for products.
+    print(f"Filtered queryset: {queryset}")
+    serializer = ProductSerializer(queryset, many=True)
+    return Response(serializer.data)
 
-        This endpoint retrieves a list of products that match the search query.
-        """
-        return super().get(request, *args, **kwargs)
+
 class ProductCategoryListView(generics.ListAPIView):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
