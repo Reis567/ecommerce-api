@@ -25,6 +25,7 @@ import UpdatePasswordPage from './pages/UpdatePassPage/index.tsx';
 import AddAddressPage from './pages/AddEndereco/index.tsx';
 import MyProductsPage from './pages/MeusProdutosPage/index.tsx';
 import AddProductPage from './pages/AddProdPage/index.tsx';
+import SearchResults from './pages/SearchResults'; // Importe o componente SearchResultsPage
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: 'produto/:id',
         element: <ProdutoDetalhes />
+      },
+      {
+        path: 'search-results',
+        element: <SearchResults />
       },
       {
         path: 'checkout',
