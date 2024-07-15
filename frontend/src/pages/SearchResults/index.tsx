@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ProductCard from '../../components/ProductCard/ProductCard'; // Assumindo que você tem um componente ProductCard
-import { Container, ProdDiv, LoadingMessage, ErrorMessage } from './SearchResults.styles'; // Importando estilos
+import { Container, ProdDiv, LoadingMessage, ErrorMessage,Title } from './index.styles'; // Importando estilos
 
 const SearchResults: React.FC = () => {
   const location = useLocation();
@@ -44,7 +44,7 @@ const SearchResults: React.FC = () => {
 
   return (
     <Container>
-      <h2>Resultados da Pesquisa</h2>
+      <Title>Resultados da Pesquisa</Title>
       <ProdDiv>
         {products.length > 0 ? (
           products.map(product => {
