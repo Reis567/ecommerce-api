@@ -109,6 +109,17 @@ const ProdutoDetalhes: React.FC = () => {
     navigate(-1); // Volta para a página anterior
   };
 
+  const renderStars = () => {
+    const rating = product.product_rating.length > 0 ? product.product_rating[0] : 0;
+    return [...Array(5)].map((_, index) => (
+      <FontAwesomeIcon
+        key={index}
+        icon={faStar}
+        style={{ color: index < rating ? '#FFD700' : '#d3d3d3', marginRight: '5px' }}
+      />
+    ));
+  };
+
   if (isLoading) {
     return <div>Carregando...</div>;
   }
@@ -132,9 +143,7 @@ const ProdutoDetalhes: React.FC = () => {
       <ContentRight>
         <RightHead>
           <StarsContainer>
-            {[...Array(5)].map((_, index) => (
-              <FontAwesomeIcon key={index} icon={faStar} style={{ color: '#FFD700', marginRight: '5px' }} />
-            ))}
+            {renderStars()}
           </StarsContainer>
           <ProdTitle>{product.title}</ProdTitle>
           <ProdDesc>{product.detail}</ProdDesc>
