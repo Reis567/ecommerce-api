@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { StyledCarousel, Content, CarouselItem, Image, Title, Price } from './index.style';
 
 const CarouselHome: React.FC = () => {
@@ -43,11 +44,13 @@ const CarouselHome: React.FC = () => {
           ? `${baseUrl}${product.photo_urls[0]}`
           : 'https://static.vecteezy.com/ti/vetor-gratis/p1/3586230-sem-foto-sinal-adesivo-com-texto-inscricao-no-fundo-isolado-gratis-vetor.jpg';
         return (
-          <CarouselItem key={product.id}>
-            <Image src={imageUrl} alt={product.title} />
-            <Title>{product.title}</Title>
-            <Price>R$ {product.price}</Price>
-          </CarouselItem>
+          <Link key={product.id} to={`/produto/${product.id}`}>
+            <CarouselItem>
+              <Image src={imageUrl} alt={product.title} />
+              <Title>{product.title}</Title>
+              <Price>R$ {product.price}</Price>
+            </CarouselItem>
+          </Link>
         );
       })}
     </StyledCarousel>

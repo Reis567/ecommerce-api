@@ -1,5 +1,6 @@
 import { Carousel } from 'antd';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const StyledCarousel = styled(Carousel)`
   position: relative;
@@ -10,8 +11,8 @@ export const StyledCarousel = styled(Carousel)`
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 50px; // Altura do efeito de opacidade
-    background: linear-gradient(to bottom, rgba(54, 77, 121, 0), #ffffff); // Gradiente de opacidade
+    height: 50px;
+    background: linear-gradient(to bottom, rgba(54, 77, 121, 0), #ffffff);
     pointer-events: none;
   }
 
@@ -58,9 +59,8 @@ export const StyledCarousel = styled(Carousel)`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 500px; // Aumente a altura conforme necessário
+    height: 500px;
     color: #fff;
-
     position: relative;
     overflow: hidden;
   }
@@ -72,15 +72,15 @@ export const CarouselItem = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 100%; // Adicione esta linha para garantir que o item ocupe toda a largura do carrossel
+  width: 100%;
 `;
 
 export const Image = styled.img`
   width: 100%;
-  max-height: 400px; // Limite o tamanho da imagem
+  max-height: 400px;
   object-fit: cover;
   border-radius: 15px;
-  margin-bottom: 10px; // Espaço entre a imagem e o título
+  margin-bottom: 10px;
 `;
 
 export const Title = styled.h3`
