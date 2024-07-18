@@ -420,3 +420,11 @@ def get_user_profile(request):
         return Response({'error': 'Customer profile not found'}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+
+class ProductCommentList(generics.ListAPIView):
+    serializer_class = ProductCommentSerializer
+
+    def get_queryset(self):
+        product_id = self.kwargs['product_id']
+        return ProductComment.objects.filter(product_id=product_id).order_by('-created_at')
