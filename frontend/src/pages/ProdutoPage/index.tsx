@@ -54,7 +54,7 @@ const ProdutoDetalhes: React.FC = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/v1/products/${id}/`);
+        const response = await fetch(`${baseUrl}/api/v1/products/${id}/`);
         if (!response.ok) {
           throw new Error('Failed to fetch product data');
         }
@@ -63,7 +63,6 @@ const ProdutoDetalhes: React.FC = () => {
         const imageUrls = data.images.map((url: string) => url ? `${baseUrl}${url}` : defaultImageUrl);
         setBigImage(imageUrls[0] || defaultImageUrl);
         setThumbnails(imageUrls.slice(1) || []);
-        setComments(data.comments || []);
         setIsLoading(false);
       } catch (error) {
         console.error('Failed to fetch product data:', error);
@@ -71,7 +70,21 @@ const ProdutoDetalhes: React.FC = () => {
       }
     };
 
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(`${baseUrl}/api/v1/products/${id}/comments/`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch comments');
+        }
+        const data = await response.json();
+        setComments(data.map((comment: any) => ({ user: comment.user.username, text: comment.comment })));
+      } catch (error) {
+        console.error('Failed to fetch comments:', error);
+      }
+    };
+
     fetchProductData();
+    fetchComments();
   }, [id]);
 
   const handleThumbnailClick = (thumbnail: string) => {
@@ -87,11 +100,31 @@ const ProdutoDetalhes: React.FC = () => {
     setIsModalVisible(false);
   };
 
-  const handleAddComment = () => {
+  const handleAddComment = async () => {
     const loggedInUser = 'Usuário Logado'; // Substitua pelo nome do usuário logado no futuro
     if (newComment.trim()) {
-      setComments([...comments, { user: loggedInUser, text: newComment.trim() }]);
-      setNewComment('');
+      try {
+        const response = await fetch(`${baseUrl}/api/v1/products/${id}/comments/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            product: id,
+            user: 1, // Substitua pelo ID do usuário logado
+            comment: newComment.trim()
+          })
+        });
+        if (!response.ok) {
+          throw new Error('Failed to add comment');
+        }
+        const data = await response.json();
+        setComments([...comments, { user: loggedInUser, text: data.comment }]);
+        setNewComment('');
+        handleCloseModal();
+      } catch (error) {
+        console.error('Failed to add comment:', error);
+      }
     }
   };
 
