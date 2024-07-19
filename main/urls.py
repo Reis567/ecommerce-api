@@ -24,6 +24,7 @@ urlpatterns = [
     path('user-favorites/', user_favorites, name='user-favorites'),
     path('is-favorite/<int:product_id>/', is_favorite, name='is_favorite'),
     path('search-products/', product_search_view, name='product-search'),
+    path('products/<int:product_id>/comments/', ProductCommentList.as_view(), name='product-comments'),
 
     ##Products category
     path('categories/', ProductCategoryListView.as_view(), name='category-list'),
