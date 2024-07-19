@@ -422,9 +422,13 @@ def get_user_profile(request):
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 
-class ProductCommentList(generics.ListAPIView):
+class ProductCommentListCreate(generics.ListCreateAPIView):
     serializer_class = ProductCommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         product_id = self.kwargs['product_id']
         return ProductComment.objects.filter(product_id=product_id).order_by('-created_at')
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user, product_id=self.kwargs['product_id'])
