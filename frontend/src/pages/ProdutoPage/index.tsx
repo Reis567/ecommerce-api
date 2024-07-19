@@ -102,16 +102,18 @@ const ProdutoDetalhes: React.FC = () => {
 
   const handleAddComment = async () => {
     const loggedInUser = 'Usuário Logado'; // Substitua pelo nome do usuário logado no futuro
+    const userId = 1; // Substitua pelo ID do usuário logado no futuro
     if (newComment.trim()) {
       try {
         const response = await fetch(`${baseUrl}/api/v1/products/${id}/comments/`, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}` // Usando 'accessToken'
           },
           body: JSON.stringify({
             product: id,
-            user: 1, // Substitua pelo ID do usuário logado
+            user: userId, // Passando o ID do usuário logado
             comment: newComment.trim()
           })
         });

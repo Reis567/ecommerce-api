@@ -430,5 +430,8 @@ class ProductCommentListCreate(generics.ListCreateAPIView):
         product_id = self.kwargs['product_id']
         return ProductComment.objects.filter(product_id=product_id).order_by('-created_at')
 
+
     def perform_create(self, serializer):
+        print(self.request.user)
+        print(self.kwargs['product_id'])
         serializer.save(user=self.request.user, product_id=self.kwargs['product_id'])
