@@ -13,7 +13,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const fetchUserId = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/v1/users/me/', {
+      const response = await fetch('http://127.0.0.1:8000/api/auth/users/me/', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
         }
