@@ -1,5 +1,7 @@
+// src/main.tsx ou src/index.tsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
 import './index.css';
 import Inicio from './pages/InicioPage';
@@ -18,14 +20,13 @@ import VendasVendedor from './pages/VendasPage';
 import ComprasUsuario from './pages/ComprasUser';
 import PedidoConcluido from './pages/PedidoConcluido';
 import PedidoRecusado from './pages/PedidoRecusado';
-
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProfilePage from './pages/PerfilPage/index.tsx';
 import UpdatePasswordPage from './pages/UpdatePassPage/index.tsx';
 import AddAddressPage from './pages/AddEndereco/index.tsx';
 import MyProductsPage from './pages/MeusProdutosPage/index.tsx';
 import AddProductPage from './pages/AddProdPage/index.tsx';
-import SearchResults from './pages/SearchResults'; // Importe o componente SearchResultsPage
+import SearchResults from './pages/SearchResults';
+import { AuthProvider } from './contexts/AuthContext';
 
 const router = createBrowserRouter([
   {
@@ -33,112 +34,48 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       // Rotas principais
-      {
-        path: '/',
-        element: <Inicio />
-      },
-      {
-        path: 'categoria/:id',
-        element: <Categoria />
-      },
-      {
-        path: 'produto/:id',
-        element: <ProdutoDetalhes />
-      },
-      {
-        path: 'search-results',
-        element: <SearchResults />
-      },
-      {
-        path: 'checkout',
-        element: <CheckoutPage />
-      },
+      { path: '/', element: <Inicio /> },
+      { path: 'categoria/:id', element: <Categoria /> },
+      { path: 'produto/:id', element: <ProdutoDetalhes /> },
+      { path: 'search-results', element: <SearchResults /> },
+      { path: 'checkout', element: <CheckoutPage /> },
 
       // Rotas de endereço
-      {
-        path: 'enderecos/meus_enderecos',
-        element: <MyAddressesPage />
-      },
-      {
-        path: 'enderecos/envio',
-        element: <ShippingAddressPage />
-      },
-      {
-        path: 'enderecos/adicionar',
-        element: <AddAddressPage />
-      },
+      { path: 'enderecos/meus_enderecos', element: <MyAddressesPage /> },
+      { path: 'enderecos/envio', element: <ShippingAddressPage /> },
+      { path: 'enderecos/adicionar', element: <AddAddressPage /> },
 
       // Rotas do perfil do cliente
-      {
-        path:'perfil',
-        element:<ProfilePage/>
-      },
-      {
-        path: 'perfil/carrinho',
-        element: <CartPage />
-      },
-      {
-        path: 'perfil/favoritos',
-        element: <FavoritosPage />
-      },
-      {
-        path: 'perfil/compras',
-        element: <ComprasUsuario />
-      },
-      {
-        path: 'perfil/mudar_senha',
-        element: <UpdatePasswordPage />
-      },
+      { path: 'perfil', element: <ProfilePage /> },
+      { path: 'perfil/carrinho', element: <CartPage /> },
+      { path: 'perfil/favoritos', element: <FavoritosPage /> },
+      { path: 'perfil/compras', element: <ComprasUsuario /> },
+      { path: 'perfil/mudar_senha', element: <UpdatePasswordPage /> },
 
       // Rotas de autenticação do cliente
-      {
-        path: 'login',
-        element: <LoginCliente />
-      },
-      {
-        path: 'register',
-        element: <RegistroCliente />
-      },
+      { path: 'login', element: <LoginCliente /> },
+      { path: 'register', element: <RegistroCliente /> },
 
       // Rotas de autenticação do vendedor
-      {
-        path: 'vendedor/register',
-        element: <RegistroVendedor />
-      },
+      { path: 'vendedor/register', element: <RegistroVendedor /> },
 
       // Rotas do painel do vendedor
-      {
-        path: 'vendedor/dashboard',
-        element: <PainelVendedor />
-      },
-      {
-        path: 'vendedor/vendas',
-        element: <VendasVendedor />
-      },
-      {
-        path: 'vendedor/meus-produtos',
-        element: <MyProductsPage />
-      },
-      {
-        path: 'vendedor/meus-produtos/adicionar-produto',
-        element: <AddProductPage />
-      },
+      { path: 'vendedor/dashboard', element: <PainelVendedor /> },
+      { path: 'vendedor/vendas', element: <VendasVendedor /> },
+      { path: 'vendedor/meus-produtos', element: <MyProductsPage /> },
+      { path: 'vendedor/meus-produtos/adicionar-produto', element: <AddProductPage /> },
 
       // Rotas de pedido
-      {
-        path: 'pedido/concluido',
-        element: <PedidoConcluido />
-      },
-      {
-        path: 'pedido/recusado',
-        element: <PedidoRecusado />
-      },
+      { path: 'pedido/concluido', element: <PedidoConcluido /> },
+      { path: 'pedido/recusado', element: <PedidoRecusado /> },
     ]
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );
