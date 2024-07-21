@@ -88,5 +88,5 @@ class UserMeView(APIView):
 
     def get(self, request):
         user = request.user
-        serializer = UserSerializer(user)
+        serializer = UserDetailSerializer(user)
         return Response(serializer.data)

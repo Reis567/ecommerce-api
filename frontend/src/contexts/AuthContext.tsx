@@ -1,17 +1,18 @@
-// src/contexts/AuthContext.tsx
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 
 interface AuthContextType {
   userId: number | null;
-  fetchUserId: () => Promise<void>;
+  username: string | null;
+  fetchUserData: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [userId, setUserId] = useState<number | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
 
-  const fetchUserId = async () => {
+  const fetchUserData = async () => {
     try {
       const response = await fetch('http://127.0.0.1:8000/api/auth/users/me/', {
         headers: {
@@ -23,17 +24,20 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       }
       const data = await response.json();
       setUserId(data.id);
+      setUsername(data.username);
+      console.log("User ID fetched and set in context:", data.id);
+      console.log("Username fetched and set in context:", data.username);
     } catch (error) {
       console.error('Failed to fetch user data:', error);
     }
   };
 
   useEffect(() => {
-    fetchUserId();
+    fetchUserData();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ userId, fetchUserId }}>
+    <AuthContext.Provider value={{ userId, username, fetchUserData }}>
       {children}
     </AuthContext.Provider>
   );

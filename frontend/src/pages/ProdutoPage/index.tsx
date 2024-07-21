@@ -32,10 +32,12 @@ import {
   BackButton,
   StarsContainer
 } from './index.styles.tsx';
+import { useAuth } from '../../contexts/AuthContext'; // Importa o contexto
 
 const ProdutoDetalhes: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { userId, username } = useAuth(); // Obtendo userId e username do contexto
   const [product, setProduct] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -101,8 +103,6 @@ const ProdutoDetalhes: React.FC = () => {
   };
 
   const handleAddComment = async () => {
-    const loggedInUser = 'Usuário Logado'; // Substitua pelo nome do usuário logado no futuro
-    const userId = 1; // Substitua pelo ID do usuário logado no futuro
     if (newComment.trim()) {
       try {
         const response = await fetch(`${baseUrl}/api/v1/products/${id}/comments/`, {
@@ -121,7 +121,7 @@ const ProdutoDetalhes: React.FC = () => {
           throw new Error('Failed to add comment');
         }
         const data = await response.json();
-        setComments([...comments, { user: loggedInUser, text: data.comment }]);
+        setComments([...comments, { user: username, text: data.comment }]); // Passando o username
         setNewComment('');
         handleCloseModal();
       } catch (error) {
