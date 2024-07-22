@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Modal, Input, Button as AntButton } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faShoppingCart, faDollarSign, faStar } from '@fortawesome/free-solid-svg-icons';
 import PopupNotification from '../../components/PopupNotification/PopupNotification.tsx';
+import ProductComments from '../../components/ProductComments/ProductComments'; // Importando o novo componente
 import {
   ProdContent,
   ProdTitle,
@@ -26,31 +26,23 @@ import {
   ThumbnailContainer,
   BigImageContainer,
   RightComments,
-  CommentsButton,
-  CommentsCount,
   BackButtonContainer,
   BackButton,
   StarsContainer
 } from './index.styles.tsx';
-import { useAuth } from '../../contexts/AuthContext'; // Importa o contexto
 
 const ProdutoDetalhes: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { userId, username } = useAuth(); // Obtendo userId e username do contexto
   const [product, setProduct] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const [bigImage, setBigImage] = useState<string>('');
   const [thumbnails, setThumbnails] = useState<string[]>([]);
 
-  const [comments, setComments] = useState<{ user: string, text: string }[]>([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [newComment, setNewComment] = useState('');
-
   const [popupVisible, setPopupVisible] = useState(false);
 
-  const baseUrl = 'http://127.0.0.1:8000'; // URL base do backend
+  const baseUrl = 'http://127.0.0.1:8000';
   const defaultImageUrl = 'https://static.vecteezy.com/ti/vetor-gratis/p1/3586230-sem-foto-sinal-adesivo-com-texto-inscricao-no-fundo-isolado-gratis-vetor.jpg';
 
   useEffect(() => {
@@ -72,21 +64,7 @@ const ProdutoDetalhes: React.FC = () => {
       }
     };
 
-    const fetchComments = async () => {
-      try {
-        const response = await fetch(`${baseUrl}/api/v1/products/${id}/comments/`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch comments');
-        }
-        const data = await response.json();
-        setComments(data.map((comment: any) => ({ user: comment.user.username, text: comment.comment })));
-      } catch (error) {
-        console.error('Failed to fetch comments:', error);
-      }
-    };
-
     fetchProductData();
-    fetchComments();
   }, [id]);
 
   const handleThumbnailClick = (thumbnail: string) => {
@@ -94,54 +72,17 @@ const ProdutoDetalhes: React.FC = () => {
     setBigImage(thumbnail);
   };
 
-  const handleOpenModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleAddComment = async () => {
-    if (newComment.trim()) {
-      try {
-        const response = await fetch(`${baseUrl}/api/v1/products/${id}/comments/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}` // Usando 'accessToken'
-          },
-          body: JSON.stringify({
-            product: id,
-            user: userId, 
-            comment: newComment.trim()
-          })
-        });
-        if (!response.ok) {
-          throw new Error('Failed to add comment');
-        }
-        const data = await response.json();
-        setComments([...comments, { user: username, text: data.comment }]); // Passando o username
-        setNewComment('');
-        handleCloseModal();
-      } catch (error) {
-        console.error('Failed to add comment:', error);
-      }
-    }
-  };
-
   const handleBuyClick = () => {
-    navigate('/enderecos-envio'); // Substitua '/shipping-address' pela rota correta para a página de endereço de entrega
+    navigate('/enderecos-envio');
   };
 
   const handleAddToCart = () => {
-    // Lógica para adicionar ao carrinho
     setPopupVisible(true);
-    setTimeout(() => setPopupVisible(false), 3000); // Oculta o popup após 3 segundos
+    setTimeout(() => setPopupVisible(false), 3000);
   };
 
   const handleBackClick = () => {
-    navigate(-1); // Volta para a página anterior
+    navigate(-1);
   };
 
   const renderStars = () => {
@@ -161,84 +102,58 @@ const ProdutoDetalhes: React.FC = () => {
 
   return (
     <ProdContent>
-      <BackButtonContainer>
-        <BackButton onClick={handleBackClick}>Voltar</BackButton>
-      </BackButtonContainer>
       <ContentLeft>
+        <BackButtonContainer>
+          <BackButton onClick={handleBackClick}>Voltar</BackButton>
+        </BackButtonContainer>
         <BigImageContainer>
-          <ImgS src={bigImage} />
+          <ImgS src={bigImage} alt={product.name} />
         </BigImageContainer>
         <ThumbnailContainer>
           {thumbnails.map((thumbnail, index) => (
-            <Thumbnail key={index} src={thumbnail} onClick={() => handleThumbnailClick(thumbnail)} />
+            <Thumbnail
+              key={index}
+              src={thumbnail}
+              alt={`Thumbnail ${index + 1}`}
+              onClick={() => handleThumbnailClick(thumbnail)}
+            />
           ))}
         </ThumbnailContainer>
       </ContentLeft>
-
       <ContentRight>
         <RightHead>
-          <StarsContainer>
-            {renderStars()}
-          </StarsContainer>
-          <ProdTitle>{product.title}</ProdTitle>
-          <ProdDesc>{product.detail}</ProdDesc>
+          <ProdTitle>{product.name}</ProdTitle>
+          <StarsContainer>{renderStars()}</StarsContainer>
+          <ProdDesc>{product.description}</ProdDesc>
         </RightHead>
-
         <RightBody>
           <ContPrice>
-            <Price>R$ {product.price}</Price>
+            <Price>R${product.price.toFixed(2)}</Price>
           </ContPrice>
-
           <ContBtns>
-            <CartBtn onClick={handleAddToCart}>
-              <FontAwesomeIcon icon={faShoppingCart} /> Adicionar ao Carrinho
-            </CartBtn>
-
             <BuyBtn onClick={handleBuyClick}>
-              <FontAwesomeIcon icon={faDollarSign} /> Comprar
+              <FontAwesomeIcon icon={faDollarSign} />
+              Comprar
             </BuyBtn>
-
+            <CartBtn onClick={handleAddToCart}>
+              <FontAwesomeIcon icon={faShoppingCart} />
+              Adicionar ao Carrinho
+            </CartBtn>
             <FavBtn>
-              <FontAwesomeIcon icon={faHeart} /> Favoritar
+              <FontAwesomeIcon icon={faHeart} />
+              Favoritar
             </FavBtn>
           </ContBtns>
         </RightBody>
-
         <RightTags>
-          <TagsTitle>Tags</TagsTitle>
-          {product.tags.map((tag: { name: string }) => (
-            <StyledTag key={tag.name}>{tag.name}</StyledTag>
+          <TagsTitle>Tags:</TagsTitle>
+          {product.tags.map((tag: string, index: number) => (
+            <StyledTag key={index}>{tag}</StyledTag>
           ))}
         </RightTags>
-
         <RightComments>
-          <CommentsButton onClick={handleOpenModal}>Comentários</CommentsButton>
-          <CommentsCount>{comments.length} Comentários</CommentsCount>
+          <ProductComments productId={id} />
         </RightComments>
-
-        <Modal
-          title="Comentários"
-          visible={isModalVisible}
-          onCancel={handleCloseModal}
-          footer={null}
-        >
-          <Input
-            placeholder="Escreva seu comentário"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-          <AntButton type="primary" onClick={handleAddComment} style={{ marginTop: '10px' }}>
-            Enviar
-          </AntButton>
-          <div style={{ marginTop: '20px' }}>
-            {comments.map((comment, index) => (
-              <div key={index} style={{ marginBottom: '10px' }}>
-                <strong>{comment.user}:</strong>
-                <p>{comment.text}</p>
-              </div>
-            ))}
-          </div>
-        </Modal>
       </ContentRight>
       <PopupNotification message={`${product.title} adicionado ao carrinho`} visible={popupVisible} />
     </ProdContent>
