@@ -113,7 +113,7 @@ const ProdutoDetalhes: React.FC = () => {
           },
           body: JSON.stringify({
             product: id,
-            user: userId, // Passando o ID do usuário logado
+            user: userId, 
             comment: newComment.trim()
           })
         });
