@@ -1,53 +1,53 @@
-// src/components/ProductComments/ProductComments.tsx
 import React, { useState, useEffect } from 'react';
-import { Modal, Input } from 'antd';
+import { Modal, Input, Button as AntButton } from 'antd';
+import { useParams } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import {
-  CommentsContainer,
   CommentsButton,
   CommentsCount,
   CommentModal,
   CommentInput,
-  SubmitButton,
-  CommentsList,
+  SendButton,
+  CommentList,
   CommentItem,
   CommentUser,
-  CommentText,
+  CommentText
 } from './ProductComments.styles';
 
-interface Comment {
-  user: string;
-  text: string;
-}
-
-interface ProductCommentsProps {
-  productId: string;
-}
-
-const ProductComments: React.FC<ProductCommentsProps> = ({ productId }) => {
+const ProductComments: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
   const { userId, username } = useAuth();
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [comments, setComments] = useState<{ user: string, text: string }[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newComment, setNewComment] = useState('');
-
-  const baseUrl = 'http://127.0.0.1:8000';
+  const baseUrl = 'http://127.0.0.1:8000'; // URL base do backend
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await fetch(`${baseUrl}/api/v1/products/${productId}/comments/`);
+        const response = await fetch(`${baseUrl}/api/v1/products/${id}/comments/`);
         if (!response.ok) {
           throw new Error('Failed to fetch comments');
         }
         const data = await response.json();
-        setComments(data.map((comment: any) => ({ user: comment.user.username, text: comment.comment })));
+        console.log('Fetched comments:', data);
+    
+        if (data.results && Array.isArray(data.results)) {
+          setComments(data.results.map((comment: any) => ({
+            user: comment.user.username,
+            text: comment.comment
+          })));
+        } else {
+          throw new Error('Invalid response format');
+        }
       } catch (error) {
         console.error('Failed to fetch comments:', error);
       }
     };
+    
 
     fetchComments();
-  }, [productId]);
+  }, [id]);
 
   const handleOpenModal = () => {
     setIsModalVisible(true);
@@ -60,14 +60,14 @@ const ProductComments: React.FC<ProductCommentsProps> = ({ productId }) => {
   const handleAddComment = async () => {
     if (newComment.trim()) {
       try {
-        const response = await fetch(`${baseUrl}/api/v1/products/${productId}/comments/`, {
+        const response = await fetch(`${baseUrl}/api/v1/products/${id}/comments/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
           },
           body: JSON.stringify({
-            product: productId,
+            product: id,
             user: userId,
             comment: newComment.trim()
           })
@@ -86,36 +86,33 @@ const ProductComments: React.FC<ProductCommentsProps> = ({ productId }) => {
   };
 
   return (
-    <CommentsContainer>
+    <div>
       <CommentsButton onClick={handleOpenModal}>Comentários</CommentsButton>
       <CommentsCount>{comments.length} Comentários</CommentsCount>
-
-      <Modal
+      <CommentModal
         title="Comentários"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={handleCloseModal}
         footer={null}
       >
-        <CommentModal>
-          <CommentInput
-            placeholder="Escreva seu comentário"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-          <SubmitButton type="primary" onClick={handleAddComment}>
-            Enviar
-          </SubmitButton>
-        </CommentModal>
-        <CommentsList>
+        <CommentInput
+          placeholder="Escreva seu comentário"
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+        />
+        <SendButton type="primary" onClick={handleAddComment} style={{ marginTop: '10px' }}>
+          Enviar
+        </SendButton>
+        <CommentList style={{ marginTop: '20px' }}>
           {comments.map((comment, index) => (
-            <CommentItem key={index}>
+            <CommentItem key={index} style={{ marginBottom: '10px' }}>
               <CommentUser>{comment.user}:</CommentUser>
               <CommentText>{comment.text}</CommentText>
             </CommentItem>
           ))}
-        </CommentsList>
-      </Modal>
-    </CommentsContainer>
+        </CommentList>
+      </CommentModal>
+    </div>
   );
 };
 

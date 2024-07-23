@@ -421,7 +421,6 @@ def get_user_profile(request):
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
-
 class ProductCommentListCreate(generics.ListCreateAPIView):
     serializer_class = ProductCommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -430,8 +429,5 @@ class ProductCommentListCreate(generics.ListCreateAPIView):
         product_id = self.kwargs['product_id']
         return ProductComment.objects.filter(product_id=product_id).order_by('-created_at')
 
-
     def perform_create(self, serializer):
-        print(self.request.user)
-        print(self.kwargs['product_id'])
         serializer.save(user=self.request.user, product_id=self.kwargs['product_id'])

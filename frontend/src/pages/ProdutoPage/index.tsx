@@ -100,6 +100,8 @@ const ProdutoDetalhes: React.FC = () => {
     return <div>Carregando...</div>;
   }
 
+  const price = typeof product.price === 'number' ? product.price.toFixed(2) : '0.00';
+
   return (
     <ProdContent>
       <ContentLeft>
@@ -128,7 +130,7 @@ const ProdutoDetalhes: React.FC = () => {
         </RightHead>
         <RightBody>
           <ContPrice>
-            <Price>R${product.price.toFixed(2)}</Price>
+            <Price>R${price}</Price>
           </ContPrice>
           <ContBtns>
             <BuyBtn onClick={handleBuyClick}>
