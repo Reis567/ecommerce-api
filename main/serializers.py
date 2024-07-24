@@ -171,3 +171,16 @@ class ProductCommentSerializer(serializers.ModelSerializer):
         model = ProductComment
         fields = ['id', 'product', 'user', 'comment', 'created_at', 'updated_at']
         read_only_fields = ['created_at', 'updated_at']
+
+
+class CartItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CartItem
+        fields = ['id', 'product', 'quantity']
+
+class CartSerializer(serializers.ModelSerializer):
+    items = CartItemSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Cart
+        fields = ['id', 'user', 'created_at', 'items']
