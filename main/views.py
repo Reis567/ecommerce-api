@@ -9,12 +9,12 @@ from rest_framework.filters import SearchFilter
 from django.db.models import Q
 from rest_framework.permissions import AllowAny
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
-
+from rest_framework.decorators import action
 from .serializers import *
 from .models import *
 from django.http import JsonResponse
 from django.db.models import Count
-
+from django.shortcuts import get_object_or_404
 def welcome(request):
     return JsonResponse({'message': 'Bem-vindo à API!'})
 
@@ -431,3 +431,35 @@ class ProductCommentListCreate(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, product_id=self.kwargs['product_id'])
+
+
+class CartViewSet(ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    @action(detail=True, methods=['post'])
+    def add_item(self, request, pk=None):
+        cart = self.get_object()
+        product_id = request.data.get('product_id')
+        quantity = request.data.get('quantity', 1)
+        product = get_object_or_404(Product, id=product_id)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        if not created:
+            cart_item.quantity += int(quantity)
+        cart_item.save()
+        return Response({'status': 'item added'})
+
+    @action(detail=True, methods=['post'])
+    def remove_item(self, request, pk=None):
+        cart = self.get_object()
+        product_id = request.data.get('product_id')
+        cart_item = get_object_or_404(CartItem, cart=cart, product_id=product_id)
+        cart_item.delete()
+        return Response({'status': 'item removed'})
