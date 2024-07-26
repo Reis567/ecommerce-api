@@ -1,35 +1,76 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CartContainer,
-     CartItemsContainer,
-      CartSummaryContainer,
-       Table,
-        TableCell,
-         TableRow,
-          ProductImage,
-           ProductName,
-            Quantity,
-             Price,
-              RemoveButton,
-               SummaryTitle,
-                SummaryItem,
-                 SummaryTotal,
-                  CheckoutButton,
-                    ProdLink,
-                    ButtonContainer,
-                    BackButton } from './index.styles.tsx';
+import axios from 'axios';
+import {
+    CartContainer,
+    CartItemsContainer,
+    CartSummaryContainer,
+    Table,
+    TableCell,
+    TableRow,
+    ProductImage,
+    ProductName,
+    Quantity,
+    Price,
+    RemoveButton,
+    SummaryTitle,
+    SummaryItem,
+    SummaryTotal,
+    CheckoutButton,
+    ProdLink,
+    ButtonContainer,
+    BackButton
+} from './index.styles.tsx';
+
+interface CartItem {
+    id: string;
+    product_id: string;
+    product_image: string;
+    product_name: string;
+    quantity: number;
+    price: number;
+}
 
 const CartPage: React.FC = () => {
     const navigate = useNavigate();
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [total, setTotal] = useState<number>(0);
+
+    useEffect(() => {
+        const fetchCartItems = async () => {
+            const accessToken = localStorage.getItem('accessToken');
+            try {
+                const response = await axios.get('http://localhost:8000/api/v1/cart/', {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                setCartItems(response.data.items);
+                setTotal(response.data.total);
+            } catch (error) {
+                console.error('Failed to fetch cart items:', error);
+            }
+        };
+
+        fetchCartItems();
+    }, []);
+
+    const handleRemoveItem = async (itemId: string) => {
+        const accessToken = localStorage.getItem('accessToken');
+        try {
+            await axios.delete(`http://localhost:8000/api/v1/cart/${itemId}/`, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            setCartItems(cartItems.filter(item => item.id !== itemId));
+        } catch (error) {
+            console.error('Failed to remove item from cart:', error);
+        }
+    };
 
     const handleBackClick = () => {
         navigate(-1);
-    };
-
-
-    const handleRemoveItem = (itemId: string) => {
-        // Lógica para remover o item do carrinho
-        console.log('Remover item:', itemId);
     };
 
     const handleCheckout = () => {
@@ -44,41 +85,25 @@ const CartPage: React.FC = () => {
                 </ButtonContainer>
                 <Table>
                     <tbody>
-                        <TableRow>
-                            <TableCell>
-                                <ProdLink to={`/produto/1`}>
-                                            <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 1" />
-                                            <ProductName>Produto 2</ProductName>
-                                </ProdLink>
-                            </TableCell>
-                            <TableCell>
-                                <Quantity>1</Quantity>
-                            </TableCell>
-                            <TableCell>
-                                <Price>R$ 99,99</Price>
-                            </TableCell>
-                            <TableCell>
-                                <RemoveButton onClick={() => handleRemoveItem('1')}>X</RemoveButton>
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                            <ProdLink to={`/produto/1`}>
-                                            <ProductImage src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Escudo_Botafogo.png" alt="Produto 1" />
-                                            <ProductName>Produto 2</ProductName>
-                                </ProdLink>
-                            </TableCell>
-                            <TableCell>
-                                <Quantity>2</Quantity>
-                            </TableCell>
-                            <TableCell>
-                                <Price>R$ 199,98</Price>
-                            </TableCell>
-                            <TableCell>
-                                <RemoveButton onClick={() => handleRemoveItem('2')}>X</RemoveButton>
-                            </TableCell>
-                        </TableRow>
-                        {/* Adicione mais itens conforme necessário */}
+                        {cartItems.map(item => (
+                            <TableRow key={item.id}>
+                                <TableCell>
+                                    <ProdLink to={`/produto/${item.product_id}`}>
+                                        <ProductImage src={item.product_image} alt={item.product_name} />
+                                        <ProductName>{item.product_name}</ProductName>
+                                    </ProdLink>
+                                </TableCell>
+                                <TableCell>
+                                    <Quantity>{item.quantity}</Quantity>
+                                </TableCell>
+                                <TableCell>
+                                    <Price>R$ {item.price.toFixed(2)}</Price>
+                                </TableCell>
+                                <TableCell>
+                                    <RemoveButton onClick={() => handleRemoveItem(item.id)}>X</RemoveButton>
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </tbody>
                 </Table>
             </CartItemsContainer>
@@ -86,7 +111,7 @@ const CartPage: React.FC = () => {
                 <SummaryTitle>Resumo do Carrinho</SummaryTitle>
                 <SummaryItem>
                     <span>Total do Carrinho:</span>
-                    <span>R$ 299,97</span>
+                    <span>R$ {total.toFixed(2)}</span>
                 </SummaryItem>
                 <SummaryItem>
                     <span>Total do Frete:</span>
@@ -94,7 +119,7 @@ const CartPage: React.FC = () => {
                 </SummaryItem>
                 <SummaryTotal>
                     <span>Total:</span>
-                    <span>R$ 329,96</span>
+                    <span>R$ {(total + 29.99).toFixed(2)}</span>
                 </SummaryTotal>
                 <CheckoutButton onClick={handleCheckout}>Comprar</CheckoutButton>
             </CartSummaryContainer>
