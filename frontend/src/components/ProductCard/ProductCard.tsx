@@ -77,12 +77,35 @@ const ProductCard: React.FC<ProductCardProps> = ({ imageUrl, title, description,
     }
   };
 
-  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    // Lógica para adicionar ao carrinho
-    setPopupVisible(true);
-    setTimeout(() => setPopupVisible(false), 3000); // Oculta o popup após 3 segundos
+
+    const token = localStorage.getItem('accessToken');
+    if (!token) {
+      console.error('Usuário não autenticado');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/v1/cart/`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ product_id: idProduto, quantity: 1 }),
+      });
+
+      if (response.ok) {
+        setPopupVisible(true);
+        setTimeout(() => setPopupVisible(false), 3000); // Oculta o popup após 3 segundos
+      } else {
+        console.error('Failed to add product to cart');
+      }
+    } catch (error) {
+      console.error('Failed to add product to cart', error);
+    }
   };
 
   const handleNavigateToAddress = (e: React.MouseEvent<HTMLButtonElement>) => {
