@@ -19,7 +19,9 @@ import {
     CheckoutButton,
     ProdLink,
     ButtonContainer,
-    BackButton
+    BackButton,
+    CepInput,
+    CalculateShippingButton
 } from './index.styles.tsx';
 
 interface CartItem {
@@ -35,12 +37,14 @@ const CartPage: React.FC = () => {
     const navigate = useNavigate();
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [total, setTotal] = useState<number>(0);
+    const [cep, setCep] = useState<string>('');
+    const [freight, setFreight] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchCartItems = async () => {
             const accessToken = localStorage.getItem('accessToken');
             try {
-                const response = await axios.get('http://localhost:8000/api/v1/cart/', {
+                const response = await axios.get('http://localhost:8000/api/v1/carts/', {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                     },
@@ -75,6 +79,17 @@ const CartPage: React.FC = () => {
 
     const handleCheckout = () => {
         navigate('/enderecos-envio');
+    };
+
+    const handleCalculateShipping = async () => {
+        try {
+            const response = await axios.post('http://localhost:8000/api/v1/calculate-shipping/', {
+                cep,
+            });
+            setFreight(response.data.freight);
+        } catch (error) {
+            console.error('Failed to calculate shipping:', error);
+        }
     };
 
     return (
@@ -114,12 +129,23 @@ const CartPage: React.FC = () => {
                     <span>R$ {total.toFixed(2)}</span>
                 </SummaryItem>
                 <SummaryItem>
-                    <span>Total do Frete:</span>
-                    <span>R$ 29,99</span>
+                    <span>Digite seu CEP:</span>
+                    <CepInput 
+                        type="text"
+                        value={cep}
+                        onChange={(e) => setCep(e.target.value)}
+                    />
+                    <CalculateShippingButton onClick={handleCalculateShipping}>Calcular Frete</CalculateShippingButton>
                 </SummaryItem>
+                {freight !== null && (
+                    <SummaryItem>
+                        <span>Total do Frete:</span>
+                        <span>R$ {freight.toFixed(2)}</span>
+                    </SummaryItem>
+                )}
                 <SummaryTotal>
                     <span>Total:</span>
-                    <span>R$ {(total + 29.99).toFixed(2)}</span>
+                    <span>R$ {(total + (freight || 0)).toFixed(2)}</span>
                 </SummaryTotal>
                 <CheckoutButton onClick={handleCheckout}>Comprar</CheckoutButton>
             </CartSummaryContainer>
