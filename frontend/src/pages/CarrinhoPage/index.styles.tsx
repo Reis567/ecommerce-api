@@ -108,17 +108,33 @@ export const CheckoutButton = styled(Button)`
     margin-top: 20px;
 `;
 
-
 export const BackButton = styled(Button)`
-  background-color: #239271; 
-  color: white;
-  &:hover {
-    background-color: #1e8266;
-  }
+    background-color: #239271; 
+    color: white;
+    &:hover {
+        background-color: #1e8266;
+    }
 `;
 
-
 export const ButtonContainer = styled.div`
-  align-self: flex-start; 
-  margin-bottom: 20px;
+    align-self: flex-start; 
+    margin-bottom: 20px;
+`;
+
+export const CepInput = styled.input`
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 10px;
+`;
+
+export const CalculateShippingButton = styled(Button)`
+    background-color: #239271;
+    color: white;
+    &:hover {
+        background-color: #1e8266;
+    }
+    margin-top: 10px;
+    width: 100%;
 `;
