@@ -432,7 +432,6 @@ class ProductCommentListCreate(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, product_id=self.kwargs['product_id'])
 
-
 class CartViewSet(ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
@@ -444,22 +443,54 @@ class CartViewSet(ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-    @action(detail=True, methods=['post'])
-    def add_item(self, request, pk=None):
-        cart = self.get_object()
+    @action(detail=False, methods=['get'])
+    def list_items(self, request):
+        cart = Cart.objects.filter(user=request.user).first()
+        if not cart:
+            return Response({'items': [], 'total': 0})
+
+        cart_items = CartItem.objects.filter(cart=cart)
+        total = sum(item.product.price * item.quantity for item in cart_items)
+        items = [
+            {
+                'id': item.id,
+                'product_id': item.product.id,
+                'product_image': item.product.photo_product1.url if item.product.photo_product1 else None,
+                'product_name': item.product.title,
+                'quantity': item.quantity,
+                'price': item.product.price
+            } for item in cart_items
+        ]
+
+        return Response({'items': items, 'total': total})
+
+    @action(detail=False, methods=['post'])
+    def add_item(self, request):
         product_id = request.data.get('product_id')
         quantity = request.data.get('quantity', 1)
+
+        if not product_id:
+            return Response({'error': 'Product ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        cart, created = Cart.objects.get_or_create(user=request.user)
         product = get_object_or_404(Product, id=product_id)
         cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+
         if not created:
             cart_item.quantity += int(quantity)
         cart_item.save()
-        return Response({'status': 'item added'})
 
+        return Response({'status': 'item added'}, status=status.HTTP_200_OK)
+    
     @action(detail=True, methods=['post'])
     def remove_item(self, request, pk=None):
         cart = self.get_object()
         product_id = request.data.get('product_id')
+
+        if not product_id:
+            return Response({'error': 'Product ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+
         cart_item = get_object_or_404(CartItem, cart=cart, product_id=product_id)
         cart_item.delete()
-        return Response({'status': 'item removed'})
+
+        return Response({'status': 'item removed'}, status=status.HTTP_200_OK)
