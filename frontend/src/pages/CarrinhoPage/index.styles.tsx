@@ -40,14 +40,16 @@ export const TableCell = styled.td`
     text-align: center;
     vertical-align: middle;
 `;
+
 export const ProdLink = styled(Link)`
     display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: black;
-  text-decoration: None;
-`
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    text-decoration: none;
+`;
+
 export const TableRow = styled.tr`
     &:nth-child(even) {
         background-color: #f9f9f9;
@@ -90,51 +92,61 @@ export const SummaryTitle = styled.h2`
 export const SummaryItem = styled.div`
     display: flex;
     justify-content: space-between;
-    margin: 10px 0;
+    margin-bottom: 10px;
+    font-size: 16px;
 `;
 
-export const SummaryTotal = styled(SummaryItem)`
+export const SummaryTotal = styled.div`
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
     font-weight: bold;
-    font-size: 18px;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
 `;
 
 export const CheckoutButton = styled(Button)`
     background-color: #239271;
     color: white;
-    &:hover {
-        background-color: #1e8266;
-    }
-    align-self: center;
+    font-size: 18px;
     margin-top: 20px;
-`;
-
-export const BackButton = styled(Button)`
-    background-color: #239271; 
-    color: white;
     &:hover {
-        background-color: #1e8266;
+        background-color: #1e7a5f;
     }
 `;
 
 export const ButtonContainer = styled.div`
-    align-self: flex-start; 
     margin-bottom: 20px;
 `;
 
+export const BackButton = styled(Button)`
+    background-color: #1890ff;
+    color: white;
+    &:hover {
+        background-color: #096dd9;
+    }
+`;
+
 export const CepInput = styled.input`
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    margin-top: 10px;
+    padding: 5px;
+    margin-top: 5px;
 `;
 
 export const CalculateShippingButton = styled(Button)`
+    margin-top: 10px;
     background-color: #239271;
     color: white;
     &:hover {
-        background-color: #1e8266;
+        background-color: #1e7a5f;
     }
-    margin-top: 10px;
-    width: 100%;
 `;
+
+export const FreightOptionsContainer = styled.div`
+    margin-top: 10px;
+`;
+
+export const FreightOptionLabel = styled.label`
+    margin-left: 5px;
+`;
+

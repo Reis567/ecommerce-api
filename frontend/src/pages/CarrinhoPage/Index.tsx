@@ -36,8 +36,13 @@ interface CartItem {
 }
 
 interface FreightOption {
+    id: number;
     name: string;
-    price: number;
+    price: string;
+    custom_price: string;
+    discount: string;
+    company?: object;
+    error?: string;
 }
 
 const CartPage: React.FC = () => {
@@ -101,14 +106,20 @@ const CartPage: React.FC = () => {
             const response = await axios.post('http://localhost:8000/api/v1/calculate-shipping/', {
                 cep,
             });
-            setFreightOptions(response.data.freightOptions);
+            console.log('Shipping response:', response.data); // Adiciona um log para verificar a resposta
+            if (response.data && response.data.freight) {
+                setFreightOptions(response.data.freight);
+            } else {
+                console.error('Invalid response format:', response.data);
+                setFreightOptions([]); // Garante que `freightOptions` esteja definido
+            }
         } catch (error) {
             console.error('Failed to calculate shipping:', error);
         }
     };
 
-    const handleFreightSelection = (price: number) => {
-        setSelectedFreight(price);
+    const handleFreightSelection = (price: string) => {
+        setSelectedFreight(parseFloat(price));
     };
 
     return (
@@ -160,32 +171,30 @@ const CartPage: React.FC = () => {
                     />
                     <CalculateShippingButton onClick={handleCalculateShipping}>Calcular Frete</CalculateShippingButton>
                 </SummaryItem>
-                {freightOptions.length > 0 && (
+                {freightOptions && freightOptions.length > 0 && (
                     <FreightOptionsContainer>
                         {freightOptions.map((option, index) => (
-                            <SummaryItem key={index}>
-                                <input 
-                                    type="radio" 
-                                    name="freight" 
-                                    value={option.price} 
-                                    onChange={() => handleFreightSelection(option.price)}
-                                />
-                                <FreightOptionLabel>{option.name} - R$ {option.price.toFixed(2)}</FreightOptionLabel>
-                            </SummaryItem>
+                            option.error ? null : ( // Ignore options with errors
+                                <SummaryItem key={index}>
+                                    <input 
+                                        type="radio" 
+                                        name="freight" 
+                                        value={option.price} 
+                                        onChange={() => handleFreightSelection(option.price)}
+                                    />
+                                    <FreightOptionLabel>{option.name} - R$ {parseFloat(option.price).toFixed(2)}</FreightOptionLabel>
+                                </SummaryItem>
+                            )
                         ))}
                     </FreightOptionsContainer>
                 )}
                 {selectedFreight !== null && (
-                    <SummaryItem>
-                        <span>Total do Frete:</span>
-                        <span>R$ {selectedFreight.toFixed(2)}</span>
-                    </SummaryItem>
+                    <SummaryTotal>
+                        <span>Total com Frete:</span>
+                        <span>R$ {(total + selectedFreight).toFixed(2)}</span>
+                    </SummaryTotal>
                 )}
-                <SummaryTotal>
-                    <span>Total:</span>
-                    <span>R$ {(total + (selectedFreight || 0)).toFixed(2)}</span>
-                </SummaryTotal>
-                <CheckoutButton onClick={handleCheckout}>Comprar</CheckoutButton>
+                <CheckoutButton onClick={handleCheckout}>Finalizar Compra</CheckoutButton>
             </CartSummaryContainer>
         </CartContainer>
     );
