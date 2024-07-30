@@ -21,7 +21,9 @@ import {
     ButtonContainer,
     BackButton,
     CepInput,
-    CalculateShippingButton
+    CalculateShippingButton,
+    FreightOptionsContainer,
+    FreightOptionLabel
 } from './index.styles.tsx';
 
 interface CartItem {
@@ -33,12 +35,18 @@ interface CartItem {
     price: number;
 }
 
+interface FreightOption {
+    name: string;
+    price: number;
+}
+
 const CartPage: React.FC = () => {
     const navigate = useNavigate();
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [total, setTotal] = useState<number>(0);
     const [cep, setCep] = useState<string>('');
-    const [freight, setFreight] = useState<number | null>(null);
+    const [freightOptions, setFreightOptions] = useState<FreightOption[]>([]);
+    const [selectedFreight, setSelectedFreight] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchCartItems = async () => {
@@ -51,7 +59,6 @@ const CartPage: React.FC = () => {
                 });
                 if (response.data && response.data.items) {
                     setCartItems(response.data.items);
-                    console.log(response.data.items);
                     setTotal(response.data.total);
                 } else {
                     setCartItems([]);
@@ -67,8 +74,6 @@ const CartPage: React.FC = () => {
         fetchCartItems();
     }, []);
     
-    
-
     const handleRemoveItem = async (itemId: string) => {
         const accessToken = localStorage.getItem('accessToken');
         try {
@@ -96,10 +101,14 @@ const CartPage: React.FC = () => {
             const response = await axios.post('http://localhost:8000/api/v1/calculate-shipping/', {
                 cep,
             });
-            setFreight(response.data.freight);
+            setFreightOptions(response.data.freightOptions);
         } catch (error) {
             console.error('Failed to calculate shipping:', error);
         }
+    };
+
+    const handleFreightSelection = (price: number) => {
+        setSelectedFreight(price);
     };
 
     return (
@@ -151,15 +160,30 @@ const CartPage: React.FC = () => {
                     />
                     <CalculateShippingButton onClick={handleCalculateShipping}>Calcular Frete</CalculateShippingButton>
                 </SummaryItem>
-                {freight !== null && (
+                {freightOptions.length > 0 && (
+                    <FreightOptionsContainer>
+                        {freightOptions.map((option, index) => (
+                            <SummaryItem key={index}>
+                                <input 
+                                    type="radio" 
+                                    name="freight" 
+                                    value={option.price} 
+                                    onChange={() => handleFreightSelection(option.price)}
+                                />
+                                <FreightOptionLabel>{option.name} - R$ {option.price.toFixed(2)}</FreightOptionLabel>
+                            </SummaryItem>
+                        ))}
+                    </FreightOptionsContainer>
+                )}
+                {selectedFreight !== null && (
                     <SummaryItem>
                         <span>Total do Frete:</span>
-                        <span>R$ {freight.toFixed(2)}</span>
+                        <span>R$ {selectedFreight.toFixed(2)}</span>
                     </SummaryItem>
                 )}
                 <SummaryTotal>
                     <span>Total:</span>
-                    <span>R$ {(total + (freight || 0)).toFixed(2)}</span>
+                    <span>R$ {(total + (selectedFreight || 0)).toFixed(2)}</span>
                 </SummaryTotal>
                 <CheckoutButton onClick={handleCheckout}>Comprar</CheckoutButton>
             </CartSummaryContainer>
