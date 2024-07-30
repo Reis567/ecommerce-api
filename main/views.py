@@ -494,3 +494,21 @@ class CartViewSet(ModelViewSet):
         cart_item.delete()
 
         return Response({'status': 'item removed'}, status=status.HTTP_200_OK)
+    
+
+@api_view(['POST'])
+def calculate_shipping(request):
+    cep = request.data.get('cep')
+    if not cep:
+        return Response({'error': 'CEP is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        # Simulação do cálculo de frete
+        freight_cost = get_freight_cost(cep)
+        return Response({'freight': freight_cost}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+def get_freight_cost(cep):
+
+    return 20.00  # Valor fixo de frete para exemplo
