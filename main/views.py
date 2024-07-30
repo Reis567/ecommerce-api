@@ -15,6 +15,7 @@ from .models import *
 from django.http import JsonResponse
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
+import requests
 def welcome(request):
     return JsonResponse({'message': 'Bem-vindo à API!'})
 
@@ -503,12 +504,42 @@ def calculate_shipping(request):
         return Response({'error': 'CEP is required'}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        # Simulação do cálculo de frete
+        # Chamada à API de cálculo de frete da Melhor Envio
         freight_cost = get_freight_cost(cep)
         return Response({'freight': freight_cost}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-def get_freight_cost(cep):
+def get_freight_cost(to_cep):
+    url = 'https://www.melhorenvio.com.br/api/v2/me/shipment/calculate'
+    headers = {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiY2E5OWQzY2Y3YmZhMWFhNzU5ODRkNzNiMGU3NWRjNGQ4MjYyNDkzYjY2MTJjMzA0MmY3NzEzM2M5NWFlMDFjMjNmNTY5MWEyOWY3ZGExOWUiLCJpYXQiOjE3MjIzNTMxOTguNDIyMzk2LCJuYmYiOjE3MjIzNTMxOTguNDIyMzk4LCJleHAiOjE3NTM4ODkxOTguNDA1MjEyLCJzdWIiOiI5Y2E1YTcxYi1lY2QzLTRjZDktYjRhNC0xOGMwOGI1NDI4ODMiLCJzY29wZXMiOlsic2hpcHBpbmctY2FsY3VsYXRlIl19.NgkCixG2sKTMcj5y4-VDoi4_5M2rBVuy0R8RUcWUi1-qDu8PbdSndGhbLQAvRY6jYqut_89V9XToTSUBPl1rkiJhNtNOdRnbJleiwu-nvRefDgoR2MSfi_wUrPZ3UFG1yNPwcPohhjNfy_-_Ybt0CywIW0gQlsxypJxst2ooyhEgqcTnhQX76HHuaVOrnwhbHZnfIEpTIH1BR4U4dGgIAS7Gq6BzImGyax1xO6kbgcVvqjzbJchzaj3MYCGmgbcROozdT_60OnnFJFUeHAC30zQCzxHkws_DaiipQ_fAwzQ6RFiYEL21KrL_J3utp6eqRyA_BZyTCl70vYbwraV4bfmsBxbyYukC2CIDYt5XWLdlV3gjWOBexBIQbbWx3x0Kr3XS7vVyNj1zZIjK4Ncs0wIIbP4WAbsNn2lRDDaQhlCeTTz5JwTSWigM2LPLk9T0VyZ0FCvMEUynUWxXZzpRyDk6WjmSLBk6giiS_QidiVTiFGmz-BfsSkP7iOlhjg0-skOpT8EY-C6y0I1p-i09Rv0L086CqezE5fw6nhjPdGeOsho3bnwMrm6uqScf0-__B2H4pJVmNiDMyaNDraLQYB8QIgY25pBMvE0DQuKU1B9LruPRqqYw1OSWzbuIS5SB-W2pvSgUA3xWx_a3WGU3MrNfv4tkAs9XhRt8qnUf7Io',
+        'Content-Type': 'application/json',
+        'User-Agent': 'Aplicação matheusdosreis9@gmail.com'
+    }
+    payload = {
+        "from": {
+            "postal_code": "24930124"
+        },
+        "to": {
+            "postal_code": to_cep
+        },
+        "package": {
+            "height": 4,
+            "width": 12,
+            "length": 17,
+            "weight": 0.3
+        },
+        "services": "1,2,3,4,7,11"
+    }
 
-    return 20.00  # Valor fixo de frete para exemplo
+    response = requests.post(url, headers=headers, json=payload)
+    response.raise_for_status()
+    data = response.json()
+
+    # Processa a resposta conforme necessário
+    if isinstance(data, list):
+        return data
+    else:
+        raise Exception('Freight cost not found in the response')
