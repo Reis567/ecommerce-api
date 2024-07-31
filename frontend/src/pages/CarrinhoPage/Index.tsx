@@ -41,6 +41,7 @@ interface FreightOption {
     price: string;
     custom_price: string;
     discount: string;
+    delivery_time: number;
     company?: object;
     error?: string;
 }
@@ -106,12 +107,12 @@ const CartPage: React.FC = () => {
             const response = await axios.post('http://localhost:8000/api/v1/calculate-shipping/', {
                 cep,
             });
-            console.log('Shipping response:', response.data); // Adiciona um log para verificar a resposta
+            console.log('Shipping response:', response.data);
             if (response.data && response.data.freight) {
                 setFreightOptions(response.data.freight);
             } else {
                 console.error('Invalid response format:', response.data);
-                setFreightOptions([]); // Garante que `freightOptions` esteja definido
+                setFreightOptions([]);
             }
         } catch (error) {
             console.error('Failed to calculate shipping:', error);
@@ -182,7 +183,7 @@ const CartPage: React.FC = () => {
                                         value={option.price} 
                                         onChange={() => handleFreightSelection(option.price)}
                                     />
-                                    <FreightOptionLabel>{option.name} - R$ {parseFloat(option.price).toFixed(2)}</FreightOptionLabel>
+                                    <FreightOptionLabel>{option.name} - R$ {parseFloat(option.price).toFixed(2)} ({option.delivery_time} dias úteis)</FreightOptionLabel>
                                 </SummaryItem>
                             )
                         ))}
