@@ -200,3 +200,50 @@ export const StarsContainer = styled.div`
   display: flex;
   margin-bottom: 10px;
 `;
+
+export const CepInput = styled.input`
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+`;
+
+export const CalculateShippingButton = styled(Button)`
+  margin-top: 10px;
+  background-color: #4CAF50;
+  color: white;
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
+export const FreightOptionsContainer = styled.div`
+  margin-top: 20px;
+`;
+
+export const FreightOptionLabel = styled.label`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+`;
+
+export const CustomCheckbox = styled.input`
+  margin-right: 10px;
+`;
+
+export const CustomLabel = styled.label`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  &:hover {
+    background-color: #f1f1f1;
+  }
+`;
+
+export const FreteDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+`
