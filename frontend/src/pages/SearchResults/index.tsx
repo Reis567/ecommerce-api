@@ -1,38 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import ProductCard from '../../components/ProductCard/ProductCard'; // Assumindo que você tem um componente ProductCard
-import { Container, ProdDiv, LoadingMessage, ErrorMessage,Title } from './index.styles'; // Importando estilos
+import ProductCard from '../../components/ProductCard/ProductCard';
+import { Container, ProdDiv, LoadingMessage, ErrorMessage, Title, PaginationButton } from './index.styles';
 
 const SearchResults: React.FC = () => {
   const location = useLocation();
   const [products, setProducts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [nextPage, setNextPage] = useState<string | null>(null);
+  const [previousPage, setPreviousPage] = useState<string | null>(null);
 
   const baseUrl = 'http://127.0.0.1:8000'; // URL base do backend
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const query = new URLSearchParams(location.search).get('query');
-      if (!query) return;
-
-      try {
-        const response = await fetch(`http://127.0.0.1:8000/api/v1/search-products/?search=${query}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch search results');
-        }
-        const data = await response.json();
-        setProducts(data);
-      } catch (error) {
-        console.error('Failed to fetch search results:', error);
-        setError('Failed to fetch search results');
-      } finally {
-        setIsLoading(false);
+  const fetchData = async (url: string) => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Failed to fetch search results');
       }
-    };
+      const data = await response.json();
+      setProducts(data.results);
+      setNextPage(data.next);
+      setPreviousPage(data.previous);
+    } catch (error) {
+      console.error('Failed to fetch search results:', error);
+      setError('Failed to fetch search results');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    fetchData();
+  useEffect(() => {
+    const query = new URLSearchParams(location.search).get('query');
+    if (query) {
+      const url = `http://127.0.0.1:8000/api/v1/search-products/?search=${query}&limit=5&offset=0`;
+      fetchData(url);
+    }
   }, [location.search]);
+
+  const handleNextPage = () => {
+    if (nextPage) {
+      fetchData(nextPage);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (previousPage) {
+      fetchData(previousPage);
+    }
+  };
 
   if (isLoading) {
     return <LoadingMessage>Carregando...</LoadingMessage>;
@@ -66,6 +83,14 @@ const SearchResults: React.FC = () => {
           <p>Nenhum produto encontrado.</p>
         )}
       </ProdDiv>
+      <div>
+        <PaginationButton onClick={handlePreviousPage} disabled={!previousPage}>
+          Anterior
+        </PaginationButton>
+        <PaginationButton onClick={handleNextPage} disabled={!nextPage}>
+          Próxima
+        </PaginationButton>
+      </div>
     </Container>
   );
 };

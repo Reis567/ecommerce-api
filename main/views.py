@@ -15,6 +15,7 @@ from .models import *
 from django.http import JsonResponse
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
+from rest_framework.pagination import LimitOffsetPagination
 import requests
 def welcome(request):
     return JsonResponse({'message': 'Bem-vindo à API!'})
@@ -170,7 +171,6 @@ class ProductDetailView(generics.RetrieveAPIView):
         """
         return super().get(request, *args, **kwargs)
 
-
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def product_search_view(request):
@@ -190,9 +190,11 @@ def product_search_view(request):
             Q(tags__name__icontains=search_query)
         ).distinct()
 
-    print(f"Filtered queryset: {queryset}")
-    serializer = ProductSerializer(queryset, many=True)
-    return Response(serializer.data)
+    paginator = LimitOffsetPagination()
+    paginated_queryset = paginator.paginate_queryset(queryset, request)
+    serializer = ProductSerializer(paginated_queryset, many=True)
+
+    return paginator.get_paginated_response(serializer.data)
 
 
 class ProductCategoryListView(generics.ListAPIView):
