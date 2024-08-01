@@ -21,6 +21,7 @@ export const CartItemsContainer = styled.div`
 
 export const CartSummaryContainer = styled.div`
     width: 30%;
+    height: 50vh;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -85,68 +86,93 @@ export const RemoveButton = styled(Button)`
     }
 `;
 
-export const SummaryTitle = styled.h2`
-    text-align: center;
-`;
-
-export const SummaryItem = styled.div`
+export const SummarySection = styled.div`
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 16px;
-`;
-
-export const SummaryTotal = styled.div`
-    display: flex;
-    justify-content: space-between;
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 20px;
-    border-top: 1px solid #eee;
-    padding-top: 10px;
-`;
-
-export const CheckoutButton = styled(Button)`
-    background-color: #239271;
-    color: white;
-    font-size: 18px;
-    margin-top: 20px;
-    &:hover {
-        background-color: #1e7a5f;
-    }
-`;
-
-export const ButtonContainer = styled.div`
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 20px;
 `;
 
-export const BackButton = styled(Button)`
-    background-color: #1890ff;
-    color: white;
-    &:hover {
-        background-color: #096dd9;
-    }
+export const SummaryTitle = styled.h2`
+    font-size: 40px;
+    font-weight: bold;
+`;
+
+export const SummaryTotal = styled.span`
+    font-size: 54px;
+    font-weight: bold;
+    color: #239271;
+    text-align: center;
+
+`;
+
+export const CepSection = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0px;
+
+    font-size: 20px;
 `;
 
 export const CepInput = styled.input`
+    margin-left: 10px;
     padding: 5px;
-    margin-top: 5px;
+    font-size: 30px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    width: 60%;
+    max-width: 200px;
 `;
 
 export const CalculateShippingButton = styled(Button)`
-    margin-top: 10px;
+    margin-top: 20px;
     background-color: #239271;
+    font-size: 20px;
+    height: auto;
     color: white;
     &:hover {
-        background-color: #1e7a5f;
+        background-color: #1e7a61;
     }
 `;
 
 export const FreightOptionsContainer = styled.div`
-    margin-top: 10px;
+    margin-bottom: 20px;
 `;
 
 export const FreightOptionLabel = styled.label`
-    margin-left: 5px;
+    margin-left: 10px;
+    font-size: 16px;
+    color: #333;
 `;
 
+export const SummaryItem = styled.div`
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+`;
+
+export const CheckoutButton = styled(Button)`
+    background-color: #239271;
+    font-size: 20px;
+    height: auto;
+    color: white;
+    width: 100%;
+    &:hover {
+        background-color: #1e7a61;
+    }
+`;
+
+export const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+`;
+
+export const BackButton = styled(Button)`
+    background-color: #d9d9d9;
+    color: black;
+    &:hover {
+        background-color: #bfbfbf;
+    }
+`;

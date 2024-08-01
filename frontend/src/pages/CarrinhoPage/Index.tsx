@@ -23,7 +23,9 @@ import {
     CepInput,
     CalculateShippingButton,
     FreightOptionsContainer,
-    FreightOptionLabel
+    FreightOptionLabel,
+    SummarySection,
+    CepSection,
 } from './index.styles.tsx';
 
 interface CartItem {
@@ -158,20 +160,21 @@ const CartPage: React.FC = () => {
                 )}
             </CartItemsContainer>
             <CartSummaryContainer>
-                <SummaryTitle>Resumo do Carrinho</SummaryTitle>
-                <SummaryItem>
-                    <span>Total do Carrinho:</span>
-                    <span>R$ {total.toFixed(2)}</span>
-                </SummaryItem>
-                <SummaryItem>
-                    <span>Digite seu CEP:</span>
-                    <CepInput 
-                        type="text"
-                        value={cep}
-                        onChange={(e) => setCep(e.target.value)}
-                    />
+                <SummarySection>
+                    <SummaryTitle>Total</SummaryTitle>
+                    <SummaryTotal>R$ {total.toFixed(2)}</SummaryTotal>
+                </SummarySection>
+                <CepSection>
+                    <SummaryItem>
+                        <span>Digite seu CEP:</span>
+                        <CepInput 
+                            type="text"
+                            value={cep}
+                            onChange={(e) => setCep(e.target.value)}
+                        />
+                    </SummaryItem>
                     <CalculateShippingButton onClick={handleCalculateShipping}>Calcular Frete</CalculateShippingButton>
-                </SummaryItem>
+                </CepSection>
                 {freightOptions && freightOptions.length > 0 && (
                     <FreightOptionsContainer>
                         {freightOptions.map((option, index) => (
@@ -191,11 +194,12 @@ const CartPage: React.FC = () => {
                 )}
                 {selectedFreight !== null && (
                     <SummaryTotal>
-                        <span>Total com Frete:</span>
                         <span>R$ {(total + selectedFreight).toFixed(2)}</span>
                     </SummaryTotal>
                 )}
-                <CheckoutButton onClick={handleCheckout}>Finalizar Compra</CheckoutButton>
+                {selectedFreight !== null && (
+                    <CheckoutButton onClick={handleCheckout}>Finalizar Compra</CheckoutButton>
+                )}
             </CartSummaryContainer>
         </CartContainer>
     );
