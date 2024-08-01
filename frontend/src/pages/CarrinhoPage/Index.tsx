@@ -98,9 +98,7 @@ const CartPage: React.FC = () => {
         }
     };
 
-    const handleBackClick = () => {
-        navigate(-1);
-    };
+
 
     const handleCheckout = () => {
         navigate('/enderecos-envio');
@@ -130,9 +128,6 @@ const CartPage: React.FC = () => {
     return (
         <CartContainer>
             <CartItemsContainer>
-                <ButtonContainer>
-                    <BackButton onClick={handleBackClick}>Voltar</BackButton>
-                </ButtonContainer>
                 {cartItems.length > 0 ? (
                     <Table>
                         <tbody>

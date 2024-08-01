@@ -22,9 +22,7 @@ const CheckoutPage: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState('');
   const [showPaymentForm, setShowPaymentForm] = useState(false);
 
-  const handleBackClick = () => {
-    navigate(-1);
-  };
+
 
   const handleCheckoutClick = () => {
     // Lógica para concluir a compra
@@ -44,9 +42,7 @@ const CheckoutPage: React.FC = () => {
   return (
     <CheckoutContent>
       <CheckoutContainer>
-        <ButtonContainer>
-          <BackButton onClick={handleBackClick}>Voltar</BackButton>
-        </ButtonContainer>
+
         <CheckoutTitle>Checkout</CheckoutTitle>
         <TotalAmount>Total da Compra: R$ 299,97</TotalAmount>
         <PaymentMethodContainer>

@@ -21,9 +21,7 @@ import { useNavigate } from 'react-router-dom';
 const VendasVendedor: React.FC = () => {
   const navigate = useNavigate();
 
-  const handleBackClick = () => {
-    navigate(-1); // Volta para a página anterior
-  };
+
   const vendas = [
     {
       numero: '54321',
@@ -45,7 +43,6 @@ const VendasVendedor: React.FC = () => {
     <ComprasContent>
       
       <Container>
-      <BackButton onClick={handleBackClick}>Voltar</BackButton>
         <Header>Minhas Vendas</Header>
         <ListaCompras>
           {vendas.map((venda, index) => (

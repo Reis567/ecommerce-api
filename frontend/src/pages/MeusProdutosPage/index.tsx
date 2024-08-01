@@ -70,9 +70,7 @@ const MyProductsPage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const handleBackClick = () => {
-    navigate(-1);
-  };
+
 
   const handleEditProduct = (product: any) => {
     setEditingProduct(product);
@@ -126,7 +124,6 @@ const MyProductsPage: React.FC = () => {
   return (
     <Content>
       <Container>
-        <BackButton onClick={handleBackClick}>Voltar</BackButton>
         <Header>Meus Produtos</Header>
         <AddProductButton type="primary">Adicionar Produto</AddProductButton>
         <FilterContainer>

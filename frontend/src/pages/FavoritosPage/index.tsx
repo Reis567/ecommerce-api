@@ -78,9 +78,7 @@ const FavoritosPage: React.FC = () => {
     fetchFavorites();
   }, []);
 
-  const handleBackClick = () => {
-    navigate(-1);
-  };
+
 
   if (loading) {
     return <div>Loading...</div>;
@@ -93,9 +91,7 @@ const FavoritosPage: React.FC = () => {
   return (
     <FavoritesContent>
       <FavoritesContainer>
-        <ButtonContainer>
-          <BackButton onClick={handleBackClick}>Voltar</BackButton>
-        </ButtonContainer>
+
         <FavoritesTitle>Favoritos</FavoritesTitle>
         <Table>
           <tbody>

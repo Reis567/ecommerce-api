@@ -1,19 +1,24 @@
-import './App.css'
-import { Outlet } from 'react-router-dom'
-import  Header  from './components/Header/Header'
-import  Footer  from './components/Footer/Footer'
-
-
+import React from 'react';
+import { useNavigate, Outlet } from 'react-router-dom';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import './App.css';
 
 function App() {
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
 
   return (
     <>
-      <Header/>
-      <Outlet/>
-      <Footer/>
+      <Header />
+      <button className="back-button" onClick={handleBackClick}>Voltar</button>
+      <Outlet />
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

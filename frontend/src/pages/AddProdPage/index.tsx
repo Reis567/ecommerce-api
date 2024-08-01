@@ -20,10 +20,7 @@ const AddProductPage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
 
-  const navigate = useNavigate();
-  const handleBackClick = () => {
-    navigate(-1);
-  };
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,9 +35,7 @@ const AddProductPage: React.FC = () => {
 
   return (
     <Content>
-      <BackButton onClick={handleBackClick}>
-        Voltar
-      </BackButton>
+
       <Header>
         Adicionar Produto
       </Header>

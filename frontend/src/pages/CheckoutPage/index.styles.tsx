@@ -89,7 +89,3 @@ export const BackButton = styled(Button)`
   }
 `;
 
-export const ButtonContainer = styled.div`
-  align-self: flex-start; /* Alinha o botão de voltar à esquerda */
-  margin-bottom: 20px;
-`;

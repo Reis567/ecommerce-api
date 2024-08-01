@@ -13,15 +13,10 @@ const CategoriaPage: React.FC = () => {
   const { id, slug } = useParams<{ id: string; slug: string }>(); // Obtendo o ID e o slug da categoria dos parâmetros de rota
   const navigate = useNavigate();
 
-  // Função para lidar com o clique no botão de voltar
-  const handleBackClick = () => {
-    navigate(-1); // Volta para a página anterior
-  };
+
   return (
     <CategoContent>
-      <BackButtonContainer>
-        <BackButton onClick={handleBackClick}>Voltar</BackButton>
-      </BackButtonContainer>
+
       <CatTitle>Itens da Categoria {id} ({slug})</CatTitle>
       <CardCateg>
         <ProductCard

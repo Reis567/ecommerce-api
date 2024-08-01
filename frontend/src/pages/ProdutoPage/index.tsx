@@ -87,10 +87,6 @@ const ProdutoDetalhes: React.FC = () => {
     setTimeout(() => setPopupVisible(false), 3000);
   };
 
-  const handleBackClick = () => {
-    navigate(-1);
-  };
-
   const renderStars = () => {
     const rating = product.product_rating.length > 0 ? product.product_rating[0] : 0;
     return [...Array(5)].map((_, index) => (
@@ -129,7 +125,6 @@ const ProdutoDetalhes: React.FC = () => {
     <ProdContent>
       <ContentLeft>
         <BackButtonContainer>
-          <BackButton onClick={handleBackClick}>Voltar</BackButton>
         </BackButtonContainer>
         <BigImageContainer>
           <ImgS src={bigImage} alt={product.name} />

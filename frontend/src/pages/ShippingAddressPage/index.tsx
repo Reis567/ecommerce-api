@@ -24,9 +24,6 @@ const ShippingAddressPage: React.FC = () => {
   const handleSelectAddress = (address: string) => {
     setSelectedAddress(address);
   };
-  const handleBack = () => {
-    navigate(-1); // Navega para a página anterior
-  };
 
 
   const handleContinue = () => {
@@ -40,7 +37,6 @@ const ShippingAddressPage: React.FC = () => {
     <AddressContent>
       <AddressContainer>
       <BackButtonContainer>
-          <BackButton onClick={handleBack}>Voltar</BackButton>
         </BackButtonContainer>
         <AddressTitle>Selecione o Endereço de Envio</AddressTitle>
         <AddButton onClick={handleAddAddress}>Adicionar Novo Endereço</AddButton>

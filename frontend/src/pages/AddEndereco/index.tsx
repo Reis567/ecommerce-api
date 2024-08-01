@@ -14,10 +14,7 @@ const AddAddressPage: React.FC = () => {
 
 
 
-  const navigate = useNavigate();
-  const handleBackClick = () => {
-    navigate(-1);
-};
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Lógica para adicionar o endereço
@@ -32,9 +29,7 @@ const AddAddressPage: React.FC = () => {
 
   return (
     <Content>
-      <BackButton onClick={handleBackClick}>
-        Voltar
-      </BackButton>
+
       <Header>
         Adicionar Endereço
       </Header>

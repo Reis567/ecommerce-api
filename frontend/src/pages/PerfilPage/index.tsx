@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Header, InfoSection, InfoHeader, InfoContent, EditButton, AddButton, UserImage, Content, BackButton } from './index.styles';
 
 const ProfilePage: React.FC = () => {
-  const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -50,7 +49,6 @@ const ProfilePage: React.FC = () => {
 
   return (
     <Content>
-      <BackButton onClick={() => navigate(-1)}>Voltar</BackButton>
       <Header>Perfil do Usuário</Header>
       <Container>
         <InfoSection>
