@@ -170,10 +170,12 @@ export const ButtonContainer = styled.div`
 `;
 
 export const BackButton = styled(Button)`
-    background-color: #d9d9d9;
-    color: black;
+    background-color: #239271;
+    font-size: 20px;
+    height: auto;
+    color: white;
     &:hover {
-        background-color: #bfbfbf;
+        background-color: #1e7a61;
     }
 `;
 export const CustomCheckbox = styled.input`
