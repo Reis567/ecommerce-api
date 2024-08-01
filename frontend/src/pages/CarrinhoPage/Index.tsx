@@ -26,6 +26,8 @@ import {
     FreightOptionLabel,
     SummarySection,
     CepSection,
+    CustomCheckbox,   // Adicione esta linha
+    CustomLabel       // Adicione esta linha
 } from './index.styles.tsx';
 
 interface CartItem {
@@ -162,7 +164,13 @@ const CartPage: React.FC = () => {
             <CartSummaryContainer>
                 <SummarySection>
                     <SummaryTitle>Total</SummaryTitle>
-                    <SummaryTotal>R$ {total.toFixed(2)}</SummaryTotal>
+                    {selectedFreight === null ? (
+                        <SummaryTotal>R$ {total.toFixed(2)}</SummaryTotal>
+                    ) : (
+                        <SummaryTotal>
+                            <span>R$ {(total + selectedFreight).toFixed(2)}</span>
+                        </SummaryTotal>
+                    )}
                 </SummarySection>
                 <CepSection>
                     <SummaryItem>
@@ -180,22 +188,20 @@ const CartPage: React.FC = () => {
                         {freightOptions.map((option, index) => (
                             option.error ? null : ( // Ignore options with errors
                                 <SummaryItem key={index}>
-                                    <input 
-                                        type="radio" 
-                                        name="freight" 
-                                        value={option.price} 
-                                        onChange={() => handleFreightSelection(option.price)}
-                                    />
-                                    <FreightOptionLabel>{option.name} - R$ {parseFloat(option.price).toFixed(2)} ({option.delivery_time} dias úteis)</FreightOptionLabel>
+                                    <CustomLabel htmlFor={`freight-${index}`}>
+                                        <CustomCheckbox 
+                                            type="radio" 
+                                            name="freight" 
+                                            id={`freight-${index}`}
+                                            value={option.price} 
+                                            onChange={() => handleFreightSelection(option.price)}
+                                        />
+                                        <FreightOptionLabel>{option.name} - R$ {parseFloat(option.price).toFixed(2)} ({option.delivery_time} dias úteis)</FreightOptionLabel>
+                                    </CustomLabel>
                                 </SummaryItem>
                             )
                         ))}
                     </FreightOptionsContainer>
-                )}
-                {selectedFreight !== null && (
-                    <SummaryTotal>
-                        <span>R$ {(total + selectedFreight).toFixed(2)}</span>
-                    </SummaryTotal>
                 )}
                 {selectedFreight !== null && (
                     <CheckoutButton onClick={handleCheckout}>Finalizar Compra</CheckoutButton>

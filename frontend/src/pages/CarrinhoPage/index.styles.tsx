@@ -176,3 +176,18 @@ export const BackButton = styled(Button)`
         background-color: #bfbfbf;
     }
 `;
+export const CustomCheckbox = styled.input`
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+`;
+
+export const CustomLabel = styled.label`
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    ${CustomCheckbox} {
+        margin-right: 10px;
+    }
+`;
