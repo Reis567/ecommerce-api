@@ -4,6 +4,15 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+ORDERSTATUS_CHOICES = [
+        ('Esperando pagamento', 'Esperando pagamento'),
+        ('Pagamento confirmado', 'Pagamento confirmado'),
+        ('Nota fiscal emitida', 'Nota fiscal emitida'),
+        ('Enviado', 'Enviado'),
+        ('Entregue', 'Entregue'),
+        ('Devolvido', 'Devolvido'),
+        ('Cancelado', 'Cancelado'),
+    ]
 
 
 
@@ -117,12 +126,16 @@ class Favorite(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order_time = models.DateTimeField(auto_now_add=True)
-
-    created_at = models.DateTimeField(default=timezone.now) 
+    created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=20, choices=ORDERSTATUS_CHOICES, default='Esperando pagamento')
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    endereco_destino = models.CharField(max_length=255)
+    endereco_origem = models.CharField(max_length=255)
+    produtos = models.ManyToManyField('Product')
 
     def __str__(self):
-        return str(self.order_time)
+        return f'Order {self.id} - {self.order_time}'
 
 class OrderItems(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
