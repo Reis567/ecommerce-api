@@ -128,10 +128,10 @@ class Order(models.Model):
     order_time = models.DateTimeField(auto_now_add=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=20, choices=ORDERSTATUS_CHOICES, default='Esperando pagamento')
-    total = models.DecimalField(max_digits=10, decimal_places=2)
-    endereco_destino = models.CharField(max_length=255)
-    endereco_origem = models.CharField(max_length=255)
+    status = models.CharField(max_length=20, choices=ORDERSTATUS_CHOICES, default='Esperando pagamento' ,null=True,blank=True)
+    total = models.DecimalField(max_digits=10, decimal_places=2 ,null=True,blank=True)
+    endereco_destino = models.CharField(max_length=255 ,null=True,blank=True)
+    endereco_origem = models.CharField(max_length=255 ,null=True,blank=True)
     produtos = models.ManyToManyField('Product')
 
     def __str__(self):
