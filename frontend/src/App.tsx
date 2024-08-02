@@ -1,11 +1,12 @@
 import React from 'react';
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import './App.css';
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleBackClick = () => {
     navigate(-1);
@@ -14,7 +15,9 @@ function App() {
   return (
     <>
       <Header />
-      <button className="back-button" onClick={handleBackClick}>Voltar</button>
+      {location.pathname !== '/' && (
+        <button className="back-button" onClick={handleBackClick}>Voltar</button>
+      )}
       <Outlet />
       <Footer />
     </>
