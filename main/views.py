@@ -257,7 +257,7 @@ class OrderCreateView(generics.CreateAPIView):
         tags=['Orders'],
         request=OrderSerializer,
         responses={
-            201: OrderSerializer(),
+            201: OrderSerializer,
             400: "Bad Request - Invalid data provided"
         },
     )
@@ -269,11 +269,9 @@ class OrderCreateView(generics.CreateAPIView):
         """
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            # Salvar o pedido no banco de dados
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 class OrderDetailView(generics.RetrieveAPIView):
     queryset = Order.objects.all()
