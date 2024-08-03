@@ -143,7 +143,7 @@ class ProductConditionSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['id', 'customer', 'order_time']
+        fields = ['id', 'customer', 'order_time', 'status', 'total', 'endereco_destino', 'endereco_origem', 'produtos']
 
 
 class CustomerAddressSerializer(serializers.ModelSerializer):
