@@ -151,8 +151,7 @@ class OrderSerializer(serializers.ModelSerializer):
 class CustomerAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerAddress
-        fields = ['id','customer','address']
-        depth = 1
+        fields = ['id', 'customer', 'address', 'favorite_address']
         
 class FavoriteSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()  # Mostra o nome do usuário em vez do ID

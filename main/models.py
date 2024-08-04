@@ -125,11 +125,16 @@ class Favorite(models.Model):
 
 class CustomerAddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='customer_addresses')
-    address=models.TextField()
-    favorite_address  = models.BooleanField(default=False)
+    logradouro = models.CharField(max_length=255)
+    numero = models.CharField(max_length=20, blank=True, null=True)
+    bairro = models.CharField(max_length=255, blank=True, null=True)
+    estado = models.CharField(max_length=100)
+    pais = models.CharField(max_length=100)
+    cep = models.CharField(max_length=20, blank=True, null=True)
+    favorite_address = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.address
+        return f'{self.logradouro}, {self.numero} - {self.bairro}, {self.estado}, {self.pais} - {self.cep}'
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
