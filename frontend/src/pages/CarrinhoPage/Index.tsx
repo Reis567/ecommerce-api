@@ -80,10 +80,10 @@ const CartPage: React.FC = () => {
                 setTotal(0);
             }
         };
-    
+
         fetchCartItems();
     }, []);
-    
+
     const handleRemoveItem = async (itemId: string) => {
         const accessToken = localStorage.getItem('accessToken');
         try {
@@ -101,7 +101,7 @@ const CartPage: React.FC = () => {
 
 
     const handleCheckout = () => {
-        navigate('/enderecos-envio');
+        navigate('/enderecos/envio');
     };
 
     const handleCalculateShipping = async () => {
@@ -170,7 +170,7 @@ const CartPage: React.FC = () => {
                 <CepSection>
                     <SummaryItem>
                         <span>Digite seu CEP:</span>
-                        <CepInput 
+                        <CepInput
                             type="text"
                             value={cep}
                             onChange={(e) => setCep(e.target.value)}
@@ -184,11 +184,11 @@ const CartPage: React.FC = () => {
                             option.error ? null : ( // Ignore options with errors
                                 <SummaryItem key={index}>
                                     <CustomLabel htmlFor={`freight-${index}`}>
-                                        <CustomCheckbox 
-                                            type="radio" 
-                                            name="freight" 
+                                        <CustomCheckbox
+                                            type="radio"
+                                            name="freight"
                                             id={`freight-${index}`}
-                                            value={option.price} 
+                                            value={option.price}
                                             onChange={() => handleFreightSelection(option.price)}
                                         />
                                         <FreightOptionLabel>{option.name} - R$ {parseFloat(option.price).toFixed(2)} ({option.delivery_time} dias úteis)</FreightOptionLabel>

@@ -79,7 +79,7 @@ const ProdutoDetalhes: React.FC = () => {
   };
 
   const handleBuyClick = () => {
-    navigate('/enderecos-envio');
+    navigate('/enderecos/envio');
   };
 
   const handleAddToCart = () => {
@@ -142,33 +142,33 @@ const ProdutoDetalhes: React.FC = () => {
       </ContentLeft>
 
       <ContentRight>
-          <RightHead>
-            <ProdTitle>{product.name}</ProdTitle>
-            <StarsContainer>{renderStars()}</StarsContainer>
-            <ProdDesc>{product.description}</ProdDesc>
-          </RightHead>
-          <RightBody>
-            <ContPrice>
-              <Price>R${price}</Price>
-            </ContPrice>
-            <ContBtns>
-              <BuyBtn onClick={handleBuyClick}>
-                <FontAwesomeIcon icon={faDollarSign} />
-                Comprar
-              </BuyBtn>
-              <CartBtn onClick={handleAddToCart}>
-                <FontAwesomeIcon icon={faShoppingCart} />
-                Adicionar ao Carrinho
-              </CartBtn>
-              <FavBtn>
-                <FontAwesomeIcon icon={faHeart} />
-                Favoritar
-              </FavBtn>
+        <RightHead>
+          <ProdTitle>{product.name}</ProdTitle>
+          <StarsContainer>{renderStars()}</StarsContainer>
+          <ProdDesc>{product.description}</ProdDesc>
+        </RightHead>
+        <RightBody>
+          <ContPrice>
+            <Price>R${price}</Price>
+          </ContPrice>
+          <ContBtns>
+            <BuyBtn onClick={handleBuyClick}>
+              <FontAwesomeIcon icon={faDollarSign} />
+              Comprar
+            </BuyBtn>
+            <CartBtn onClick={handleAddToCart}>
+              <FontAwesomeIcon icon={faShoppingCart} />
+              Adicionar ao Carrinho
+            </CartBtn>
+            <FavBtn>
+              <FontAwesomeIcon icon={faHeart} />
+              Favoritar
+            </FavBtn>
           </ContBtns>
 
 
           <FreteDiv>
-            <CepInput 
+            <CepInput
               type="text"
               value={cep}
               onChange={(e) => setCep(e.target.value)}
