@@ -121,29 +121,31 @@ class Favorite(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.product}"
+    
 
+class CustomerAddress(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='customer_addresses')
+    address=models.TextField()
+    favorite_address  = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.address
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     order_time = models.DateTimeField(auto_now_add=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=20, choices=ORDERSTATUS_CHOICES, default='Esperando pagamento' ,null=True,blank=True)
-    total = models.DecimalField(max_digits=10, decimal_places=2 ,null=True,blank=True)
-    endereco_destino = models.CharField(max_length=255 ,null=True,blank=True)
-    endereco_origem = models.CharField(max_length=255 ,null=True,blank=True)
+    status = models.CharField(max_length=20, choices=ORDERSTATUS_CHOICES, default='Esperando pagamento', null=True, blank=True)
+    total = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    endereco_destino = models.ForeignKey(CustomerAddress, on_delete=models.SET_NULL, null=True, blank=True, related_name='orders_as_destination')
+    endereco_origem = models.CharField(max_length=255, null=True, blank=True)
     produtos = models.ManyToManyField('Product')
 
     def __str__(self):
         return f'Order {self.id} - {self.order_time}'
 
-class CustomerAddress(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE,related_name='customer_addresses')
-    address=models.TextField()
-    default_address = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.address
     
 class ProductRating(models.Model):
     RATING_CHOICES = [
