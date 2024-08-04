@@ -125,11 +125,11 @@ class Favorite(models.Model):
 
 class CustomerAddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='customer_addresses')
-    logradouro = models.CharField(max_length=255)
+    logradouro = models.CharField(max_length=255,default="VAZIO")
     numero = models.CharField(max_length=20, blank=True, null=True)
     bairro = models.CharField(max_length=255, blank=True, null=True)
-    estado = models.CharField(max_length=100)
-    pais = models.CharField(max_length=100)
+    estado = models.CharField(max_length=100,default="VAZIO")
+    pais = models.CharField(max_length=100,default="VAZIO")
     cep = models.CharField(max_length=20, blank=True, null=True)
     favorite_address = models.BooleanField(default=False)
 

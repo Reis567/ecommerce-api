@@ -272,6 +272,17 @@ class OrderCreateView(generics.CreateAPIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class CustomerAddressViewSet(ModelViewSet):
+    queryset = CustomerAddress.objects.all()
+    serializer_class = CustomerAddressSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_authenticated:
+            return CustomerAddress.objects.filter(user=user)
+        return CustomerAddress.objects.none()
         
 class OrderDetailView(generics.RetrieveAPIView):
     queryset = Order.objects.all()
@@ -317,11 +328,6 @@ class OrderDeleteView(generics.DestroyAPIView):
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-class CustomerAddressViewSet(ModelViewSet):
-    serializer_class = CustomerAddressSerializer
-    queryset = CustomerAddress.objects.all()
-    
-
 
 class ProductRatingViewSet(ModelViewSet):
     serializer_class = ProductRatingSerializer
