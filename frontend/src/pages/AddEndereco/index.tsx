@@ -5,32 +5,32 @@ import axios from 'axios';
 
 const AddAddressPage: React.FC = () => {
   const [cep, setCep] = useState('');
-  const [street, setStreet] = useState('');
-  const [number, setNumber] = useState('');
-  const [state, setState] = useState('');
-  const [city, setCity] = useState('');
-  const [country, setCountry] = useState('');
+  const [logradouro, setLogradouro] = useState('');
+  const [numero, setNumero] = useState('');
+  const [estado, setEstado] = useState('');
+  const [bairro, setBairro] = useState('');
+  const [pais, setPais] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newAddress = {
       cep,
-      street,
-      number,
-      state,
-      city,
-      country,
+      logradouro,
+      numero,
+      estado,
+      bairro,
+      pais,
     };
 
     try {
-      await axios.post('/api/v1/address/', newAddress);
+      const response = await axios.post('http://localhost:8000/api/v1/address/create/create_address/', newAddress);
+      console.log('Resposta da requisição:', response);
       navigate('/enderecos/meus_enderecos');
     } catch (error) {
       console.error('Erro ao adicionar endereço:', error);
     }
   };
-
 
   return (
     <Content>
@@ -47,36 +47,36 @@ const AddAddressPage: React.FC = () => {
           <Input
             type="text"
             placeholder="Logradouro"
-            value={street}
-            onChange={(e) => setStreet(e.target.value)}
+            value={logradouro}
+            onChange={(e) => setLogradouro(e.target.value)}
             required
           />
           <Input
             type="text"
             placeholder="Número"
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
+            value={numero}
+            onChange={(e) => setNumero(e.target.value)}
             required
           />
           <Input
             type="text"
             placeholder="Estado"
-            value={state}
-            onChange={(e) => setState(e.target.value)}
+            value={estado}
+            onChange={(e) => setEstado(e.target.value)}
             required
           />
           <Input
             type="text"
-            placeholder="Cidade"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
+            placeholder="Bairro"
+            value={bairro}
+            onChange={(e) => setBairro(e.target.value)}
             required
           />
           <Input
             type="text"
             placeholder="País"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
+            value={pais}
+            onChange={(e) => setPais(e.target.value)}
             required
           />
           <AntdButton type="primary" htmlType="submit">
