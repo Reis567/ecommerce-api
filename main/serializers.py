@@ -11,11 +11,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 # Serializer for Customer model
 class CustomerSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
     class Meta:
         model = Customer
-        fields = ['user', 'mobile', 'street', 'city', 'state', 'zip_code', 'created_at', 'updated_at']
+        fields = ['id', 'user', 'ddd_mobile', 'mobile', 'addresses', 'created_at', 'updated_at']
 
 # List serializer for Vendor model
 class VendorListSerializer(serializers.ModelSerializer):

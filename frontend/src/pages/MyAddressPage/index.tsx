@@ -33,21 +33,23 @@ const MyAddressesPage: React.FC = () => {
 
   const fetchAddresses = async () => {
     try {
-      const response = await axios.get('/api/v1/address/');
+      const response = await axios.get('http://localhost:8000/api/v1/address/');
       const data = response.data;
-      if (Array.isArray(data)) {
-        setAddresses(data);
-        const favorite = data.find((address) => address.is_favorite);
+      if (data.results && Array.isArray(data.results)) {
+        console.log(data.results)
+        setAddresses(data.results);
+        const favorite = data.results.find((address) => address.is_favorite);
         if (favorite) {
           setFavoriteAddressId(favorite.id);
         }
       } else {
-        console.error('Resposta da API não é um array:', data);
+        console.error('Resposta da API não contém o array "results":', data);
       }
     } catch (error) {
       console.error('Erro ao buscar endereços:', error);
     }
   };
+  
 
   const handleAddAddress = () => {
     navigate('/enderecos/adicionar');
