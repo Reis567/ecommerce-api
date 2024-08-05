@@ -47,15 +47,15 @@ class Vendor(models.Model):
 
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    mobile = models.PositiveBigIntegerField()
-    addresses = models.ManyToManyField(UserAddress, blank=True)
-
-    created_at = models.DateTimeField(default=timezone.now) 
+    ddd_mobile = models.PositiveSmallIntegerField(default="021")
+    mobile = models.CharField(max_length=255,blank=True, null=True)        # Campo para o número de telefone (apenas números)
+    addresses = models.ManyToManyField('UserAddress', blank=True)
+    
+    created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user.username
-
 class ProductCategory(models.Model):
     title = models.CharField(max_length=255)
     detail = models.TextField(blank=True, null=True)
