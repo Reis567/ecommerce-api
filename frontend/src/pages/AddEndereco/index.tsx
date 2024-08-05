@@ -1,37 +1,40 @@
 import React, { useState } from 'react';
-import { Container, Header, Form, Input, AntdButton, Content,BackButton } from './index.styles';
+import { Container, Header, Form, Input, AntdButton, Content } from './index.styles';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
 const AddAddressPage: React.FC = () => {
   const [cep, setCep] = useState('');
   const [street, setStreet] = useState('');
   const [number, setNumber] = useState('');
-  const [complement, setComplement] = useState('');
   const [state, setState] = useState('');
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
+  const navigate = useNavigate();
 
-
-
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Lógica para adicionar o endereço
-    console.log('CEP:', cep);
-    console.log('Logradouro:', street);
-    console.log('Número:', number);
-    console.log('Estado:', state);
-    console.log('Cidade:', city);
-    console.log('País:', country);
+    const newAddress = {
+      cep,
+      street,
+      number,
+      state,
+      city,
+      country,
+    };
+
+    try {
+      await axios.post('/api/v1/address/', newAddress);
+      navigate('/enderecos/meus_enderecos');
+    } catch (error) {
+      console.error('Erro ao adicionar endereço:', error);
+    }
   };
+
 
   return (
     <Content>
-
-      <Header>
-        Adicionar Endereço
-      </Header>
+      <Header>Adicionar Endereço</Header>
       <Container>
         <Form onSubmit={handleSubmit}>
           <Input

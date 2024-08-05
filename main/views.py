@@ -291,6 +291,11 @@ class CustomerAddressViewSet(ModelViewSet):
         address.is_favorite = True
         address.save()
         return Response({'status': 'endereço definido como favorito'})
+    
+    @action(detail=False, methods=['post'])
+    def create(self, request, *args, **kwargs):
+        print('Requisição recebida com os dados:', request.data)
+        return super().create(request, *args, **kwargs)
         
 class OrderDetailView(generics.RetrieveAPIView):
     queryset = Order.objects.all()
