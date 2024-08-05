@@ -298,13 +298,21 @@ class CustomerAddressCreateViewSet(GenericViewSet):
 
     @action(detail=False, methods=['post'])
     def create_address(self, request, *args, **kwargs):
-        print("Dados recebidos:", request.data)
-        serializer = self.get_serializer(data=request.data)
+        if not request.user.is_authenticated:
+            return Response({'error': 'Authentication credentials were not provided.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        user = request.user
+        # Garantir que o cliente existe ou criar um novo
+        customer, created = Customer.objects.get_or_create(user=user)
+        
+        data = request.data.copy()
+        data['customer'] = customer.id  # Corrigido para usar o ID do cliente
+        
+        serializer = self.get_serializer(data=data)
         if serializer.is_valid():
-            serializer.save(user=request.user)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            print("Erros de validação:", serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 class OrderDetailView(generics.RetrieveAPIView):

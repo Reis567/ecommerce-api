@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Header, Form, Input, AntdButton, Content } from './index.styles';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../../contexts/AuthContext'; // Importando o contexto de autenticação
 
 const AddAddressPage: React.FC = () => {
   const [cep, setCep] = useState('');
@@ -11,9 +12,16 @@ const AddAddressPage: React.FC = () => {
   const [bairro, setBairro] = useState('');
   const [pais, setPais] = useState('');
   const navigate = useNavigate();
+  const { userId } = useAuth(); // Obtendo o userId do contexto de autenticação
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!userId) {
+      console.error('User ID is not available');
+      return;
+    }
+
     const newAddress = {
       cep,
       logradouro,
@@ -21,10 +29,16 @@ const AddAddressPage: React.FC = () => {
       estado,
       bairro,
       pais,
+      customer: userId, // Incluindo o userId no payload
     };
 
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/address/create/create_address/', newAddress);
+      const response = await axios.post('http://localhost:8000/api/v1/address/create/create_address/', newAddress, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`, // Incluindo o token no cabeçalho
+        },
+      });
       console.log('Resposta da requisição:', response);
       navigate('/enderecos/meus_enderecos');
     } catch (error) {
