@@ -26,8 +26,8 @@ import {
     FreightOptionLabel,
     SummarySection,
     CepSection,
-    CustomCheckbox,   // Adicione esta linha
-    CustomLabel       // Adicione esta linha
+    CustomCheckbox,
+    CustomLabel
 } from './index.styles.tsx';
 
 interface CartItem {
@@ -57,6 +57,7 @@ const CartPage: React.FC = () => {
     const [cep, setCep] = useState<string>('');
     const [freightOptions, setFreightOptions] = useState<FreightOption[]>([]);
     const [selectedFreight, setSelectedFreight] = useState<number | null>(null);
+    const [userAddresses, setUserAddresses] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchCartItems = async () => {
@@ -81,7 +82,27 @@ const CartPage: React.FC = () => {
             }
         };
 
+        const fetchUserAddresses = async () => {
+            const accessToken = localStorage.getItem('accessToken');
+            try {
+                const response = await axios.get('http://localhost:8000/api/v1/addresses/', {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+                if (response.data && response.data.length > 0) {
+                    setUserAddresses(response.data);
+                    const defaultAddress = response.data.find((address: any) => address.favorite_address) || response.data[0];
+                    setCep(defaultAddress.cep);
+                    handleCalculateShipping(defaultAddress.cep);
+                }
+            } catch (error) {
+                console.error('Failed to fetch user addresses:', error);
+            }
+        };
+
         fetchCartItems();
+        fetchUserAddresses();
     }, []);
 
     const handleRemoveItem = async (itemId: string) => {
@@ -98,16 +119,14 @@ const CartPage: React.FC = () => {
         }
     };
 
-
-
     const handleCheckout = () => {
         navigate('/enderecos/envio');
     };
 
-    const handleCalculateShipping = async () => {
+    const handleCalculateShipping = async (cepValue?: string) => {
         try {
             const response = await axios.post('http://localhost:8000/api/v1/calculate-shipping/', {
-                cep,
+                cep: cepValue || cep,
             });
             console.log('Shipping response:', response.data);
             if (response.data && response.data.freight) {
@@ -167,21 +186,23 @@ const CartPage: React.FC = () => {
                         </SummaryTotal>
                     )}
                 </SummarySection>
-                <CepSection>
-                    <SummaryItem>
-                        <span>Digite seu CEP:</span>
-                        <CepInput
-                            type="text"
-                            value={cep}
-                            onChange={(e) => setCep(e.target.value)}
-                        />
-                    </SummaryItem>
-                    <CalculateShippingButton onClick={handleCalculateShipping}>Calcular Frete</CalculateShippingButton>
-                </CepSection>
+                {userAddresses.length === 0 && (
+                    <CepSection>
+                        <SummaryItem>
+                            <span>Digite seu CEP:</span>
+                            <CepInput
+                                type="text"
+                                value={cep}
+                                onChange={(e) => setCep(e.target.value)}
+                            />
+                        </SummaryItem>
+                        <CalculateShippingButton onClick={() => handleCalculateShipping()}>Calcular Frete</CalculateShippingButton>
+                    </CepSection>
+                )}
                 {freightOptions && freightOptions.length > 0 && (
                     <FreightOptionsContainer>
                         {freightOptions.map((option, index) => (
-                            option.error ? null : ( // Ignore options with errors
+                            option.error ? null : (
                                 <SummaryItem key={index}>
                                     <CustomLabel htmlFor={`freight-${index}`}>
                                         <CustomCheckbox

@@ -21,7 +21,6 @@ const AddAddressPage: React.FC = () => {
     console.log('CEP:', cep);
     console.log('Logradouro:', street);
     console.log('Número:', number);
-    console.log('Complemento:', complement);
     console.log('Estado:', state);
     console.log('Cidade:', city);
     console.log('País:', country);
@@ -55,12 +54,6 @@ const AddAddressPage: React.FC = () => {
             value={number}
             onChange={(e) => setNumber(e.target.value)}
             required
-          />
-          <Input
-            type="text"
-            placeholder="Complemento"
-            value={complement}
-            onChange={(e) => setComplement(e.target.value)}
           />
           <Input
             type="text"

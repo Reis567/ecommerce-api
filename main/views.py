@@ -283,6 +283,14 @@ class CustomerAddressViewSet(ModelViewSet):
         if user.is_authenticated:
             return CustomerAddress.objects.filter(user=user)
         return CustomerAddress.objects.none()
+
+    @action(detail=True, methods=['post'])
+    def set_favorite(self, request, pk=None):
+        address = self.get_object()
+        CustomerAddress.objects.filter(user=request.user).update(is_favorite=False)
+        address.is_favorite = True
+        address.save()
+        return Response({'status': 'endereço definido como favorito'})
         
 class OrderDetailView(generics.RetrieveAPIView):
     queryset = Order.objects.all()

@@ -1,5 +1,6 @@
-import React from 'react';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import React, { useState, useEffect } from 'react';
+import { EditOutlined, DeleteOutlined, StarOutlined } from '@ant-design/icons';
+import axios from 'axios';
 import { 
   AddressContainer, 
   AddressTitle, 
@@ -7,21 +8,71 @@ import {
   AddressItem, 
   AddButton,
   AddressContent,
-  AddressActions
+  AddressActions,
+  FavoriteIcon
 } from './index.styles';
+import { useNavigate } from 'react-router-dom';
+
+interface Address {
+  id: string;
+  street: string;
+  city: string;
+  state: string;
+  postal_code: string;
+  is_favorite: boolean;
+}
 
 const MyAddressesPage: React.FC = () => {
+  const [addresses, setAddresses] = useState<Address[]>([]);
+  const [favoriteAddressId, setFavoriteAddressId] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchAddresses();
+  }, []);
+
+  const fetchAddresses = async () => {
+    try {
+      const response = await axios.get('/api/v1/address/');
+      const data = response.data;
+      if (Array.isArray(data)) {
+        setAddresses(data);
+        const favorite = data.find((address) => address.is_favorite);
+        if (favorite) {
+          setFavoriteAddressId(favorite.id);
+        }
+      } else {
+        console.error('Resposta da API não é um array:', data);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar endereços:', error);
+    }
+  };
 
   const handleAddAddress = () => {
-    console.log('Adicionar novo endereço');
+    navigate('/enderecos/adicionar');
   };
 
-  const handleEditAddress = (address: string) => {
-    console.log('Editar endereço:', address);
+  const handleEditAddress = (addressId: string) => {
+    navigate(`/enderecos/editar/${addressId}`);
   };
 
-  const handleDeleteAddress = (address: string) => {
-    console.log('Excluir endereço:', address);
+  const handleDeleteAddress = async (addressId: string) => {
+    try {
+      await axios.delete(`/api/v1/address/${addressId}/`);
+      fetchAddresses();
+    } catch (error) {
+      console.error('Erro ao excluir endereço:', error);
+    }
+  };
+
+  const handleSetFavorite = async (addressId: string) => {
+    try {
+      await axios.post(`/api/v1/address/${addressId}/set_favorite/`);
+      setFavoriteAddressId(addressId);
+    } catch (error) {
+      console.error('Erro ao definir endereço favorito:', error);
+    }
   };
 
   return (
@@ -30,20 +81,25 @@ const MyAddressesPage: React.FC = () => {
         <AddressTitle>Meus Endereços</AddressTitle>
         <AddButton onClick={handleAddAddress}>Adicionar Novo Endereço</AddButton>
         <AddressList>
-          <AddressItem>
-            Rua Exemplo, 123, Cidade, Estado, CEP 12345-678
-            <AddressActions>
-              <EditOutlined onClick={() => handleEditAddress('Rua Exemplo, 123, Cidade, Estado, CEP 12345-678')} />
-              <DeleteOutlined onClick={() => handleDeleteAddress('Rua Exemplo, 123, Cidade, Estado, CEP 12345-678')} />
-            </AddressActions>
-          </AddressItem>
-          <AddressItem>
-            Avenida Exemplo, 456, Cidade, Estado, CEP 12345-678
-            <AddressActions>
-              <EditOutlined onClick={() => handleEditAddress('Avenida Exemplo, 456, Cidade, Estado, CEP 12345-678')} />
-              <DeleteOutlined onClick={() => handleDeleteAddress('Avenida Exemplo, 456, Cidade, Estado, CEP 12345-678')} />
-            </AddressActions>
-          </AddressItem>
+          {addresses.length > 0 ? (
+            addresses.map((address) => (
+              <AddressItem key={address.id}>
+                {address.street}, {address.city}, {address.state}, {address.postal_code}
+                <AddressActions>
+                  <EditOutlined onClick={() => handleEditAddress(address.id)} />
+                  <DeleteOutlined onClick={() => handleDeleteAddress(address.id)} />
+                  <FavoriteIcon 
+                    onClick={() => handleSetFavorite(address.id)} 
+                    isFavorite={address.id === favoriteAddressId}
+                  >
+                    <StarOutlined />
+                  </FavoriteIcon>
+                </AddressActions>
+              </AddressItem>
+            ))
+          ) : (
+            <p>Nenhum endereço encontrado.</p>
+          )}
         </AddressList>
       </AddressContainer>
     </AddressContent>

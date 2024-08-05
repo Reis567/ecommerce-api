@@ -4,7 +4,6 @@ import { Button } from 'antd';
 export const AddressContent = styled.div`
   width: 100%;
   min-height: 100vh;
-
 `;
 
 export const AddressContainer = styled.div`
@@ -59,6 +58,15 @@ export const AddressActions = styled.div`
     &:hover {
       color: #1e8266;
     }
+  }
+`;
+
+export const FavoriteIcon = styled.div<{ isFavorite: boolean }>`
+  color: ${props => (props.isFavorite ? 'gold' : 'gray')};
+  cursor: pointer;
+
+  &:hover {
+    color: gold;
   }
 `;
 
