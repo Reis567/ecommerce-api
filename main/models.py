@@ -19,7 +19,19 @@ ORDERSTATUS_CHOICES = [
 
 
 
-class UserAddress(models.Model):
+
+
+# Vendor models
+
+class Vendor(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now) 
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.user.username
+class VendorAddress(models.Model):
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name='vendor_addresses',default=1)
     street = models.CharField(max_length=255)
     number = models.CharField(max_length=20, null=True, blank=True)
     complement = models.CharField(max_length=255, null=True, blank=True)
@@ -27,35 +39,38 @@ class UserAddress(models.Model):
     city = models.CharField(max_length=100)
     zip_code = models.CharField(max_length=20)
     country = models.CharField(max_length=100)
+    favorite_address = models.BooleanField(default=False)
+
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.street}, {self.number} - {self.city}, {self.state}, {self.zip_code}"
 
-# Vendor models
-
-class Vendor(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    addresses = models.ManyToManyField(UserAddress, blank=True)
-
-    created_at = models.DateTimeField(default=timezone.now) 
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.user.username
-
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ddd_mobile = models.PositiveSmallIntegerField(default="021")
     mobile = models.CharField(max_length=255,blank=True, null=True)        # Campo para o número de telefone (apenas números)
-    addresses = models.ManyToManyField('UserAddress', blank=True)
     
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.user.username
+class CustomerAddress(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='customer_addresses')
+    logradouro = models.CharField(max_length=255,default="VAZIO")
+    numero = models.CharField(max_length=20, blank=True, null=True)
+    bairro = models.CharField(max_length=255, blank=True, null=True)
+    estado = models.CharField(max_length=100,default="VAZIO")
+    pais = models.CharField(max_length=100,default="VAZIO")
+    cep = models.CharField(max_length=20, blank=True, null=True)
+    favorite_address = models.BooleanField(default=False)
+    
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return f'{self.logradouro}, {self.numero} - {self.bairro}, {self.estado}, {self.pais} - {self.cep}'
 class ProductCategory(models.Model):
     title = models.CharField(max_length=255)
     detail = models.TextField(blank=True, null=True)
@@ -123,18 +138,7 @@ class Favorite(models.Model):
         return f"{self.user} - {self.product}"
     
 
-class CustomerAddress(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='customer_addresses')
-    logradouro = models.CharField(max_length=255,default="VAZIO")
-    numero = models.CharField(max_length=20, blank=True, null=True)
-    bairro = models.CharField(max_length=255, blank=True, null=True)
-    estado = models.CharField(max_length=100,default="VAZIO")
-    pais = models.CharField(max_length=100,default="VAZIO")
-    cep = models.CharField(max_length=20, blank=True, null=True)
-    favorite_address = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f'{self.logradouro}, {self.numero} - {self.bairro}, {self.estado}, {self.pais} - {self.cep}'
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
