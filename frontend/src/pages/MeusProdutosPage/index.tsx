@@ -8,7 +8,6 @@ import {
   PaginationContainer,
   AddProductButton,
   Content,
-  BackButton,
   ProductActions,
   EditButton,
   DeleteButton
@@ -23,6 +22,7 @@ const MyProductsPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [editingProduct, setEditingProduct] = useState<any>(null);
   const [form] = Form.useForm();
 
@@ -70,7 +70,10 @@ const MyProductsPage: React.FC = () => {
 
   const navigate = useNavigate();
 
-
+  const handleAddProduct = () => {
+    setIsAddModalVisible(true);
+    form.resetFields(); // Reseta os campos do formulário
+  };
 
   const handleEditProduct = (product: any) => {
     setEditingProduct(product);
@@ -87,9 +90,13 @@ const MyProductsPage: React.FC = () => {
     try {
       const values = form.getFieldsValue();
       const token = localStorage.getItem('accessToken');
+      const method = editingProduct ? 'PUT' : 'POST';
+      const url = editingProduct 
+        ? `http://127.0.0.1:8000/api/v1/products/${editingProduct.id}/` 
+        : 'http://127.0.0.1:8000/api/v1/products/';
 
-      const response = await fetch(`http://127.0.0.1:8000/api/v1/products/${editingProduct.id}/`, {
-        method: 'PUT',
+      const response = await fetch(url, {
+        method: method,
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -101,16 +108,18 @@ const MyProductsPage: React.FC = () => {
         throw new Error('Network response was not ok');
       }
 
-      // Atualiza a lista de produtos após a edição
+      // Atualiza a lista de produtos após a adição/edição
       fetchProducts();
       setIsModalVisible(false);
+      setIsAddModalVisible(false);
     } catch (error) {
-      console.error('Failed to update product', error);
+      console.error('Failed to update/add product', error);
     }
   };
 
   const handleModalCancel = () => {
     setIsModalVisible(false);
+    setIsAddModalVisible(false);
   };
 
   if (loading) {
@@ -125,7 +134,7 @@ const MyProductsPage: React.FC = () => {
     <Content>
       <Container>
         <Header>Meus Produtos</Header>
-        <AddProductButton type="primary">Adicionar Produto</AddProductButton>
+        <AddProductButton type="primary" onClick={handleAddProduct}>Adicionar Produto</AddProductButton>
         <FilterContainer>
           <Input 
             placeholder="Filtrar produtos..." 
@@ -156,8 +165,8 @@ const MyProductsPage: React.FC = () => {
       </Container>
       
       <Modal
-        title="Editar Produto"
-        visible={isModalVisible}
+        title={editingProduct ? "Editar Produto" : "Adicionar Produto"}
+        visible={isModalVisible || isAddModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalCancel}
       >

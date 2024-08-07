@@ -21,7 +21,6 @@ ORDERSTATUS_CHOICES = [
 
 
 
-# Vendor models
 
 class Vendor(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -71,6 +70,8 @@ class CustomerAddress(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
         return f'{self.logradouro}, {self.numero} - {self.bairro}, {self.estado}, {self.pais} - {self.cep}'
+    
+    
 class ProductCategory(models.Model):
     title = models.CharField(max_length=255)
     detail = models.TextField(blank=True, null=True)
