@@ -12,8 +12,9 @@ import {
   EditButton,
   DeleteButton
 } from './index.style';
-import { Input, Pagination, Modal, Form, Input as AntdInput } from 'antd';
+import { Input, Pagination, Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import ProductModal from '../../components/ProductInfoModal/ProductInfoModal'; // Importação correta
 
 const MyProductsPage: React.FC = () => {
   const [filter, setFilter] = useState('');
@@ -163,26 +164,14 @@ const MyProductsPage: React.FC = () => {
           />
         </PaginationContainer>
       </Container>
-      
-      <Modal
-        title={editingProduct ? "Editar Produto" : "Adicionar Produto"}
+
+      <ProductModal
         visible={isModalVisible || isAddModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalCancel}
-      >
-        <Form form={form} layout="vertical">
-          <Form.Item name="title" label="Título" rules={[{ required: true, message: 'Por favor insira o título do produto' }]}>
-            <AntdInput />
-          </Form.Item>
-          <Form.Item name="detail" label="Descrição">
-            <AntdInput.TextArea />
-          </Form.Item>
-          <Form.Item name="price" label="Preço" rules={[{ required: true, message: 'Por favor insira o preço do produto' }]}>
-            <AntdInput type="number" />
-          </Form.Item>
-          {/* Adicione mais campos conforme necessário */}
-        </Form>
-      </Modal>
+        form={form}
+        isEditing={!!editingProduct}
+      />
     </Content>
   );
 };
