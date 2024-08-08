@@ -28,7 +28,7 @@ const MyProductsPage: React.FC = () => {
   const [form] = Form.useForm();
 
   const fetchProducts = async () => {
-    const token = localStorage.getItem('accessToken'); // Supondo que você armazena o token no localStorage
+    const token = localStorage.getItem('accessToken');
     if (!token) {
       console.error('Usuário não autenticado');
       return;
@@ -73,17 +73,20 @@ const MyProductsPage: React.FC = () => {
 
   const handleAddProduct = () => {
     setIsAddModalVisible(true);
-    form.resetFields(); // Reseta os campos do formulário
+    form.resetFields();
   };
 
   const handleEditProduct = (product: any) => {
     setEditingProduct(product);
-    form.setFieldsValue(product);
+    form.setFieldsValue({
+      ...product,
+      tags: product.tags.map(tag => tag.id), // Ajusta as tags para serem exibidas corretamente
+    });
     setIsModalVisible(true);
   };
 
   const handleDeleteProduct = (id: number) => {
-    // Implement delete product logic here
+    // Implementar lógica de exclusão do produto
     console.log('Delete product', id);
   };
 
@@ -96,20 +99,35 @@ const MyProductsPage: React.FC = () => {
         ? `http://127.0.0.1:8000/api/v1/products/${editingProduct.id}/` 
         : 'http://127.0.0.1:8000/api/v1/products/';
 
+      // Tratando as imagens e criando o FormData para envio
+      const formData = new FormData();
+      formData.append('title', values.title);
+      formData.append('detail', values.detail);
+      formData.append('price', values.price);
+      formData.append('category', values.category);
+      formData.append('condition', values.condition);
+      formData.append('vendor', values.vendor);
+
+      values.tags.forEach(tag => formData.append('tags', tag));
+      
+      if (values.photo_product1) formData.append('photo_product1', values.photo_product1.file.originFileObj);
+      if (values.photo_product2) formData.append('photo_product2', values.photo_product2.file.originFileObj);
+      if (values.photo_product3) formData.append('photo_product3', values.photo_product3.file.originFileObj);
+      if (values.photo_product4) formData.append('photo_product4', values.photo_product4.file.originFileObj);
+      if (values.photo_product5) formData.append('photo_product5', values.photo_product5.file.originFileObj);
+
       const response = await fetch(url, {
         method: method,
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(values)
+        body: formData
       });
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
 
-      // Atualiza a lista de produtos após a adição/edição
       fetchProducts();
       setIsModalVisible(false);
       setIsAddModalVisible(false);
