@@ -32,16 +32,16 @@ export const ProductList = styled.div`
   width: 100%;
   justify-content: center;
 `;
-
 export const ProductItem = styled.div`
   padding: 16px;
-  width: 200px;
+  width: 300px; /* Ajuste o tamanho conforme necessário */
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 export const PaginationContainer = styled.div`
@@ -91,4 +91,19 @@ export const DeleteButton = styled(Button)`
   &:hover {
     background-color: #e53935;
   }
+`;
+export const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+export const ProductImage = styled.img`
+  width: 100%; /* Ajusta a imagem para preencher a largura do card */
+  height: auto;
+  max-height: 150px; /* Define uma altura máxima para as imagens */
+  object-fit: cover; /* Mantém a proporção da imagem e cobre o container */
+  border-radius: 4px;
+  margin-bottom: 10px; /* Espaço entre as imagens */
 `;

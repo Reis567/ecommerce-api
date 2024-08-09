@@ -10,7 +10,9 @@ import {
   Content,
   ProductActions,
   EditButton,
-  DeleteButton
+  DeleteButton,
+  ImageContainer,
+  ProductImage
 } from './index.style';
 import { Input, Pagination, Form, Tag } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -216,27 +218,28 @@ const MyProductsPage: React.FC = () => {
           />
         </FilterContainer>
         <ProductList>
-          {paginatedProducts?.map(product => (
-            <ProductItem key={product.id}>
-              <h3>{product.title}</h3>
-              <p>{product.detail}</p>
-              <div>
-                {product.images.map((image, index) => 
-                  image ? <img key={index} src={image} alt={`Product Image ${index + 1}`} style={{ width: '50px', marginRight: '10px' }} /> : null
-                )}
-              </div>
-              <div>
-                {product.tags.map(tag => (
-                  <Tag key={tag.id}>{tag.name}</Tag>
-                ))}
-              </div>
-              <ProductActions>
-                <EditButton onClick={() => handleEditProduct(product)}>Editar</EditButton>
-                <DeleteButton onClick={() => handleDeleteProduct(product.id)}>Excluir</DeleteButton>
-              </ProductActions>
-            </ProductItem>
-          ))}
-        </ProductList>
+        {paginatedProducts?.map(product => (
+          <ProductItem key={product.id}>
+            <h3>{product.title}</h3>
+            <p>{product.detail}</p>
+            <ImageContainer>
+              {product.images.map((image, index) => 
+                image ? <ProductImage key={index} src={`http://127.0.0.1:8000${image}`} alt={`Product Image ${index + 1}`} /> : null
+              )}
+            </ImageContainer>
+            <div>
+              {product.tags.map(tag => (
+                <Tag key={tag.id}>{tag.name}</Tag>
+              ))}
+            </div>
+            <ProductActions>
+              <EditButton onClick={() => handleEditProduct(product)}>Editar</EditButton>
+              <DeleteButton onClick={() => handleDeleteProduct(product.id)}>Excluir</DeleteButton>
+            </ProductActions>
+          </ProductItem>
+        ))}
+      </ProductList>
+
         <PaginationContainer>
           <Pagination 
             current={currentPage} 
