@@ -28,8 +28,11 @@ urlpatterns = [
     path('search-products/', product_search_view, name='product-search'),
     path('products/<int:product_id>/comments/', ProductCommentListCreate.as_view(), name='product-comments'),
 
-    ##Products category
+
+    # Products category, condition, and tags
     path('categories/', ProductCategoryListView.as_view(), name='category-list'),
+    path('conditions/', ProductConditionListView.as_view(), name='condition-list'),
+    path('tags/', ProductTagListView.as_view(), name='tag-list'),
     path('categories/<int:pk>/', ProductCategoryDetailView.as_view(), name='category-detail'),
 
     ##Orders 

@@ -3,30 +3,35 @@ import { Modal, Form, Input as AntdInput, Select, Upload, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 interface ProductModalProps {
-  visible: boolean;
+  open: boolean;
   onOk: () => void;
   onCancel: () => void;
   form: any;
   isEditing: boolean;
-  categories: any[]; // Lista de categorias de produtos
-  conditions: any[]; // Lista de condições de produtos
-  tags: any[]; // Lista de tags de produtos
+  categories: { count: number; next: string | null; previous: string | null; results: Array<{ id: number; title: string; detail: string }> };
+  conditions: { count: number; next: string | null; previous: string | null; results: Array<{ id: number; condition: string }> };
+  tags: { count: number; next: string | null; previous: string | null; results: Array<{ id: number; name: string }> };
 }
 
 const ProductModal: React.FC<ProductModalProps> = ({
-  visible,
+  open,
   onOk,
   onCancel,
   form,
   isEditing,
-  categories,
-  conditions,
-  tags,
+  categories = { count: 0, next: null, previous: null, results: [] },
+  conditions = { count: 0, next: null, previous: null, results: [] },
+  tags = { count: 0, next: null, previous: null, results: [] },
 }) => {
+  // Acessando o array de resultados
+  const categoryOptions = categories.results;
+  const conditionOptions = conditions.results;
+  const tagOptions = tags.results;
+
   return (
     <Modal
       title={isEditing ? 'Editar Produto' : 'Adicionar Produto'}
-      visible={visible}
+      open={open}
       onOk={onOk}
       onCancel={onCancel}
     >
@@ -54,9 +59,9 @@ const ProductModal: React.FC<ProductModalProps> = ({
           rules={[{ required: true, message: 'Por favor selecione a categoria do produto' }]}
         >
           <Select>
-            {categories.map(category => (
+            {categoryOptions.map(category => (
               <Select.Option key={category.id} value={category.id}>
-                {category.name}
+                {category.title}
               </Select.Option>
             ))}
           </Select>
@@ -67,19 +72,16 @@ const ProductModal: React.FC<ProductModalProps> = ({
           rules={[{ required: true, message: 'Por favor selecione a condição do produto' }]}
         >
           <Select>
-            {conditions.map(condition => (
+            {conditionOptions.map(condition => (
               <Select.Option key={condition.id} value={condition.id}>
-                {condition.name}
+                {condition.condition}
               </Select.Option>
             ))}
           </Select>
         </Form.Item>
-        <Form.Item
-          name="tags"
-          label="Tags"
-        >
+        <Form.Item name="tags" label="Tags">
           <Select mode="multiple" placeholder="Selecione tags">
-            {tags.map(tag => (
+            {tagOptions.map(tag => (
               <Select.Option key={tag.id} value={tag.id}>
                 {tag.name}
               </Select.Option>

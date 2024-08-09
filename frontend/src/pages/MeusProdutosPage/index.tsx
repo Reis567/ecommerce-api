@@ -12,14 +12,17 @@ import {
   EditButton,
   DeleteButton
 } from './index.style';
-import { Input, Pagination, Form } from 'antd';
+import { Input, Pagination, Form, Tag } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import ProductModal from '../../components/ProductInfoModal/ProductInfoModal'; // Importação correta
+import ProductModal from '../../components/ProductInfoModal/ProductInfoModal';
 
 const MyProductsPage: React.FC = () => {
   const [filter, setFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState<any[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [conditions, setConditions] = useState<any[]>([]);
+  const [tags, setTags] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -46,6 +49,7 @@ const MyProductsPage: React.FC = () => {
       }
 
       const data = await response.json();
+      console.log('Fetched products:', data);
       setProducts(data);
     } catch (error) {
       setError('Failed to fetch vendor products');
@@ -54,8 +58,59 @@ const MyProductsPage: React.FC = () => {
     }
   };
 
+  const fetchCategories = async () => {
+    const token = localStorage.getItem('accessToken');
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/categories/', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      console.log('Fetched categories:', data);
+      setCategories(data);
+    } catch (error) {
+      console.error('Failed to fetch categories', error);
+    }
+  };
+
+  const fetchConditions = async () => {
+    const token = localStorage.getItem('accessToken');
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/conditions/', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      console.log('Fetched conditions:', data);
+      setConditions(data);
+    } catch (error) {
+      console.error('Failed to fetch conditions', error);
+    }
+  };
+
+  const fetchTags = async () => {
+    const token = localStorage.getItem('accessToken');
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/tags/', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      const data = await response.json();
+      console.log('Fetched tags:', data);
+      setTags(data);
+    } catch (error) {
+      console.error('Failed to fetch tags', error);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
+    fetchConditions();
+    fetchTags();
   }, []);
 
   const filteredProducts = products.filter(product => 
@@ -80,7 +135,7 @@ const MyProductsPage: React.FC = () => {
     setEditingProduct(product);
     form.setFieldsValue({
       ...product,
-      tags: product.tags.map(tag => tag.id), // Ajusta as tags para serem exibidas corretamente
+      tags: product.tags.map(tag => tag.id),
     });
     setIsModalVisible(true);
   };
@@ -99,7 +154,6 @@ const MyProductsPage: React.FC = () => {
         ? `http://127.0.0.1:8000/api/v1/products/${editingProduct.id}/` 
         : 'http://127.0.0.1:8000/api/v1/products/';
 
-      // Tratando as imagens e criando o FormData para envio
       const formData = new FormData();
       formData.append('title', values.title);
       formData.append('detail', values.detail);
@@ -162,10 +216,20 @@ const MyProductsPage: React.FC = () => {
           />
         </FilterContainer>
         <ProductList>
-          {paginatedProducts.map(product => (
+          {paginatedProducts?.map(product => (
             <ProductItem key={product.id}>
               <h3>{product.title}</h3>
               <p>{product.detail}</p>
+              <div>
+                {product.images.map((image, index) => 
+                  image ? <img key={index} src={image} alt={`Product Image ${index + 1}`} style={{ width: '50px', marginRight: '10px' }} /> : null
+                )}
+              </div>
+              <div>
+                {product.tags.map(tag => (
+                  <Tag key={tag.id}>{tag.name}</Tag>
+                ))}
+              </div>
               <ProductActions>
                 <EditButton onClick={() => handleEditProduct(product)}>Editar</EditButton>
                 <DeleteButton onClick={() => handleDeleteProduct(product.id)}>Excluir</DeleteButton>
@@ -184,12 +248,16 @@ const MyProductsPage: React.FC = () => {
       </Container>
 
       <ProductModal
-        visible={isModalVisible || isAddModalVisible}
+        open={isModalVisible || isAddModalVisible}
         onOk={handleModalOk}
         onCancel={handleModalCancel}
         form={form}
         isEditing={!!editingProduct}
+        categories={categories}
+        conditions={conditions}
+        tags={tags}
       />
+
     </Content>
   );
 };

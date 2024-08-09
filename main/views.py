@@ -198,23 +198,6 @@ def product_search_view(request):
     return paginator.get_paginated_response(serializer.data)
 
 
-class ProductCategoryListView(generics.ListAPIView):
-    queryset = ProductCategory.objects.all()
-    serializer_class = ProductCategorySerializer
-    permission_classes = [permissions.AllowAny]
-
-    @extend_schema(
-        description='List all product categories',
-        tags=['Products'],
-        responses={200: ProductCategorySerializer(many=True)},
-    )
-    def get(self, request, *args, **kwargs):
-        """
-        List all product categories.
-
-        This endpoint retrieves a list of all product categories available.
-        """
-        return super().get(request, *args, **kwargs)
 
 class ProductCategoryDetailView(generics.RetrieveAPIView):
     queryset = ProductCategory.objects.all()
@@ -436,14 +419,29 @@ def vendor_products(request):
     try:
         vendor = Vendor.objects.get(user=user)
         products = Product.objects.filter(vendor=vendor)
-        serializer = ProductSerializer(products, many=True)
+        
+        # Serializar os produtos
+        serializer = ProductDetailSerializer(products, many=True)
+        
+        # Printar os campos de cada produto
+        for product in products:
+            print(f"Product ID: {product.id}")
+            print(f"Price: {product.price}")
+            print(f"Title: {product.title}")
+            print(f"Vendor: {product.vendor}")
+            print(f"Category: {product.category}")
+            print(f"Detail: {product.detail}")
+            print(f"Condition: {product.condition}")
+            print(f"Product Rating: {[rating for rating in product.product_rating.all()]}")
+            print(f"Tags: {[tag.name for tag in product.tags.all()]}")
+            print(f"Images: {[product.photo_product1.url if product.photo_product1 else None, product.photo_product2.url if product.photo_product2 else None, product.photo_product3.url if product.photo_product3 else None, product.photo_product4.url if product.photo_product4 else None, product.photo_product5.url if product.photo_product5 else None]}")
+
         return Response(serializer.data)
     except Vendor.DoesNotExist:
         return Response({'error': 'Vendor not found'}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         print(e)
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
 
 
 @api_view(['GET'])
@@ -580,3 +578,18 @@ def get_freight_cost(to_cep):
         return data
     else:
         raise Exception('Freight cost not found in the response')
+    
+
+
+
+class ProductCategoryListView(generics.ListAPIView):
+    queryset = ProductCategory.objects.all()
+    serializer_class = ProductCategorySerializer
+
+class ProductConditionListView(generics.ListAPIView):
+    queryset = ProductCondition.objects.all()
+    serializer_class = ProductConditionSerializer
+
+class ProductTagListView(generics.ListAPIView):
+    queryset = ProductTag.objects.all()
+    serializer_class = ProductTagSerializer
