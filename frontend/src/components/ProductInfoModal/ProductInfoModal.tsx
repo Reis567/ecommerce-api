@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, Form, Input as AntdInput, Select, Upload, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
@@ -23,10 +23,41 @@ const ProductModal: React.FC<ProductModalProps> = ({
   conditions = { count: 0, next: null, previous: null, results: [] },
   tags = { count: 0, next: null, previous: null, results: [] },
 }) => {
-  // Acessando o array de resultados
   const categoryOptions = categories.results;
   const conditionOptions = conditions.results;
   const tagOptions = tags.results;
+
+  const getImageFileList = (url) => {
+    return url ? [{ uid: url, name: url.split('/').pop(), status: 'done', url }] : [];
+  };
+
+  const getInitialFileList = () => {
+    const product = form.getFieldsValue(true); // Get the latest values from the form
+    console.log('Product Images:', product.images); // Log the product images to debug
+    return {
+      photo_product1: getImageFileList(product.images[0]),
+      photo_product2: getImageFileList(product.images[1]),
+      photo_product3: getImageFileList(product.images[2]),
+      photo_product4: getImageFileList(product.images[3]),
+      photo_product5: getImageFileList(product.images[4])
+    };
+  };
+
+  useEffect(() => {
+    if (isEditing && open) {
+      const product = form.getFieldsValue(true); // Get the latest values from the form
+      console.log('Imagem 1:', product.images[0]); // Log the first image URL
+      console.log('Initial File List:', getInitialFileList()); // Log the initial file list
+      // Update the form fields to set the initial file list
+      form.setFieldsValue({
+        photo_product1: getInitialFileList().photo_product1,
+        photo_product2: getInitialFileList().photo_product2,
+        photo_product3: getInitialFileList().photo_product3,
+        photo_product4: getInitialFileList().photo_product4,
+        photo_product5: getInitialFileList().photo_product5
+      });
+    }
+  }, [isEditing, open, form]);
 
   return (
     <Modal
@@ -89,27 +120,52 @@ const ProductModal: React.FC<ProductModalProps> = ({
           </Select>
         </Form.Item>
         <Form.Item name="photo_product1" label="Foto 1">
-          <Upload name="photo_product1" listType="picture">
+          <Upload
+            name="photo_product1"
+            listType="picture"
+            defaultFileList={isEditing ? getInitialFileList().photo_product1 : []}
+            onChange={(info) => console.log('Imagem 1:', info.fileList)}
+          >
             <Button icon={<UploadOutlined />}>Upload</Button>
           </Upload>
         </Form.Item>
         <Form.Item name="photo_product2" label="Foto 2">
-          <Upload name="photo_product2" listType="picture">
+          <Upload
+            name="photo_product2"
+            listType="picture"
+            defaultFileList={isEditing ? getInitialFileList().photo_product2 : []}
+            onChange={(info) => console.log('Imagem 2:', info.fileList)}
+          >
             <Button icon={<UploadOutlined />}>Upload</Button>
           </Upload>
         </Form.Item>
         <Form.Item name="photo_product3" label="Foto 3">
-          <Upload name="photo_product3" listType="picture">
+          <Upload
+            name="photo_product3"
+            listType="picture"
+            defaultFileList={isEditing ? getInitialFileList().photo_product3 : []}
+            onChange={(info) => console.log('Imagem 3:', info.fileList)}
+          >
             <Button icon={<UploadOutlined />}>Upload</Button>
           </Upload>
         </Form.Item>
         <Form.Item name="photo_product4" label="Foto 4">
-          <Upload name="photo_product4" listType="picture">
+          <Upload
+            name="photo_product4"
+            listType="picture"
+            defaultFileList={isEditing ? getInitialFileList().photo_product4 : []}
+            onChange={(info) => console.log('Imagem 4:', info.fileList)}
+          >
             <Button icon={<UploadOutlined />}>Upload</Button>
           </Upload>
         </Form.Item>
         <Form.Item name="photo_product5" label="Foto 5">
-          <Upload name="photo_product5" listType="picture">
+          <Upload
+            name="photo_product5"
+            listType="picture"
+            defaultFileList={isEditing ? getInitialFileList().photo_product5 : []}
+            onChange={(info) => console.log('Imagem 5:', info.fileList)}
+          >
             <Button icon={<UploadOutlined />}>Upload</Button>
           </Upload>
         </Form.Item>

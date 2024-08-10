@@ -51,7 +51,7 @@ const MyProductsPage: React.FC = () => {
       }
 
       const data = await response.json();
-      console.log('Fetched products:', data);
+      //console.log('Fetched products:', data);
       setProducts(data);
     } catch (error) {
       setError('Failed to fetch vendor products');
@@ -69,7 +69,7 @@ const MyProductsPage: React.FC = () => {
         }
       });
       const data = await response.json();
-      console.log('Fetched categories:', data);
+      //console.log('Fetched categories:', data);
       setCategories(data);
     } catch (error) {
       console.error('Failed to fetch categories', error);
@@ -85,7 +85,7 @@ const MyProductsPage: React.FC = () => {
         }
       });
       const data = await response.json();
-      console.log('Fetched conditions:', data);
+      //console.log('Fetched conditions:', data);
       setConditions(data);
     } catch (error) {
       console.error('Failed to fetch conditions', error);
@@ -101,7 +101,7 @@ const MyProductsPage: React.FC = () => {
         }
       });
       const data = await response.json();
-      console.log('Fetched tags:', data);
+      //console.log('Fetched tags:', data);
       setTags(data);
     } catch (error) {
       console.error('Failed to fetch tags', error);
@@ -144,7 +144,7 @@ const MyProductsPage: React.FC = () => {
 
   const handleDeleteProduct = (id: number) => {
     // Implementar lógica de exclusão do produto
-    console.log('Delete product', id);
+    //console.log('Delete product', id);
   };
 
   const handleModalOk = async () => {
