@@ -412,37 +412,62 @@ def is_favorite(request, product_id):
     return Response({'is_favorite': is_favorite})
 
 
-@api_view(['GET'])
+
+@api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def vendor_products(request):
     user = request.user
     try:
         vendor = Vendor.objects.get(user=user)
-        products = Product.objects.filter(vendor=vendor)
         
-        # Serializar os produtos
-        serializer = ProductDetailSerializer(products, many=True)
-        
-        # Printar os campos de cada produto
-        for product in products:
-            print(f"Product ID: {product.id}")
-            print(f"Price: {product.price}")
-            print(f"Title: {product.title}")
-            print(f"Vendor: {product.vendor}")
-            print(f"Category: {product.category}")
-            print(f"Detail: {product.detail}")
-            print(f"Condition: {product.condition}")
-            print(f"Product Rating: {[rating for rating in product.product_rating.all()]}")
-            print(f"Tags: {[tag.name for tag in product.tags.all()]}")
-            print(f"Images: {[product.photo_product1.url if product.photo_product1 else None, product.photo_product2.url if product.photo_product2 else None, product.photo_product3.url if product.photo_product3 else None, product.photo_product4.url if product.photo_product4 else None, product.photo_product5.url if product.photo_product5 else None]}")
+        if request.method == 'GET':
+            products = Product.objects.filter(vendor=vendor)
+            serializer = ProductDetailSerializer(products, many=True)
+            
+            # Printar os campos de cada produto
+            for product in products:
+                print(f"Product ID: {product.id}")
+                print(f"Price: {product.price}")
+                print(f"Title: {product.title}")
+                print(f"Vendor: {product.vendor}")
+                print(f"Category: {product.category}")
+                print(f"Detail: {product.detail}")
+                print(f"Condition: {product.condition}")
+                print(f"Product Rating: {[rating for rating in product.product_rating.all()]}")
+                print(f"Tags: {[tag.name for tag in product.tags.all()]}")
+                print(f"Images: {[product.photo_product1.url if product.photo_product1 else None, product.photo_product2.url if product.photo_product2 else None, product.photo_product3.url if product.photo_product3 else None, product.photo_product4.url if product.photo_product4 else None, product.photo_product5.url if product.photo_product5 else None]}")
 
-        return Response(serializer.data)
+            return Response(serializer.data)
+        
+        elif request.method == 'POST':
+            data = request.data
+            files = request.FILES
+
+            # Create a new product instance
+            serializer = ProductSerializer(data=data)
+            
+            if serializer.is_valid():
+                product = serializer.save(vendor=vendor)
+
+                # Handle image files separately
+                for i in range(1, 6):
+                    photo_key = f'photo_product{i}'
+                    if photo_key in files:
+                        photo_file = files[photo_key]
+                        # Save the photo to the product
+                        setattr(product, photo_key, photo_file)
+                
+                product.save()
+
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
     except Vendor.DoesNotExist:
         return Response({'error': 'Vendor not found'}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         print(e)
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
