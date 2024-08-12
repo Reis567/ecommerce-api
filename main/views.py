@@ -472,6 +472,24 @@ def vendor_products(request):
         print(e)
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_product(request, product_id):
+    user = request.user
+    try:
+        product = Product.objects.get(id=product_id, vendor__user=user)
+        product.delete()
+        return Response({'message': 'Produto excluído com sucesso!'}, status=status.HTTP_204_NO_CONTENT)
+    except Product.DoesNotExist:
+        return Response({'error': 'Produto não encontrado ou você não tem permissão para excluí-lo.'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_profile(request):
