@@ -43,6 +43,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
   const conditionOptions = conditions.results;
   const tagOptions = tags.results;
 
+
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
@@ -72,13 +73,17 @@ const ProductModal: React.FC<ProductModalProps> = ({
       });
 
       message.success('Produto adicionado com sucesso!');
-      onOk(); // Close the modal on success
+      onOk(); // Fechar o modal após sucesso
+
+      // Atualizar a lista de produtos ou recarregar a página
+      window.location.reload(); // Recarregar a página
+      // ou
+      // fetchVendorProducts(); // Função para recarregar a lista de produtos via API
     } catch (error) {
       console.error('Erro ao adicionar produto:', error);
       message.error('Erro ao adicionar produto. Por favor, tente novamente.');
     }
   };
-
   const getImageFileList = (url: string | null) => {
     const prefix = 'http://127.0.0.1:8000/';
     return url ? [{ uid: url, name: url.split('/').pop() || 'image', status: 'done', url: `${prefix}${url}` }] : [];

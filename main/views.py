@@ -441,7 +441,9 @@ def vendor_products(request):
         
         elif request.method == 'POST':
             data = request.data
+            print(data)
             files = request.FILES
+            print(files)
 
             # Create a new product instance
             serializer = ProductSerializer(data=data)
@@ -461,6 +463,7 @@ def vendor_products(request):
 
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
+                print(serializer.errors)
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     except Vendor.DoesNotExist:
