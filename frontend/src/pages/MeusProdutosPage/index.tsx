@@ -14,7 +14,7 @@ import {
   ImageContainer,
   ProductImage
 } from './index.style';
-import { Input, Pagination, Form, Tag } from 'antd';
+import { Input, Pagination, Form, Tag,Popconfirm,message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import ProductModal from '../../components/ProductInfoModal/ProductInfoModal';
 
@@ -142,9 +142,26 @@ const MyProductsPage: React.FC = () => {
     setIsModalVisible(true);
   };
 
-  const handleDeleteProduct = (id: number) => {
-    // Implementar lógica de exclusão do produto
-    //console.log('Delete product', id);
+  const handleDeleteProduct = async (id: number) => {
+    const token = localStorage.getItem('accessToken');
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/v1/vendor-products/${id}/delete/`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        message.success('Produto excluído com sucesso!');
+        setProducts(products.filter(product => product.id !== id));
+      } else {
+        message.error('Falha ao excluir o produto. Tente novamente.');
+      }
+    } catch (error) {
+      console.error('Erro ao excluir o produto:', error);
+      message.error('Erro ao excluir o produto. Por favor, tente novamente.');
+    }
   };
 
   const handleModalOk = async () => {
@@ -234,7 +251,14 @@ const MyProductsPage: React.FC = () => {
             </div>
             <ProductActions>
               <EditButton onClick={() => handleEditProduct(product)}>Editar</EditButton>
-              <DeleteButton onClick={() => handleDeleteProduct(product.id)}>Excluir</DeleteButton>
+              <Popconfirm
+                title="Tem certeza que deseja excluir este produto?"
+                onConfirm={() => handleDeleteProduct(product.id)}
+                okText="Sim"
+                cancelText="Não"
+              >
+                <DeleteButton>Excluir</DeleteButton>
+              </Popconfirm>
             </ProductActions>
           </ProductItem>
         ))}
