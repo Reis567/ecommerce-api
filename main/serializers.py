@@ -150,7 +150,10 @@ class CustomerAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerAddress
         fields = ['id', 'customer', 'logradouro', 'numero', 'bairro', 'estado', 'pais', 'cep', 'favorite_address']
-        
+class VendorAddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VendorAddress
+        fields = ['id', 'vendor', 'street', 'number', 'complement', 'state', 'city', 'zip_code', 'country', 'favorite_address']
 class FavoriteSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()  # Mostra o nome do usuário em vez do ID
     product = serializers.StringRelatedField()  # Mostra o título do produto em vez do ID
