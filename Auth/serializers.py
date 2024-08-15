@@ -5,6 +5,7 @@ from main.models import *
 from main.serializers import *
 
 
+
 class UserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
@@ -40,8 +41,8 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class UserDetailSerializer(serializers.ModelSerializer):
-    customer_addresses = CustomerAddressSerializer(many=True, read_only=True)
-    vendor_addresses = VendorAddressSerializer(many=True, read_only=True)
+    customer_addresses = serializers.SerializerMethodField()
+    vendor_addresses = serializers.SerializerMethodField()
     user_type = serializers.SerializerMethodField()
 
     class Meta:
@@ -66,13 +67,27 @@ class UserDetailSerializer(serializers.ModelSerializer):
             return 'vendor'
         return None
 
+    def get_customer_addresses(self, obj):
+        # Local import to avoid circular import
+        from main.serializers import CustomerAddressSerializer
+        if hasattr(obj, 'customer'):
+            return CustomerAddressSerializer(obj.customer.customer_addresses.all(), many=True).data
+        return []
+
+    def get_vendor_addresses(self, obj):
+        # Local import to avoid circular import
+        from main.serializers import VendorAddressSerializer
+        if hasattr(obj, 'vendor'):
+            return VendorAddressSerializer(obj.vendor.vendor_addresses.all(), many=True).data
+        return []
+
     def to_representation(self, instance):
         representation = super().to_representation(instance)
 
         if representation['user_type'] == 'customer':
-            representation['addresses'] = CustomerAddressSerializer(instance.customer.customer_addresses.all(), many=True).data
+            representation['addresses'] = self.get_customer_addresses(instance)
         elif representation['user_type'] == 'vendor':
-            representation['addresses'] = VendorAddressSerializer(instance.vendor.vendor_addresses.all(), many=True).data
+            representation['addresses'] = self.get_vendor_addresses(instance)
         else:
             representation['addresses'] = []
 
