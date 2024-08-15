@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, Header, InfoSection, InfoHeader, InfoContent, EditButton, AddButton, UserImage, Content, BackButton } from './index.styles';
+import {
+  Container,
+  Header,
+  InfoSection,
+  InfoHeader,
+  InfoContent,
+  EditButton,
+  AddButton,
+  UserImage,
+  Content,
+  BackButton
+} from './index.styles';
 
 const ProfilePage: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -47,6 +58,13 @@ const ProfilePage: React.FC = () => {
     return <div>{error}</div>;
   }
 
+  // Verificar se customer_addresses ou vendor_addresses estão definidos antes de usar find
+  const primaryAddress = user.user_type === 'customer' && user.customer_addresses
+    ? user.customer_addresses.find((address: any) => address.favorite_address)
+    : user.user_type === 'vendor' && user.vendor_addresses
+    ? user.vendor_addresses.find((address: any) => address.favorite_address)
+    : null;
+
   return (
     <Content>
       <Header>Perfil do Usuário</Header>
@@ -68,12 +86,19 @@ const ProfilePage: React.FC = () => {
             <h2>Endereço Principal</h2>
             <EditButton>Editar</EditButton>
           </InfoHeader>
-          <InfoContent>
-            <p><strong>Rua:</strong> </p>
-            <p><strong>Cidade:</strong></p>
-            <p><strong>Estado:</strong></p>
-            <p><strong>CEP:</strong></p>
-          </InfoContent>
+          {primaryAddress ? (
+            <InfoContent>
+              <p><strong>Rua:</strong> {user.user_type === 'customer' ? primaryAddress.logradouro : primaryAddress.street}</p>
+              <p><strong>Número:</strong> {primaryAddress.numero || primaryAddress.number}</p>
+              <p><strong>Cidade:</strong> {user.user_type === 'customer' ? primaryAddress.bairro : primaryAddress.city}</p>
+              <p><strong>Estado:</strong> {primaryAddress.estado || primaryAddress.state}</p>
+              <p><strong>CEP:</strong> {primaryAddress.cep || primaryAddress.zip_code}</p>
+            </InfoContent>
+          ) : (
+            <InfoContent>
+              <p>Nenhum endereço principal definido.</p>
+            </InfoContent>
+          )}
           <AddButton>Adicionar Novo Endereço</AddButton>
         </InfoSection>
       </Container>
