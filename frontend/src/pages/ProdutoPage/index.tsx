@@ -28,7 +28,6 @@ import {
   BigImageContainer,
   RightComments,
   BackButtonContainer,
-  BackButton,
   StarsContainer,
   CepInput,
   CalculateShippingButton,
@@ -54,15 +53,14 @@ const ProdutoDetalhes: React.FC = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await fetch(`${baseUrl}/api/v1/products/${id}/`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch product data');
-        }
-        const data = await response.json();
+        const response = await axios.get(`${baseUrl}/api/v1/products/${id}/`);
+        const data = response.data;
         setProduct(data);
-        const imageUrls = data.images.map((url: string) => url ? `${baseUrl}${url}` : defaultImageUrl);
+
+        const imageUrls = data.images.filter((url: string) => url).map((url: string) => `${baseUrl}${url}`);
         setBigImage(imageUrls[0] || defaultImageUrl);
         setThumbnails(imageUrls.slice(1) || []);
+
         setIsLoading(false);
       } catch (error) {
         console.error('Failed to fetch product data:', error);
@@ -88,7 +86,7 @@ const ProdutoDetalhes: React.FC = () => {
   };
 
   const renderStars = () => {
-    const rating = product.product_rating.length > 0 ? product.product_rating[0] : 0;
+    const rating = product.product_rating.length > 0 ? parseFloat(product.product_rating[0]) : 0;
     return [...Array(5)].map((_, index) => (
       <FontAwesomeIcon
         key={index}
@@ -100,16 +98,8 @@ const ProdutoDetalhes: React.FC = () => {
 
   const handleCalculateShipping = async () => {
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/calculate-shipping/', {
-        cep,
-      });
-      console.log('Shipping response:', response.data);
-      if (response.data && response.data.freight) {
-        setFreightOptions(response.data.freight);
-      } else {
-        console.error('Invalid response format:', response.data);
-        setFreightOptions([]);
-      }
+      const response = await axios.post('http://localhost:8000/api/v1/calculate-shipping/', { cep });
+      setFreightOptions(response.data.freight || []);
     } catch (error) {
       console.error('Failed to calculate shipping:', error);
     }
@@ -127,7 +117,7 @@ const ProdutoDetalhes: React.FC = () => {
         <BackButtonContainer>
         </BackButtonContainer>
         <BigImageContainer>
-          <ImgS src={bigImage} alt={product.name} />
+          <ImgS src={bigImage} alt={product.title} />
         </BigImageContainer>
         <ThumbnailContainer>
           {thumbnails.map((thumbnail, index) => (
@@ -143,13 +133,13 @@ const ProdutoDetalhes: React.FC = () => {
 
       <ContentRight>
         <RightHead>
-          <ProdTitle>{product.name}</ProdTitle>
+          <ProdTitle>{product.title}</ProdTitle>
           <StarsContainer>{renderStars()}</StarsContainer>
-          <ProdDesc>{product.description}</ProdDesc>
+          <ProdDesc>{product.detail}</ProdDesc>
         </RightHead>
         <RightBody>
           <ContPrice>
-            <Price>R${price}</Price>
+            <Price>R${product.price}</Price>
           </ContPrice>
           <ContBtns>
             <BuyBtn onClick={handleBuyClick}>
@@ -166,7 +156,6 @@ const ProdutoDetalhes: React.FC = () => {
             </FavBtn>
           </ContBtns>
 
-
           <FreteDiv>
             <CepInput
               type="text"
@@ -175,7 +164,7 @@ const ProdutoDetalhes: React.FC = () => {
             />
             <CalculateShippingButton onClick={handleCalculateShipping}>Simular Frete</CalculateShippingButton>
           </FreteDiv>
-          {freightOptions && freightOptions.length > 0 && (
+          {freightOptions.length > 0 && (
             <FreightOptionsContainer>
               {freightOptions.map((option, index) => (
                 !option.error && (
@@ -189,8 +178,8 @@ const ProdutoDetalhes: React.FC = () => {
         </RightBody>
         <RightTags>
           <TagsTitle>Tags:</TagsTitle>
-          {product.tags.map((tag: string, index: number) => (
-            <StyledTag key={index}>{tag}</StyledTag>
+          {product.tags.map((tag: any, index: number) => (
+            <StyledTag key={index}>{tag.name}</StyledTag>
           ))}
         </RightTags>
         <RightComments>
