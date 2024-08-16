@@ -199,23 +199,33 @@ def product_search_view(request):
 
 
 
-class ProductCategoryDetailView(generics.RetrieveAPIView):
-    queryset = ProductCategory.objects.all()
-    serializer_class = ProductCategorySerializer
-    permission_classes = [permissions.AllowAny]
-
-    @extend_schema(
-        description='Retrieve a product category',
-        tags=['Products'],
-        responses={200: ProductCategorySerializer()},
-    )
-    def get(self, request, *args, **kwargs):
-        """
-        Retrieve a product category.
-
-        This endpoint retrieves details of a specific product category.
-        """
-        return super().get(request, *args, **kwargs)
+def category_detail(request, pk):
+    # Buscando a categoria pelo ID
+    category = get_object_or_404(ProductCategory, pk=pk)
+    
+    # Buscando os produtos relacionados a essa categoria
+    products = Product.objects.filter(category=category)
+    
+    # Preparando a lista de produtos para o JSON
+    products_list = [
+        {
+            'id': product.id,
+            'title': product.title,
+            'price': str(product.price),
+            'description': product.detail,
+            'imageUrl': product.photo_product1.url if product.photo_product1 else '',
+        }
+        for product in products
+    ]
+    
+    # Criando o JSON de resposta
+    response_data = {
+        'id': category.id,
+        'title': category.title,
+        'products': products_list,
+    }
+    
+    return JsonResponse(response_data)
     
 class CustomerOrderListView(generics.ListAPIView):
     serializer_class = OrderSerializer

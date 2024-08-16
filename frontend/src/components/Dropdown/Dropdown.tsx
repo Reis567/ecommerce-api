@@ -33,7 +33,7 @@ const DropPerso: React.FC = () => {
   const items = displayedCategories.map(category => ({
     key: category.id.toString(),
     label: (
-      <Link to={`/categoria/${category.id}/${category.slug}`}>
+      <Link to={`/categoria/${category.id}`}>
         {category.title}
       </Link>
     ),
