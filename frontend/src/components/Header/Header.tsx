@@ -69,7 +69,7 @@ const Header: React.FC = () => {
               <DropPerso />
               <SLink to="/ofertas" onClick={toggleNavBar}>Ofertas</SLink>
               <SLink to="/supermercado" onClick={toggleNavBar}>Supermercado</SLink>
-              <SLink to="/moda" onClick={toggleNavBar}>Moda</SLink>
+              <SLink to="/categoria/1" onClick={toggleNavBar}>Moda</SLink>
               <SLink to="/historico" onClick={toggleNavBar}>Histórico</SLink>
               <SLink to="/eletronicos" onClick={toggleNavBar}>Eletrônicos</SLink>
               <SLink to="/contato" onClick={toggleNavBar}>Ajuda</SLink>

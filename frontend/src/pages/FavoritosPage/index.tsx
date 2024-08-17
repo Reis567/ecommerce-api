@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   FavoritesContent,
   FavoritesContainer,
   FavoritesTitle,
-  BackButton,
   Table,
   TableRow,
   TableCell,
@@ -12,7 +11,6 @@ import {
   ProductName,
   Price,
   RemoveButton,
-  ButtonContainer,
   ProdLink
 } from './index.styles.tsx';
 
@@ -23,7 +21,7 @@ const FavoritosPage: React.FC = () => {
   const [error, setError] = useState('');
 
   const fetchFavorites = async () => {
-    const token = localStorage.getItem('accessToken'); // Supondo que você armazena o token no localStorage
+    const token = localStorage.getItem('accessToken');
     if (!token) {
       console.error('Usuário não autenticado');
       return;
@@ -40,7 +38,15 @@ const FavoritosPage: React.FC = () => {
       }
 
       const data = await response.json();
-      setFavorites(data);
+
+      // Ajustar a URL das imagens para incluir o prefixo do backend
+      const baseUrl = 'http://127.0.0.1:8000';
+      const adjustedFavorites = data.map((favorite: any) => ({
+        ...favorite,
+        photo_urls: favorite.photo_urls.map((url: string) => `${baseUrl}${url}`),
+      }));
+
+      setFavorites(adjustedFavorites);
     } catch (error) {
       setError('Failed to fetch favorite products');
     } finally {
@@ -49,7 +55,7 @@ const FavoritosPage: React.FC = () => {
   };
 
   const handleRemoveItem = async (productId: string) => {
-    const token = localStorage.getItem('accessToken'); // Supondo que você armazena o token no localStorage
+    const token = localStorage.getItem('accessToken');
     if (!token) {
       console.error('Usuário não autenticado');
       return;
@@ -78,8 +84,6 @@ const FavoritosPage: React.FC = () => {
     fetchFavorites();
   }, []);
 
-
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -91,7 +95,6 @@ const FavoritosPage: React.FC = () => {
   return (
     <FavoritesContent>
       <FavoritesContainer>
-
         <FavoritesTitle>Favoritos</FavoritesTitle>
         <Table>
           <tbody>
