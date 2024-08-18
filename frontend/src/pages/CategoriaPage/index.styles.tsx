@@ -38,3 +38,28 @@ export const BackButton = styled(Button)`
     background-color: #1e8266;
   }
 `;
+
+export const LoadingMessage = styled.div`
+  font-size: 20px;
+  color: #007bff;
+`;
+
+export const ErrorMessage = styled.div`
+  font-size: 20px;
+  color: red;
+`;
+
+export const PaginationButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  &:disabled {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+  }
+`;

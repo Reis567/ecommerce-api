@@ -198,7 +198,8 @@ def product_search_view(request):
     return paginator.get_paginated_response(serializer.data)
 
 
-
+@api_view(['GET'])
+@permission_classes([AllowAny])
 def category_detail(request, pk):
     # Buscando a categoria pelo ID
     category = get_object_or_404(ProductCategory, pk=pk)
@@ -206,27 +207,24 @@ def category_detail(request, pk):
     # Buscando os produtos relacionados a essa categoria
     products = Product.objects.filter(category=category)
     
-    # Preparando a lista de produtos para o JSON
-    products_list = [
-        {
-            'id': product.id,
-            'title': product.title,
-            'price': str(product.price),
-            'description': product.detail,
-            'imageUrl': product.photo_product1.url if product.photo_product1 else '',
-        }
-        for product in products
-    ]
+    # Configurando a paginação
+    paginator = LimitOffsetPagination()
+    paginated_products = paginator.paginate_queryset(products, request)
     
-    # Criando o JSON de resposta
+    # Serializando os produtos paginados
+    serializer = ProductSerializer(paginated_products, many=True)
+    
+    # Criando o JSON de resposta com informações da categoria e produtos paginados
     response_data = {
         'id': category.id,
         'title': category.title,
-        'products': products_list,
+        'products': serializer.data,
+        'next': paginator.get_next_link(),
+        'previous': paginator.get_previous_link(),
     }
     
     return JsonResponse(response_data)
-    
+
 class CustomerOrderListView(generics.ListAPIView):
     serializer_class = OrderSerializer
 
