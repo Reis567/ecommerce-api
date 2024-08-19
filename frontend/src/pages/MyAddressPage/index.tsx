@@ -34,20 +34,24 @@ const MyAddressesPage: React.FC = () => {
       fetchAddresses();
     }
   }, [userId]);
-
   const fetchAddresses = async () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/v1/address/`, {
-        params: { user_id: userId }, // Passe o userId nos parâmetros da requisição
+        params: { user_id: userId }, // Passando o userId nos parâmetros da requisição
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
+  
       const data = response.data;
+  
+      // Verifique se a resposta contém o array "results"
       if (data.results && Array.isArray(data.results)) {
         console.log(data.results);
         setAddresses(data.results);
-        const favorite = data.results.find((address) => address.is_favorite);
+  
+        // Encontrar o endereço favorito
+        const favorite = data.results.find((address) => address.favorite_address);
         if (favorite) {
           setFavoriteAddressId(favorite.id);
         }
@@ -58,7 +62,7 @@ const MyAddressesPage: React.FC = () => {
       console.error('Erro ao buscar endereços:', error);
     }
   };
-
+  
   const handleAddAddress = () => {
     navigate('/enderecos/adicionar');
   };
@@ -94,7 +98,7 @@ const MyAddressesPage: React.FC = () => {
           {addresses.length > 0 ? (
             addresses.map((address) => (
               <AddressItem key={address.id}>
-                {address.street}, {address.city}, {address.state}, {address.postal_code}
+                {address.logradouro}, {address.bairro}, {address.estado}, {address.cep}
                 <AddressActions>
                   <EditOutlined onClick={() => handleEditAddress(address.id)} />
                   <DeleteOutlined onClick={() => handleDeleteAddress(address.id)} />
@@ -114,6 +118,7 @@ const MyAddressesPage: React.FC = () => {
       </AddressContainer>
     </AddressContent>
   );
+  
 };
 
 export default MyAddressesPage;
