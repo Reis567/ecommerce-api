@@ -270,10 +270,21 @@ class CustomerAddressViewSet(ModelViewSet):
     queryset = CustomerAddress.objects.all()
     serializer_class = CustomerAddressSerializer
 
+        
+
     def get_queryset(self):
-        user = self.request.user
-        if user.is_authenticated:
-            return CustomerAddress.objects.filter(user=user)
+        # Tente obter o user_id da query parameters
+        user_id = self.request.query_params.get('user_id')
+        customer = Customer.objects.get(user=user_id)
+        print("User ID from request:", customer)
+
+        # Verifique se o usuário está autenticado e o user_id foi fornecido
+        if self.request.user.is_authenticated and customer is not None:
+            # Filtre os endereços com base no user_id passado
+            print(f"Filtrando endereços para o user_id: {customer}")
+            return CustomerAddress.objects.filter(customer=customer)
+        
+        # Se o usuário não está autenticado ou não foi passado user_id, retorne nenhum
         return CustomerAddress.objects.none()
 
     @action(detail=True, methods=['post'])

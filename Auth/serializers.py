@@ -53,8 +53,8 @@ class UserDetailSerializer(serializers.ModelSerializer):
             'first_name', 
             'last_name', 
             'email',
-            'phone', 
-            'photo',
+            #'phone', 
+            #'photo',
             'user_type',
             'customer_addresses',
             'vendor_addresses'

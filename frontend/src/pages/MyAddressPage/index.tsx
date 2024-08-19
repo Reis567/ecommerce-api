@@ -12,6 +12,7 @@ import {
   FavoriteIcon
 } from './index.styles';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext'; // Importe o contexto de autenticação
 
 interface Address {
   id: string;
@@ -26,17 +27,25 @@ const MyAddressesPage: React.FC = () => {
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [favoriteAddressId, setFavoriteAddressId] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { userId } = useAuth(); // Acesse o userId do contexto
 
   useEffect(() => {
-    fetchAddresses();
-  }, []);
+    if (userId) {
+      fetchAddresses();
+    }
+  }, [userId]);
 
   const fetchAddresses = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/v1/address/');
+      const response = await axios.get(`http://localhost:8000/api/v1/address/`, {
+        params: { user_id: userId }, // Passe o userId nos parâmetros da requisição
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
       const data = response.data;
       if (data.results && Array.isArray(data.results)) {
-        console.log(data.results)
+        console.log(data.results);
         setAddresses(data.results);
         const favorite = data.results.find((address) => address.is_favorite);
         if (favorite) {
@@ -49,7 +58,6 @@ const MyAddressesPage: React.FC = () => {
       console.error('Erro ao buscar endereços:', error);
     }
   };
-  
 
   const handleAddAddress = () => {
     navigate('/enderecos/adicionar');

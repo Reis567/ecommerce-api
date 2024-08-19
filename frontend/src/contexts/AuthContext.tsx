@@ -25,8 +25,8 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       const data = await response.json();
       setUserId(data.id);
       setUsername(data.username);
-      console.log("User ID fetched and set in context:", data.id);
-      console.log("Username fetched and set in context:", data.username);
+      //console.log("User ID fetched and set in context:", data.id);
+      //console.log("Username fetched and set in context:", data.username);
     } catch (error) {
       console.error('Failed to fetch user data:', error);
     }
