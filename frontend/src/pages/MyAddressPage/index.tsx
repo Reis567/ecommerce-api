@@ -112,7 +112,7 @@ const MyAddressesPage: React.FC = () => {
               </AddressItem>
             ))
           ) : (
-            <p>Nenhum endereço encontrado.</p>
+            <AddressItem>Nenhum endereço encontrado.</AddressItem>
           )}
         </AddressList>
       </AddressContainer>
