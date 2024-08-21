@@ -63,7 +63,6 @@ const CategoriaPage: React.FC = () => {
       fetchCategoryDetails(previousPage);
     }
   };
-
   return (
     <CategoContent>
       <CatTitle>Categoria {categoryName}</CatTitle>
@@ -72,6 +71,8 @@ const CategoriaPage: React.FC = () => {
         <LoadingMessage>Carregando...</LoadingMessage>
       ) : error ? (
         <ErrorMessage>{error}</ErrorMessage>
+      ) : products.length === 0 ? ( // Verifica se a lista de produtos está vazia
+        <p>Nenhum produto encontrado nesta categoria.</p>
       ) : (
         <>
           <CardCateg>
