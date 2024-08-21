@@ -17,7 +17,7 @@ import {
 const ProductComments: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { userId, username } = useAuth();
-  const [comments, setComments] = useState<{ user: string, text: string }[]>([]);
+  const [comments, setComments] = useState<{ username: string, text: string }[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newComment, setNewComment] = useState('');
   const baseUrl = 'http://127.0.0.1:8000'; // URL base do backend
@@ -36,12 +36,12 @@ const ProductComments: React.FC = () => {
         if (data.results && Array.isArray(data.results)) {
           data.results.forEach((comment: any, index: number) => {
             console.log(`Comment ${index}:`, comment);
-            console.log(`User: ${comment.user ? comment.user.username : 'No user data'}`);
+            console.log(`User: ${comment.username}`);
             console.log(`Comment Text: ${comment.comment}`);
           });
 
           setComments(data.results.map((comment: any) => ({
-            user: comment.user.username,
+            username: comment.username, // Corrigido para usar username
             text: comment.comment
           })));
         } else {
@@ -82,7 +82,7 @@ const ProductComments: React.FC = () => {
           throw new Error('Failed to add comment');
         }
         const data = await response.json();
-        setComments([...comments, { user: username, text: data.comment }]);
+        setComments([...comments, { username: username, text: data.comment }]); // Corrigido para usar username
         setNewComment('');
         handleCloseModal();
       } catch (error) {
@@ -112,7 +112,7 @@ const ProductComments: React.FC = () => {
         <CommentList style={{ marginTop: '20px' }}>
           {comments.map((comment, index) => (
             <CommentItem key={index} style={{ marginBottom: '10px' }}>
-              <CommentUser>{comment.user}:</CommentUser>
+              <CommentUser>{comment.username}:</CommentUser> {/* Corrigido para usar username */}
               <CommentText>{comment.text}</CommentText>
             </CommentItem>
           ))}
