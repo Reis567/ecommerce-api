@@ -165,10 +165,14 @@ class FavoriteSerializer(serializers.ModelSerializer):
 
 
 class ProductCommentSerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField()
+
     class Meta:
         model = ProductComment
-        fields = ['id', 'product', 'user', 'comment', 'created_at', 'updated_at']
-        read_only_fields = ['created_at', 'updated_at']
+        fields = ['id', 'product', 'user', 'username', 'comment', 'created_at', 'updated_at']
+
+    def get_username(self, obj):
+        return obj.user.username
 
 
 class CartItemSerializer(serializers.ModelSerializer):

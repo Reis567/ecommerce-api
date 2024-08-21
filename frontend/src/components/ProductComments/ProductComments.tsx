@@ -31,8 +31,15 @@ const ProductComments: React.FC = () => {
         }
         const data = await response.json();
         console.log('Fetched comments:', data);
-    
+
+        // Verificando cada campo presente na resposta
         if (data.results && Array.isArray(data.results)) {
+          data.results.forEach((comment: any, index: number) => {
+            console.log(`Comment ${index}:`, comment);
+            console.log(`User: ${comment.user ? comment.user.username : 'No user data'}`);
+            console.log(`Comment Text: ${comment.comment}`);
+          });
+
           setComments(data.results.map((comment: any) => ({
             user: comment.user.username,
             text: comment.comment
@@ -44,7 +51,6 @@ const ProductComments: React.FC = () => {
         console.error('Failed to fetch comments:', error);
       }
     };
-    
 
     fetchComments();
   }, [id]);

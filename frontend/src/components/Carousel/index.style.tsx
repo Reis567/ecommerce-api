@@ -99,3 +99,4 @@ export const Price = styled.p`
   font-size: 20px;
   font-weight: bolder;
 `;
+
