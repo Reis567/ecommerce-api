@@ -31,6 +31,10 @@ export const CommentItem = styled.div`
   margin-bottom: 10px;
 `;
 
-export const CommentUser = styled.strong``;
+export const CommentUser = styled.strong`
+font-size: 20px;`;
 
-export const CommentText = styled.p``;
+export const CommentText = styled.p`
+padding: 0px 10px;
+font-size: 20px;
+background-color:#b7d2fc;`;
