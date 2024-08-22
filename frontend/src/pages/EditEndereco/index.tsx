@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Header, Form, Input, AntdButton, Content } from './index.styles';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../../contexts/AuthContext'; // Importando o contexto de autenticação
+import { useAuth } from '../../contexts/AuthContext';
 
-const AddAddressPage: React.FC = () => {
+const EditAddressPage: React.FC = () => {
   const [cep, setCep] = useState('');
   const [logradouro, setLogradouro] = useState('');
   const [numero, setNumero] = useState('');
@@ -12,7 +12,33 @@ const AddAddressPage: React.FC = () => {
   const [bairro, setBairro] = useState('');
   const [pais, setPais] = useState('');
   const navigate = useNavigate();
-  const { userId } = useAuth(); // Obtendo o userId do contexto de autenticação
+  const { userId } = useAuth();
+  const { addressId } = useParams<{ addressId: string }>();
+
+  useEffect(() => {
+    if (addressId) {
+      fetchAddress();
+    }
+  }, [addressId]);
+
+  const fetchAddress = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/v1/address/${addressId}/`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      });
+      const address = response.data;
+      setCep(address.cep);
+      setLogradouro(address.logradouro);
+      setNumero(address.numero);
+      setEstado(address.estado);
+      setBairro(address.bairro);
+      setPais(address.pais);
+    } catch (error) {
+      console.error('Erro ao buscar endereço:', error);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,33 +48,32 @@ const AddAddressPage: React.FC = () => {
       return;
     }
 
-    const newAddress = {
+    const updatedAddress = {
       cep,
       logradouro,
       numero,
       estado,
       bairro,
       pais,
-      customer: userId,
     };
 
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/address/create/create_address/', newAddress, {
+      const response = await axios.put(`http://localhost:8000/api/v1/address/${addressId}/`, updatedAddress, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`, // Incluindo o token no cabeçalho
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
       console.log('Resposta da requisição:', response);
       navigate('/enderecos/meus_enderecos');
     } catch (error) {
-      console.error('Erro ao adicionar endereço:', error);
+      console.error('Erro ao atualizar endereço:', error);
     }
   };
 
   return (
     <Content>
-      <Header>Adicionar Endereço</Header>
+      <Header>Editar Endereço</Header>
       <Container>
         <Form onSubmit={handleSubmit}>
           <Input
@@ -94,7 +119,7 @@ const AddAddressPage: React.FC = () => {
             required
           />
           <AntdButton type="primary" htmlType="submit">
-            Adicionar Endereço
+            Atualizar Endereço
           </AntdButton>
         </Form>
       </Container>
@@ -102,4 +127,4 @@ const AddAddressPage: React.FC = () => {
   );
 };
 
-export default AddAddressPage;
+export default EditAddressPage;
