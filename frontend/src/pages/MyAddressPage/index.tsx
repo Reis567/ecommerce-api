@@ -16,10 +16,10 @@ import { useAuth } from '../../contexts/AuthContext'; // Importe o contexto de a
 
 interface Address {
   id: string;
-  street: string;
-  city: string;
-  state: string;
-  postal_code: string;
+  logradouro: string;
+  bairro: string;
+  estado: string;
+  cep: string;
   is_favorite: boolean;
 }
 
