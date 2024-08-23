@@ -23,6 +23,7 @@ import PedidoRecusado from './pages/PedidoRecusado';
 import ProfilePage from './pages/PerfilPage/index.tsx';
 import UpdatePasswordPage from './pages/UpdatePassPage/index.tsx';
 import AddAddressPage from './pages/AddEndereco/index.tsx';
+import EditAddressPage from './pages/EditEndereco/index.tsx';
 import MyProductsPage from './pages/MeusProdutosPage/index.tsx';
 import AddProductPage from './pages/AddProdPage/index.tsx';
 import SearchResults from './pages/SearchResults';
@@ -44,6 +45,11 @@ const router = createBrowserRouter([
       { path: 'enderecos/meus_enderecos', element: <MyAddressesPage /> },
       { path: 'enderecos/envio', element: <ShippingAddressPage /> },
       { path: 'enderecos/adicionar', element: <AddAddressPage /> },
+      {
+        path: 'enderecos/editar/:addressId',
+        element: <EditAddressPage />,
+      },
+      
 
       // Rotas do perfil do cliente
       { path: 'perfil', element: <ProfilePage /> },

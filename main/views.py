@@ -269,7 +269,21 @@ class OrderCreateView(generics.CreateAPIView):
 class CustomerAddressViewSet(ModelViewSet):
     queryset = CustomerAddress.objects.all()
     serializer_class = CustomerAddressSerializer
+    
+    def update(self, request, pk=None):
+        if not request.user.is_authenticated:
+            return Response({'error': 'Authentication credentials were not provided.'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        try:
+            address = CustomerAddress.objects.get(pk=pk, customer=request.user.customer)
+        except CustomerAddress.DoesNotExist:
+            return Response({'error': 'Address not found.'}, status=status.HTTP_404_NOT_FOUND)
 
+        serializer = self.serializer_class(address, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
     def get_queryset(self):
