@@ -16,10 +16,13 @@ const EditAddressPage: React.FC = () => {
   const { addressId } = useParams<{ addressId: string }>();
 
   useEffect(() => {
-    if (addressId) {
+    if (addressId && userId) {
       fetchAddress();
+    } else {
+      console.error('User ID or Address ID is missing');
     }
-  }, [addressId]);
+}, [addressId, userId]);
+
 
   const fetchAddress = async () => {
     try {

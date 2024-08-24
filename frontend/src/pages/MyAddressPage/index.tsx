@@ -45,23 +45,20 @@ const MyAddressesPage: React.FC = () => {
   
       const data = response.data;
   
-      // Verifique se a resposta contém o array "results"
-      if (data.results && Array.isArray(data.results)) {
-        console.log(data.results);
-        setAddresses(data.results);
+      // Aqui, data é o próprio array de endereços, então não precisamos de `data.results`
+      console.log(data);
+      setAddresses(data);
   
-        // Encontrar o endereço favorito
-        const favorite = data.results.find((address) => address.favorite_address);
-        if (favorite) {
-          setFavoriteAddressId(favorite.id);
-        }
-      } else {
-        console.error('Resposta da API não contém o array "results":', data);
+      // Encontrar o endereço favorito
+      const favorite = data.find((address) => address.favorite_address);
+      if (favorite) {
+        setFavoriteAddressId(favorite.id);
       }
     } catch (error) {
       console.error('Erro ao buscar endereços:', error);
     }
   };
+  
   
   const handleAddAddress = () => {
     navigate('/enderecos/adicionar');

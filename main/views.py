@@ -266,49 +266,54 @@ class OrderCreateView(generics.CreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-class CustomerAddressViewSet(ModelViewSet):
-    queryset = CustomerAddress.objects.all()
-    serializer_class = CustomerAddressSerializer
-    
-    def update(self, request, pk=None):
-        if not request.user.is_authenticated:
-            return Response({'error': 'Authentication credentials were not provided.'}, status=status.HTTP_401_UNAUTHORIZED)
-        
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def list_addresses(request):
+    user_id = request.query_params.get('user_id')
+    print(user_id)
+
+    if user_id:
         try:
-            address = CustomerAddress.objects.get(pk=pk, customer=request.user.customer)
-        except CustomerAddress.DoesNotExist:
-            return Response({'error': 'Address not found.'}, status=status.HTTP_404_NOT_FOUND)
-
-        serializer = self.serializer_class(address, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            customer = Customer.objects.get(user=user_id)
+            print(str(customer))
+        except Customer.DoesNotExist:
+            return Response([], status=status.HTTP_200_OK)
         
+        addresses = CustomerAddress.objects.filter(customer=customer)
+        print(str(addresses))
+    else:
+        addresses = CustomerAddress.objects.none()
 
-    def get_queryset(self):
-        # Tente obter o user_id da query parameters
-        user_id = self.request.query_params.get('user_id')
-        customer = Customer.objects.get(user=user_id)
-        print("User ID from request:", customer)
+    serializer = CustomerAddressSerializer(addresses, many=True)
+    print(str(serializer))
+    return Response(serializer.data)
 
-        # Verifique se o usuário está autenticado e o user_id foi fornecido
-        if self.request.user.is_authenticated and customer is not None:
-            # Filtre os endereços com base no user_id passado
-            print(f"Filtrando endereços para o user_id: {customer}")
-            return CustomerAddress.objects.filter(customer=customer)
-        
-        # Se o usuário não está autenticado ou não foi passado user_id, retorne nenhum
-        return CustomerAddress.objects.none()
 
-    @action(detail=True, methods=['post'])
-    def set_favorite(self, request, pk=None):
-        address = self.get_object()
-        CustomerAddress.objects.filter(user=request.user).update(is_favorite=False)
-        address.is_favorite = True
-        address.save()
-        return Response({'status': 'endereço definido como favorito'})
-    
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_address(request, pk):
+    try:
+        address = CustomerAddress.objects.get(pk=pk, customer=request.user.customer)
+    except CustomerAddress.DoesNotExist:
+        return Response({'error': 'Address not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = CustomerAddressSerializer(address, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def set_favorite_address(request, pk):
+    address = get_object_or_404(CustomerAddress, pk=pk, customer=request.user.customer)
+    CustomerAddress.objects.filter(customer=request.user.customer).update(is_favorite=False)
+    address.is_favorite = True
+    address.save()
+    return Response({'status': 'endereço definido como favorito'}, status=status.HTTP_200_OK)
+
+
 class CustomerAddressCreateViewSet(GenericViewSet):
     serializer_class = CustomerAddressSerializer
 

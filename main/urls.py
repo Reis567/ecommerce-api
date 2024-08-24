@@ -4,7 +4,6 @@ from rest_framework import routers
 
 
 router=routers.DefaultRouter()
-router.register(r'address' ,CustomerAddressViewSet)
 router.register(r'address/create', CustomerAddressCreateViewSet, basename='customeraddress-create')
 router.register(r'productrating' ,ProductRatingViewSet)
 router.register(r'carts', CartViewSet, basename='cart')
@@ -41,6 +40,11 @@ urlpatterns = [
     path('orders/<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
     path('orders/<int:pk>/update/', OrderUpdateView.as_view(), name='order-update'),
     path('orders/<int:pk>/delete/', OrderDeleteView.as_view(), name='order-delete'),
-    path('calculate-shipping/', calculate_shipping, name='calculate_shipping')
+    path('calculate-shipping/', calculate_shipping, name='calculate_shipping'),
+
+    ## Address
+    path('address/', list_addresses, name='list_addresses'),
+    path('address/<int:pk>/', update_address, name='update_address'),
+    path('address/<int:pk>/set_favorite/', set_favorite_address, name='set_favorite_address'),
 ]
 urlpatterns+=router.urls
