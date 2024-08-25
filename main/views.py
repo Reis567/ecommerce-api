@@ -288,19 +288,34 @@ def list_addresses(request):
     print(str(serializer))
     return Response(serializer.data)
 
-@api_view(['PUT'])
+@api_view(['GET', 'PUT'])
 @permission_classes([IsAuthenticated])
 def update_address(request, pk):
+    user_id = request.query_params.get('user_id')  # Obtendo o user_id do frontend
+    
+    if not user_id:
+        return Response({'error': 'User ID is missing.'}, status=status.HTTP_400_BAD_REQUEST)
+
     try:
-        address = CustomerAddress.objects.get(pk=pk, customer=request.user.customer)
+        customer = Customer.objects.get(user=user_id)  # Obtendo o cliente a partir do user_id
+    except Customer.DoesNotExist:
+        return Response({'error': 'Customer not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        address = CustomerAddress.objects.get(pk=pk, customer=customer)  # Buscando o endereço específico para o cliente
     except CustomerAddress.DoesNotExist:
         return Response({'error': 'Address not found.'}, status=status.HTTP_404_NOT_FOUND)
 
-    serializer = CustomerAddressSerializer(address, data=request.data, partial=True)
-    if serializer.is_valid():
-        serializer.save()
+    if request.method == 'GET':
+        serializer = CustomerAddressSerializer(address)
         return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'PUT':
+        serializer = CustomerAddressSerializer(address, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
