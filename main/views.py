@@ -338,6 +338,31 @@ def set_favorite_address(request, pk):
     return Response({'status': 'endereço definido como favorito'}, status=status.HTTP_200_OK)
 
 
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_address(request, pk):
+    user_id = request.query_params.get('user_id')
+    
+    if not user_id:
+        return Response({'error': 'User ID is missing.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        customer = Customer.objects.get(user=user_id)
+    except Customer.DoesNotExist:
+        return Response({'error': 'Customer not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        address = CustomerAddress.objects.get(pk=pk, customer=customer)
+    except CustomerAddress.DoesNotExist:
+        return Response({'error': 'Address not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    if address.is_favorite:
+        return Response({'error': 'Cannot delete a favorite address. Please remove it from favorites first.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    address.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 class CustomerAddressCreateViewSet(GenericViewSet):
     serializer_class = CustomerAddressSerializer
 
