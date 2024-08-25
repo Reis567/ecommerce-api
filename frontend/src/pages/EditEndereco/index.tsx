@@ -18,11 +18,8 @@ const EditAddressPage: React.FC = () => {
   useEffect(() => {
     if (addressId && userId) {
       fetchAddress();
-    } else {
-      console.error('User ID or Address ID is missing');
     }
-}, [addressId, userId]);
-
+  }, [addressId, userId]);
 
   const fetchAddress = async () => {
     try {
@@ -45,11 +42,6 @@ const EditAddressPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!userId) {
-      console.error('User ID is not available');
-      return;
-    }
 
     const updatedAddress = {
       cep,

@@ -288,7 +288,6 @@ def list_addresses(request):
     print(str(serializer))
     return Response(serializer.data)
 
-
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def update_address(request, pk):
@@ -302,6 +301,7 @@ def update_address(request, pk):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 @api_view(['POST'])
