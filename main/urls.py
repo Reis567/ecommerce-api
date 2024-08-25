@@ -45,6 +45,7 @@ urlpatterns = [
     ## Address
     path('address/', list_addresses, name='list_addresses'),
     path('address/<int:pk>/', update_address, name='update_address'),
+    path('address/<int:pk>/delete/', delete_address, name='delete_address'),
     path('address/<int:pk>/set_favorite/', set_favorite_address, name='set_favorite_address'),
 ]
 urlpatterns+=router.urls
