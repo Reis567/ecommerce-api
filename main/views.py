@@ -322,7 +322,16 @@ def update_address(request, pk):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def set_favorite_address(request, pk):
-    address = get_object_or_404(CustomerAddress, pk=pk, customer=request.user.customer)
+    user_id = request.query_params.get('user_id')  # Obtendo o user_id do frontend
+    
+    if not user_id:
+        return Response({'error': 'User ID is missing.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        customer = Customer.objects.get(user=user_id)  # Obtendo o cliente a partir do user_id
+    except Customer.DoesNotExist:
+        return Response({'error': 'Customer not found.'}, status=status.HTTP_404_NOT_FOUND)
+    address = get_object_or_404(CustomerAddress, pk=pk, customer=customer)
     CustomerAddress.objects.filter(customer=request.user.customer).update(is_favorite=False)
     address.is_favorite = True
     address.save()
