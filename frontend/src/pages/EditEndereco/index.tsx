@@ -23,48 +23,54 @@ const EditAddressPage: React.FC = () => {
 
   const fetchAddress = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/v1/address/${addressId}/`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      });
-      const address = response.data;
-      setCep(address.cep);
-      setLogradouro(address.logradouro);
-      setNumero(address.numero);
-      setEstado(address.estado);
-      setBairro(address.bairro);
-      setPais(address.pais);
+        const response = await axios.get(`http://localhost:8000/api/v1/address/${addressId}/?user_id=${userId}`, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+            },
+        });
+        const address = response.data;
+        setCep(address.cep);
+        setLogradouro(address.logradouro);
+        setNumero(address.numero);
+        setEstado(address.estado);
+        setBairro(address.bairro);
+        setPais(address.pais);
     } catch (error) {
-      console.error('Erro ao buscar endereço:', error);
+        console.error('Erro ao buscar endereço:', error);
     }
-  };
+};
 
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!userId) {
+        console.error('User ID is not available');
+        return;
+    }
+
     const updatedAddress = {
-      cep,
-      logradouro,
-      numero,
-      estado,
-      bairro,
-      pais,
+        cep,
+        logradouro,
+        numero,
+        estado,
+        bairro,
+        pais,
     };
 
     try {
-      const response = await axios.put(`http://localhost:8000/api/v1/address/${addressId}/`, updatedAddress, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      });
-      console.log('Resposta da requisição:', response);
-      navigate('/enderecos/meus_enderecos');
+        const response = await axios.put(`http://localhost:8000/api/v1/address/${addressId}/?user_id=${userId}`, updatedAddress, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+            },
+        });
+        console.log('Resposta da requisição:', response);
+        navigate('/enderecos/meus_enderecos');
     } catch (error) {
-      console.error('Erro ao atualizar endereço:', error);
+        console.error('Erro ao atualizar endereço:', error);
     }
-  };
+};
+
 
   return (
     <Content>
