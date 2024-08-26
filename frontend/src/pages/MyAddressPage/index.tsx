@@ -1,6 +1,6 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button } from 'antd';
-import { EditOutlined, DeleteOutlined, StarOutlined,StarFilled  } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, StarOutlined, StarFilled } from '@ant-design/icons';
 import axios from 'axios';
 import { 
   AddressContainer, 
@@ -21,12 +21,11 @@ interface Address {
   bairro: string;
   estado: string;
   cep: string;
-  is_favorite: boolean;
+  favorite_address: boolean; // Alterado para usar o campo correto da API
 }
 
 const MyAddressesPage: React.FC = () => {
   const [addresses, setAddresses] = useState<Address[]>([]);
-  const [favoriteAddressId, setFavoriteAddressId] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [addressToDelete, setAddressToDelete] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -50,10 +49,6 @@ const MyAddressesPage: React.FC = () => {
       const data = response.data;
       setAddresses(data);
   
-      const favorite = data.find((address) => address.is_favorite);
-      if (favorite) {
-        setFavoriteAddressId(favorite.id);
-      }
     } catch (error) {
       console.error('Erro ao buscar endereços:', error);
     }
@@ -91,7 +86,6 @@ const MyAddressesPage: React.FC = () => {
     }
   };
 
-
   const handleSetFavorite = async (addressId: string) => {
     try {
       await axios.post(`http://localhost:8000/api/v1/address/${addressId}/set_favorite/`, null, {
@@ -100,7 +94,6 @@ const MyAddressesPage: React.FC = () => {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
         },
       });
-      setFavoriteAddressId(addressId);
       fetchAddresses();
     } catch (error) {
       console.error('Erro ao definir endereço favorito:', error);
@@ -111,36 +104,35 @@ const MyAddressesPage: React.FC = () => {
     setIsModalVisible(false);
     setAddressToDelete(null);
   };
+
   return (
     <AddressContent>
       <AddressContainer>
         <AddressTitle>Meus Endereços</AddressTitle>
         <AddButton onClick={handleAddAddress}>Adicionar Novo Endereço</AddButton>
         <AddressList>
-        {addresses.length > 0 ? (
+          {addresses.length > 0 ? (
             addresses.map((address) => (
               <AddressItem 
                 key={address.id}
-                isFavorite={address.id === favoriteAddressId} // Verifica se o endereço é o favorito
+                isFavorite={address.favorite_address} // Aplicando o estado de favorito corretamente
               >
                 {address.logradouro}, {address.bairro}, {address.estado}, {address.cep}
                 <AddressActions>
                   <EditOutlined onClick={() => handleEditAddress(address.id)} />
                   <DeleteOutlined onClick={() => handleDeleteClick(address.id)} />
-                                      <FavoriteIcon 
-                      onClick={() => handleSetFavorite(address.id)} 
-                      isFavorite={address.id === favoriteAddressId}
-                    >
-                      {address.id === favoriteAddressId ? <StarFilled style={{ color: '#FFD700' }} /> : <StarOutlined />}
-                    </FavoriteIcon>
-
+                  <FavoriteIcon 
+                    onClick={() => handleSetFavorite(address.id)} 
+                    isFavorite={address.favorite_address}
+                  >
+                    {address.favorite_address ? <StarFilled style={{ color: '#FFD700' }} /> : <StarOutlined />}
+                  </FavoriteIcon>
                 </AddressActions>
               </AddressItem>
             ))
           ) : (
             <AddressItem isFavorite={false}>Nenhum endereço encontrado.</AddressItem>
           )}
-
         </AddressList>
 
         <Modal
