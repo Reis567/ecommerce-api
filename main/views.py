@@ -18,6 +18,8 @@ from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from rest_framework.pagination import LimitOffsetPagination
 import requests
+from django.db import transaction
+
 def welcome(request):
     return JsonResponse({'message': 'Bem-vindo à API!'})
 
@@ -317,25 +319,30 @@ def update_address(request, pk):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def set_favorite_address(request, pk):
-    user_id = request.query_params.get('user_id')  # Obtendo o user_id do frontend
+    user_id = request.query_params.get('user_id')
     
     if not user_id:
         return Response({'error': 'User ID is missing.'}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        customer = Customer.objects.get(user=user_id)  # Obtendo o cliente a partir do user_id
+        customer = Customer.objects.get(user=user_id)
     except Customer.DoesNotExist:
         return Response({'error': 'Customer not found.'}, status=status.HTTP_404_NOT_FOUND)
-    address = get_object_or_404(CustomerAddress, pk=pk, customer=customer)
-    CustomerAddress.objects.filter(customer=request.user.customer).update(is_favorite=False)
-    address.is_favorite = True
-    address.save()
-    return Response({'status': 'endereço definido como favorito'}, status=status.HTTP_200_OK)
+    
+    try:
+        address = CustomerAddress.objects.get(pk=pk, customer=customer)
+    except CustomerAddress.DoesNotExist:
+        return Response({'error': 'Address not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    with transaction.atomic():
+        CustomerAddress.objects.filter(customer=customer).update(is_favorite=False)
+        address.is_favorite = True
+        address.save()
+
+    return Response({'status': 'Endereço definido como favorito'}, status=status.HTTP_200_OK)
 
 
 @api_view(['DELETE'])
