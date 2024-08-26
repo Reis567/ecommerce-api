@@ -76,7 +76,7 @@ const MyAddressesPage: React.FC = () => {
     if (!addressToDelete) return;
 
     try {
-      await axios.delete(`/api/v1/address/${addressToDelete}/`, {
+      await axios.delete(`http://localhost:8000/api/v1/address/${addressToDelete}/`, {
         params: { user_id: userId },
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
@@ -91,9 +91,11 @@ const MyAddressesPage: React.FC = () => {
     }
   };
 
+
   const handleSetFavorite = async (addressId: string) => {
     try {
-      await axios.post(`/api/v1/address/${addressId}/set_favorite/`, null, {
+      await axios.post(`http://localhost:8000/api/v1/address/${addressId}/set_favorite/`, null, {
+        params: { user_id: userId },
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
         },
@@ -109,7 +111,6 @@ const MyAddressesPage: React.FC = () => {
     setIsModalVisible(false);
     setAddressToDelete(null);
   };
-
   return (
     <AddressContent>
       <AddressContainer>

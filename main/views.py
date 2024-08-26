@@ -338,11 +338,12 @@ def set_favorite_address(request, pk):
         return Response({'error': 'Address not found.'}, status=status.HTTP_404_NOT_FOUND)
 
     with transaction.atomic():
-        CustomerAddress.objects.filter(customer=customer).update(is_favorite=False)
-        address.is_favorite = True
+        CustomerAddress.objects.filter(customer=customer).update(favorite_address=False)
+        address.favorite_address = True
         address.save()
 
     return Response({'status': 'Endereço definido como favorito'}, status=status.HTTP_200_OK)
+
 
 
 @api_view(['DELETE'])
