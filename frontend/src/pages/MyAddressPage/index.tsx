@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { Modal, Button } from 'antd';
-import { EditOutlined, DeleteOutlined, StarOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, StarOutlined,StarFilled  } from '@ant-design/icons';
 import axios from 'axios';
 import { 
   AddressContainer, 
@@ -127,12 +127,13 @@ const MyAddressesPage: React.FC = () => {
                 <AddressActions>
                   <EditOutlined onClick={() => handleEditAddress(address.id)} />
                   <DeleteOutlined onClick={() => handleDeleteClick(address.id)} />
-                  <FavoriteIcon 
-                    onClick={() => handleSetFavorite(address.id)} 
-                    isFavorite={address.id === favoriteAddressId}
-                  >
-                    <StarOutlined />
-                  </FavoriteIcon>
+                                      <FavoriteIcon 
+                      onClick={() => handleSetFavorite(address.id)} 
+                      isFavorite={address.id === favoriteAddressId}
+                    >
+                      {address.id === favoriteAddressId ? <StarFilled style={{ color: '#FFD700' }} /> : <StarOutlined />}
+                    </FavoriteIcon>
+
                 </AddressActions>
               </AddressItem>
             ))
