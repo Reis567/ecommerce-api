@@ -29,22 +29,27 @@ export const AddressList = styled.ul`
   padding: 0;
   width: 100%;
 `;
+interface AddressItemProps {
+  isFavorite: boolean;
+}
 
-export const AddressItem = styled.li`
-  padding: 15px 20px;
-  border: 1px solid #ddd;
+export const AddressItem = styled.div<AddressItemProps>`
+  padding: 15px;
   margin-bottom: 10px;
-  border-radius: 5px;
+  width: 100%;
+  background-color: ${({ isFavorite }) => (isFavorite ? '#f5f5dc' : '#fff')}; /* Bege para favoritos, branco para os outros */
+  border: 1px solid #ddd;
+  border-radius: 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   &:hover {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
 `;
+
 
 export const AddressActions = styled.div`
   display: flex;

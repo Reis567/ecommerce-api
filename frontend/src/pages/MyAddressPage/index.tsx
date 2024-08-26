@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Modal, Button } from 'antd';
 import { EditOutlined, DeleteOutlined, StarOutlined } from '@ant-design/icons';
 import axios from 'axios';
@@ -116,9 +116,12 @@ const MyAddressesPage: React.FC = () => {
         <AddressTitle>Meus Endereços</AddressTitle>
         <AddButton onClick={handleAddAddress}>Adicionar Novo Endereço</AddButton>
         <AddressList>
-          {addresses.length > 0 ? (
+        {addresses.length > 0 ? (
             addresses.map((address) => (
-              <AddressItem key={address.id}>
+              <AddressItem 
+                key={address.id}
+                isFavorite={address.id === favoriteAddressId} // Verifica se o endereço é o favorito
+              >
                 {address.logradouro}, {address.bairro}, {address.estado}, {address.cep}
                 <AddressActions>
                   <EditOutlined onClick={() => handleEditAddress(address.id)} />
@@ -133,8 +136,9 @@ const MyAddressesPage: React.FC = () => {
               </AddressItem>
             ))
           ) : (
-            <AddressItem>Nenhum endereço encontrado.</AddressItem>
+            <AddressItem isFavorite={false}>Nenhum endereço encontrado.</AddressItem>
           )}
+
         </AddressList>
 
         <Modal
