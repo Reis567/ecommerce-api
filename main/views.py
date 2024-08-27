@@ -19,6 +19,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.pagination import LimitOffsetPagination
 import requests
 from django.db import transaction
+from django.utils.timezone import now, timedelta
 
 def welcome(request):
     return JsonResponse({'message': 'Bem-vindo à API!'})
