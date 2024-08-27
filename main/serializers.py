@@ -145,7 +145,6 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = ['id', 'customer', 'order_time', 'status', 'total', 'endereco_destino', 'endereco_origem', 'produtos']
 
-
 class CustomerAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerAddress
