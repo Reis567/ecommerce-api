@@ -1,15 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import {Card,Cards,ChartContainer,Charts,Container,Header} from './index.styles';
+import axios from 'axios';
+import { Card, Cards, ChartContainer, Charts, Container, Header } from './index.styles';
 
-const PainelVendedor: React.FC = () => {
+const PainelVendedor = () => {
+  const [dashboardData, setDashboardData] = useState(null);
+
+  useEffect(() => {
+    axios.get('http://127.0.0.1:8000/api/v1/dashboard-data/')
+      .then(response => {
+        setDashboardData(response.data);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar os dados do dashboard:', error);
+      });
+  }, []);
+
+  if (!dashboardData) {
+    return <p>Carregando...</p>;
+  }
+
   const vendasPorCategoriaOptions = {
     chart: { type: 'column' },
     title: { text: 'Vendas por Categoria' },
-    xAxis: { categories: ['Eletrônicos', 'Roupas', 'Livros', 'Jogos', 'Móveis'] },
+    xAxis: { categories: dashboardData.vendas_por_categoria.map(item => item.category) },
     yAxis: { title: { text: 'Número de Vendas' } },
-    series: [{ name: 'Vendas', data: [5, 3, 4, 7, 2] }]
+    series: [{ name: 'Vendas', data: dashboardData.vendas_por_categoria.map(item => item.total) }]
   };
 
   const vendasPorMesOptions = {
@@ -17,15 +34,15 @@ const PainelVendedor: React.FC = () => {
     title: { text: 'Vendas por Mês' },
     xAxis: { categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'] },
     yAxis: { title: { text: 'Número de Vendas' } },
-    series: [{ name: 'Vendas', data: [29, 71, 106, 129, 144, 176, 135, 148, 216, 194, 95, 54] }]
+    series: [{ name: 'Vendas', data: dashboardData.vendas_por_mes.map(item => item.total) }]
   };
 
   const vendasUltimasSemanasOptions = {
     chart: { type: 'bar' },
     title: { text: 'Vendas nas Últimas Semanas' },
-    xAxis: { categories: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'] },
+    xAxis: { categories: dashboardData.vendas_ultimas_semanas.map(item => item.week) },
     yAxis: { title: { text: 'Número de Vendas' } },
-    series: [{ name: 'Vendas', data: [5, 7, 3, 8] }]
+    series: [{ name: 'Vendas', data: dashboardData.vendas_ultimas_semanas.map(item => item.total) }]
   };
 
   const vendasDoDiaOptions = {
@@ -34,13 +51,10 @@ const PainelVendedor: React.FC = () => {
     series: [{
       name: 'Vendas',
       colorByPoint: true,
-      data: [
-        { name: 'Eletrônicos', y: 61.41 },
-        { name: 'Roupas', y: 11.84 },
-        { name: 'Livros', y: 10.85 },
-        { name: 'Jogos', y: 4.67 },
-        { name: 'Móveis', y: 4.18 }
-      ]
+      data: dashboardData.vendas_do_dia.map(item => ({
+        name: item.category,
+        y: item.total
+      }))
     }]
   };
 
@@ -52,19 +66,19 @@ const PainelVendedor: React.FC = () => {
       <Cards>
         <Card>
           <h2>Total de Vendas</h2>
-          <p>1,234</p>
+          <p>{dashboardData.total_vendas}</p>
         </Card>
         <Card>
           <h2>Vendas do Mês</h2>
-          <p>567</p>
+          <p>{dashboardData.vendas_mes}</p>
         </Card>
         <Card>
           <h2>Vendas da Semana</h2>
-          <p>89</p>
+          <p>{dashboardData.vendas_semana}</p>
         </Card>
         <Card>
           <h2>Vendas do Dia</h2>
-          <p>23</p>
+          <p>{dashboardData.vendas_dia}</p>
         </Card>
       </Cards>
       <Charts>

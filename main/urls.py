@@ -50,6 +50,6 @@ urlpatterns = [
 
 
     # Data
-    path('api/dashboard-data/', dashboard_data, name='dashboard_data'),
+    path('dashboard-data/', dashboard_data, name='dashboard_data'),
 ]
 urlpatterns+=router.urls
