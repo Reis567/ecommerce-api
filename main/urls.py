@@ -47,5 +47,9 @@ urlpatterns = [
     path('address/<int:pk>/', update_address, name='update_address'),
     path('address/<int:pk>/delete/', delete_address, name='delete_address'),
     path('address/<int:pk>/set_favorite/', set_favorite_address, name='set_favorite_address'),
+
+
+    # Data
+    path('api/dashboard-data/', dashboard_data, name='dashboard_data'),
 ]
 urlpatterns+=router.urls
