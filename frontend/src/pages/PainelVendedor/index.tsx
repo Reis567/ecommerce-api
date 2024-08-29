@@ -4,16 +4,16 @@ import HighchartsReact from 'highcharts-react-official';
 import axios from 'axios';
 import { Card, Cards, ChartContainer, Charts, Container, Header } from './index.styles';
 import { useAuth } from '../../contexts/AuthContext';
+
 const PainelVendedor = () => {
   const [dashboardData, setDashboardData] = useState(null);
-
-  const { userId } = useAuth();
+  const { userId } = useAuth(); // Obtém o ID do usuário logado
 
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/api/v1/dashboard-data/', {
-      params: { user_id: userId },
+      params: { user_id: userId }, // Envia o ID do usuário como parâmetro
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`, // Inclui o token de autenticação
       },
     })
       .then(response => {
@@ -22,7 +22,7 @@ const PainelVendedor = () => {
       .catch(error => {
         console.error('Erro ao buscar os dados do dashboard:', error);
       });
-  }, []);
+  }, [userId]); // O useEffect é executado sempre que o userId mudar
 
   if (!dashboardData) {
     return <p>Carregando...</p>;
