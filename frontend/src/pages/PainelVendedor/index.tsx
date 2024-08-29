@@ -3,12 +3,19 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import axios from 'axios';
 import { Card, Cards, ChartContainer, Charts, Container, Header } from './index.styles';
-
+import { useAuth } from '../../contexts/AuthContext';
 const PainelVendedor = () => {
   const [dashboardData, setDashboardData] = useState(null);
 
+  const { userId } = useAuth();
+
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/v1/dashboard-data/')
+    axios.get('http://127.0.0.1:8000/api/v1/dashboard-data/', {
+      params: { user_id: userId },
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
       .then(response => {
         setDashboardData(response.data);
       })

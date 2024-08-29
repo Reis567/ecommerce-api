@@ -278,7 +278,7 @@ def list_addresses(request):
     if user_id:
         try:
             customer = Customer.objects.get(user=user_id)
-            print(str(customer))''
+            print(str(customer))
         except Customer.DoesNotExist:
             return Response([], status=status.HTTP_200_OK)
         
@@ -740,12 +740,19 @@ class ProductTagListView(generics.ListAPIView):
 
 @api_view(['GET'])
 def dashboard_data(request):
-    # Vendas por Categoria
-    vendas_por_categoria = Order.objects.values('produtos__category__name').annotate(total_vendas=Count('produtos')).order_by('-total_vendas')
+    user = request.user
+    try:
+        vendor = Vendor.objects.get(user=user)
+    except Vendor.DoesNotExist:
+        return Response({'error': 'Vendedor não encontrado'}, status=404)
+    
+    # Obtenha as ordens associadas ao vendedor
+    orders = Order.objects.filter(vendor=vendor)
+    vendas_por_categoria = orders.values('produtos__category__name').annotate(total_vendas=Count('produtos')).order_by('-total_vendas')
     vendas_por_categoria_data = [{'category': item['produtos__category__name'], 'total': item['total_vendas']} for item in vendas_por_categoria]
 
     # Vendas por Mês
-    vendas_por_mes = Order.objects.filter(order_time__year=now().year).extra(select={'month': "strftime('%%m', order_time)"}).values('month').annotate(total=Count('id')).order_by('month')
+    vendas_por_mes = orders.filter(order_time__year=now().year).extra(select={'month': "strftime('%%m', order_time)"}).values('month').annotate(total=Count('id')).order_by('month')
     vendas_por_mes_data = [{'month': item['month'], 'total': item['total']} for item in vendas_por_mes]
 
     # Vendas nas Últimas Semanas
@@ -754,24 +761,24 @@ def dashboard_data(request):
     for i in range(4):
         start_date = today - timedelta(days=today.weekday(), weeks=i)
         end_date = start_date + timedelta(days=6)
-        vendas_na_semana = Order.objects.filter(order_time__date__range=[start_date, end_date]).count()
+        vendas_na_semana = orders.filter(order_time__date__range=[start_date, end_date]).count()
         vendas_ultimas_semanas.append({'week': f'Semana {i + 1}', 'total': vendas_na_semana})
 
     # Vendas do Dia
-    vendas_do_dia = Order.objects.filter(order_time__date=today).values('produtos__category__name').annotate(total=Count('id'))
+    vendas_do_dia = orders.filter(order_time__date=today).values('produtos__category__name').annotate(total=Count('id'))
     vendas_do_dia_data = [{'category': item['produtos__category__name'], 'total': item['total']} for item in vendas_do_dia]
 
     # Total de Vendas
-    total_vendas = Order.objects.count()
+    total_vendas = orders.count()
 
     # Vendas do Mês
-    vendas_mes = Order.objects.filter(order_time__month=now().month, order_time__year=now().year).count()
+    vendas_mes = orders.filter(order_time__month=now().month, order_time__year=now().year).count()
 
     # Vendas da Semana
-    vendas_semana = Order.objects.filter(order_time__date__gte=today - timedelta(days=today.weekday())).count()
+    vendas_semana = orders.filter(order_time__date__gte=today - timedelta(days=today.weekday())).count()
 
     # Vendas do Dia
-    vendas_dia = Order.objects.filter(order_time__date=today).count()
+    vendas_dia = orders.filter(order_time__date=today).count()
 
     data = {
         'vendas_por_categoria': vendas_por_categoria_data,
