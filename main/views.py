@@ -736,8 +736,6 @@ class ProductTagListView(generics.ListAPIView):
     queryset = ProductTag.objects.all()
     serializer_class = ProductTagSerializer
 
-
-
 @api_view(['GET'])
 def dashboard_data(request):
     user = request.user
@@ -747,9 +745,11 @@ def dashboard_data(request):
         return Response({'error': 'Vendedor não encontrado'}, status=404)
     
     # Obtenha as ordens associadas ao vendedor
-    orders = Order.objects.filter(vendor=vendor)
-    vendas_por_categoria = orders.values('produtos__category__name').annotate(total_vendas=Count('produtos')).order_by('-total_vendas')
-    vendas_por_categoria_data = [{'category': item['produtos__category__name'], 'total': item['total_vendas']} for item in vendas_por_categoria]
+    orders = Order.objects.filter(product__vendor=vendor)
+
+    # Vendas por Categoria
+    vendas_por_categoria = orders.values('product__category__title').annotate(total_vendas=Count('product')).order_by('-total_vendas')
+    vendas_por_categoria_data = [{'category': item['product__category__title'], 'total': item['total_vendas']} for item in vendas_por_categoria]
 
     # Vendas por Mês
     vendas_por_mes = orders.filter(order_time__year=now().year).extra(select={'month': "strftime('%%m', order_time)"}).values('month').annotate(total=Count('id')).order_by('month')
@@ -765,8 +765,8 @@ def dashboard_data(request):
         vendas_ultimas_semanas.append({'week': f'Semana {i + 1}', 'total': vendas_na_semana})
 
     # Vendas do Dia
-    vendas_do_dia = orders.filter(order_time__date=today).values('produtos__category__name').annotate(total=Count('id'))
-    vendas_do_dia_data = [{'category': item['produtos__category__name'], 'total': item['total']} for item in vendas_do_dia]
+    vendas_do_dia = orders.filter(order_time__date=today).values('product__category__title').annotate(total=Count('id'))
+    vendas_do_dia_data = [{'category': item['product__category__title'], 'total': item['total']} for item in vendas_do_dia]
 
     # Total de Vendas
     total_vendas = orders.count()
