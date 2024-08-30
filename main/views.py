@@ -20,6 +20,18 @@ from rest_framework.pagination import LimitOffsetPagination
 import requests
 from django.db import transaction
 from django.utils.timezone import now, timedelta
+from django.db.models import Count, Sum
+from django.utils.timezone import now
+from datetime import timedelta
+from django.db.models.functions import TruncMonth
+
+
+
+
+
+
+
+
 
 def welcome(request):
     return JsonResponse({'message': 'Bem-vindo à API!'})
@@ -736,6 +748,9 @@ class ProductTagListView(generics.ListAPIView):
     queryset = ProductTag.objects.all()
     serializer_class = ProductTagSerializer
 
+
+
+
 @api_view(['GET'])
 def dashboard_data(request):
     user = request.user
@@ -745,15 +760,19 @@ def dashboard_data(request):
         return Response({'error': 'Vendedor não encontrado'}, status=404)
     
     # Obtenha as ordens associadas ao vendedor
-    orders = Order.objects.filter(product__vendor=vendor)
+    orders = Order.objects.filter(vendor=vendor).distinct()
 
     # Vendas por Categoria
-    vendas_por_categoria = orders.values('product__category__title').annotate(total_vendas=Count('product')).order_by('-total_vendas')
-    vendas_por_categoria_data = [{'category': item['product__category__title'], 'total': item['total_vendas']} for item in vendas_por_categoria]
+    vendas_por_categoria = orders.values('produtos__category__title').annotate(total_vendas=Count('produtos')).order_by('-total_vendas')
+    vendas_por_categoria_data = [{'category': item['produtos__category__title'], 'total': item['total_vendas']} for item in vendas_por_categoria]
 
     # Vendas por Mês
-    vendas_por_mes = orders.filter(order_time__year=now().year).extra(select={'month': "strftime('%%m', order_time)"}).values('month').annotate(total=Count('id')).order_by('month')
-    vendas_por_mes_data = [{'month': item['month'], 'total': item['total']} for item in vendas_por_mes]
+    vendas_por_mes = orders.filter(order_time__year=now().year).annotate(
+        month=TruncMonth('order_time')  # Truncar para o mês
+    ).values('month').annotate(total=Count('id')).order_by('month')
+
+    vendas_por_mes_data = [{'month': item['month'].strftime('%m'), 'total': item['total']} for item in vendas_por_mes]
+
 
     # Vendas nas Últimas Semanas
     today = now().date()
@@ -765,8 +784,8 @@ def dashboard_data(request):
         vendas_ultimas_semanas.append({'week': f'Semana {i + 1}', 'total': vendas_na_semana})
 
     # Vendas do Dia
-    vendas_do_dia = orders.filter(order_time__date=today).values('product__category__title').annotate(total=Count('id'))
-    vendas_do_dia_data = [{'category': item['product__category__title'], 'total': item['total']} for item in vendas_do_dia]
+    vendas_do_dia = orders.filter(order_time__date=today).values('produtos__category__title').annotate(total=Count('id'))
+    vendas_do_dia_data = [{'category': item['produtos__category__title'], 'total': item['total']} for item in vendas_do_dia]
 
     # Total de Vendas
     total_vendas = orders.count()
