@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { AuthContainer, AuthForm, AuthTitle, AuthButton } from './index.styles';
 
 const RegistroCliente: React.FC = () => {
@@ -85,6 +85,11 @@ const RegistroCliente: React.FC = () => {
             Registrar
           </AuthButton>
         </Form.Item>
+        
+        <Form.Item>
+          <Link to="/vendedor/register">Sou vendedor</Link>
+        </Form.Item>
+        
       </AuthForm>
     </AuthContainer>
   );
