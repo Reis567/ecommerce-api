@@ -1,7 +1,7 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { AuthContainer, AuthForm, AuthTitle, AuthButton } from './index.styles';
+import { AuthContainer, AuthForm, AuthTitle, AuthButton, AuthInput } from './index.styles';
 
 const RegistroVendedor: React.FC = () => {
   const navigate = useNavigate();
@@ -19,12 +19,13 @@ const RegistroVendedor: React.FC = () => {
           password: values.password,
           first_name: values.name,
           last_name: values.last_name,
-          user_type: 'vendor' // Adicionando o tipo de usuário
+          user_type: 'vendor', // Adicionando o tipo de usuário
+          mobile: values.mobile // Adicionando o campo mobile
         }),
       });
 
       if (response.ok) {
-        navigate('/login-vendedor'); // Redireciona para a página de login do vendedor
+        navigate('/login'); // Redireciona para a mesma página de login do cliente
       } else {
         const errorData = await response.json();
         console.error('Failed:', errorData);
@@ -52,28 +53,35 @@ const RegistroVendedor: React.FC = () => {
           name="name"
           rules={[{ required: true, message: 'Por favor, insira seu nome!' }]}
         >
-          <Input placeholder="Nome" />
+          <AuthInput placeholder="Nome" />
         </Form.Item>
 
         <Form.Item
           name="last_name"
           rules={[{ required: true, message: 'Por favor, insira seu sobrenome!' }]}
         >
-          <Input placeholder="Sobrenome" />
+          <AuthInput placeholder="Sobrenome" />
         </Form.Item>
 
         <Form.Item
           name="email"
           rules={[{ required: true, message: 'Por favor, insira seu email!' }]}
         >
-          <Input placeholder="Email" />
+          <AuthInput placeholder="Email" />
         </Form.Item>
 
         <Form.Item
           name="password"
           rules={[{ required: true, message: 'Por favor, insira sua senha!' }]}
         >
-          <Input.Password placeholder="Senha" />
+          <AuthInput.Password placeholder="Senha" />
+        </Form.Item>
+
+        <Form.Item
+          name="mobile"
+          rules={[{ required: true, message: 'Por favor, insira seu número de celular!' }]}
+        >
+          <AuthInput placeholder="Número de Celular" />
         </Form.Item>
 
         <Form.Item>

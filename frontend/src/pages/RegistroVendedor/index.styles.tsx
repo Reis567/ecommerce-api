@@ -1,6 +1,6 @@
 // styles.ts
 import styled from 'styled-components';
-import { Button, Form } from 'antd';
+import { Form, Input, Button } from 'antd';
 
 export const AuthContainer = styled.div`
   display: flex;
@@ -18,18 +18,32 @@ export const AuthForm = styled(Form)`
   border-radius: 8px;
 `;
 
+export const AuthInput = styled(Input)`
+  padding: 10px 15px;
+  color: black; /* Cor do texto digitado */
+  font-size: 18px; /* Tamanho do texto digitado */
+  border-radius: 8px;
+
+  &::placeholder {
+    color: gray; /* Cor do placeholder */
+    font-size: 18px; /* Tamanho do texto do placeholder */
+  }
+`;
 export const AuthTitle = styled.h2`
   text-align: center;
   margin-bottom: 24px;
-  font-size: 24px;
+  font-size: 34px;
   font-weight: bold;
 `;
 
 export const AuthButton = styled(Button)`
   width: 100%;
   background-color: #239271;
+  color: black; /* Cor do texto digitado */
+  font-size: 18px;
   color: white;
   &:hover {
     background-color: #1e8266;
   }
+  height: auto;
 `;

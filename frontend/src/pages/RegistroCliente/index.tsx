@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
-import { AuthContainer, AuthForm, AuthTitle, AuthButton } from './index.styles';
+import { AuthContainer, AuthForm, AuthTitle, AuthButton ,AuthInput} from './index.styles';
 
 const RegistroCliente: React.FC = () => {
   const navigate = useNavigate();
@@ -53,31 +53,31 @@ const RegistroCliente: React.FC = () => {
           name="name"
           rules={[{ required: true, message: 'Por favor, insira seu nome!' }]}
         >
-          <Input placeholder="Nome" />
+          <AuthInput placeholder="Nome" />
         </Form.Item>
         <Form.Item
           name="last_name"
           rules={[{ required: true, message: 'Por favor, insira seu sobrenome!' }]}
         >
-          <Input placeholder="Sobrenome" />
+          <AuthInput placeholder="Sobrenome" />
         </Form.Item>
         <Form.Item
           name="email"
           rules={[{ required: true, message: 'Por favor, insira seu email!' }]}
         >
-          <Input placeholder="Email" />
+          <AuthInput placeholder="Email" />
         </Form.Item>
         <Form.Item
           name="password"
           rules={[{ required: true, message: 'Por favor, insira sua senha!' }]}
         >
-          <Input.Password placeholder="Senha" />
+          <AuthInput.Password placeholder="Senha" />
         </Form.Item>
         <Form.Item
           name="mobile"
           rules={[{ required: true, message: 'Por favor, insira seu número de celular!' }]}
         >
-          <Input placeholder="Número de Celular" />
+          <AuthInput placeholder="Número de Celular" />
         </Form.Item>
 
         <Form.Item>
