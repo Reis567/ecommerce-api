@@ -24,7 +24,7 @@ from django.db.models import Count, Sum
 from django.utils.timezone import now
 from datetime import timedelta
 from django.db.models.functions import TruncMonth
-
+from rest_framework.exceptions import NotFound
 
 
 
@@ -437,19 +437,23 @@ class OrderUpdateView(generics.UpdateAPIView):
         self.perform_update(serializer)
         return Response(serializer.data)
     
-class OrderDeleteView(generics.DestroyAPIView):
-    queryset = Order.objects.all()
 
-    @extend_schema(
-        description="Delete an existing order",
-        tags=["Orders"],
-        responses={204: "No content"},
-    )
-    def delete(self, request, *args, **kwargs):
-        instance = self.get_object()
-        self.perform_destroy(instance)
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
+
+@extend_schema(
+    description="Delete an existing order",
+    tags=["Orders"],
+    responses={204: "No content"},
+)
+@api_view(['DELETE'])
+def order_delete_view(request, pk):
+    try:
+        order = Order.objects.get(pk=pk)
+    except Order.DoesNotExist:
+        raise NotFound(detail="Order not found.")
+
+    order.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 class ProductRatingViewSet(ModelViewSet):
     serializer_class = ProductRatingSerializer
