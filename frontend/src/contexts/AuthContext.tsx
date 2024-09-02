@@ -3,6 +3,7 @@ import React, { createContext, useState, useEffect, useContext, ReactNode } from
 interface AuthContextType {
   userId: number | null;
   username: string | null;
+  userType: string | null;  // Adicionando o userType ao contexto
   fetchUserData: () => Promise<void>;
 }
 
@@ -11,6 +12,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [userId, setUserId] = useState<number | null>(null);
   const [username, setUsername] = useState<string | null>(null);
+  const [userType, setUserType] = useState<string | null>(null);  // Estado para o userType
 
   const fetchUserData = async () => {
     try {
@@ -25,8 +27,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       const data = await response.json();
       setUserId(data.id);
       setUsername(data.username);
-      //console.log("User ID fetched and set in context:", data.id);
-      //console.log("Username fetched and set in context:", data.username);
+      setUserType(data.user_type);  // Salvando o userType no estado
     } catch (error) {
       console.error('Failed to fetch user data:', error);
     }
@@ -37,7 +38,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ userId, username, fetchUserData }}>
+    <AuthContext.Provider value={{ userId, username, userType, fetchUserData }}>
       {children}
     </AuthContext.Provider>
   );
