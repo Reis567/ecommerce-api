@@ -39,7 +39,6 @@ class UserSerializer(serializers.ModelSerializer):
             Customer.objects.create(user=user, mobile=mobile)
         
         return user
-
 class UserDetailSerializer(serializers.ModelSerializer):
     customer_addresses = serializers.SerializerMethodField()
     vendor_addresses = serializers.SerializerMethodField()
@@ -53,31 +52,27 @@ class UserDetailSerializer(serializers.ModelSerializer):
             'first_name', 
             'last_name', 
             'email',
-            #'phone', 
-            #'photo',
             'user_type',
             'customer_addresses',
             'vendor_addresses'
         ]
 
     def get_user_type(self, obj):
-        if hasattr(obj, 'customer'):
-            return 'customer'
-        elif hasattr(obj, 'vendor'):
+        if Vendor.objects.filter(user=obj).exists():
             return 'vendor'
+        elif Customer.objects.filter(user=obj).exists():
+            return 'customer'
         return None
 
     def get_customer_addresses(self, obj):
-        # Local import to avoid circular import
-        from main.serializers import CustomerAddressSerializer
         if hasattr(obj, 'customer'):
+            from main.serializers import CustomerAddressSerializer
             return CustomerAddressSerializer(obj.customer.customer_addresses.all(), many=True).data
         return []
 
     def get_vendor_addresses(self, obj):
-        # Local import to avoid circular import
-        from main.serializers import VendorAddressSerializer
         if hasattr(obj, 'vendor'):
+            from main.serializers import VendorAddressSerializer
             return VendorAddressSerializer(obj.vendor.vendor_addresses.all(), many=True).data
         return []
 
