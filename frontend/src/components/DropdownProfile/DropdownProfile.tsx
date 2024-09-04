@@ -22,7 +22,7 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({ username }) => {
       navigate('/perfil');
     } else if (key === '6') {
       navigate('/vendedor/meus-produtos');
-    } else if (key === '7') {
+    } else if (key === '8') {
       // Lógica para logout
       localStorage.removeItem('accessToken');
       navigate('/login');
