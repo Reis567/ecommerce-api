@@ -53,14 +53,20 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({ username }) => {
       label: 'Dashboard',
       icon: <DashboardOutlined />,
     }] : []),
+
     ...(userType === 'vendor' ? [{
       key: '6',
       label: 'Meus produtos',
       icon: <SkinOutlined />,
     }] : []),
+    ...(userType === 'vendor' ? [{
+      key: '7',
+      label: 'Vendas',
+      icon: <SkinOutlined />,
+    }] : []),
 
     {
-      key: '7',
+      key: '8',
       label: (
         <span>
           Sair <ArrowRightOutlined />
