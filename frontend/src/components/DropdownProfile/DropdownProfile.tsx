@@ -4,13 +4,14 @@ import type { MenuProps } from 'antd';
 import { Dropdown } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { SpaceSty, DownStyled } from './DropdownProfile.styles';
-
+import { AuthContext, useAuth } from '../../contexts/AuthContext';
 interface DropdownProfileProps {
   username: string;
 }
 
 const DropdownProfile: React.FC<DropdownProfileProps> = ({ username }) => {
   const navigate = useNavigate();
+  const { userType } = useAuth();
 
   const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
     if (key === '4') {
@@ -47,16 +48,17 @@ const DropdownProfile: React.FC<DropdownProfileProps> = ({ username }) => {
       key: '4',
       label: 'Meus Endereços',
     },
-    {
+    ...(userType === 'vendor' ? [{
       key: '5',
       label: 'Dashboard',
       icon: <DashboardOutlined />,
-    },
-    {
+    }] : []),
+    ...(userType === 'vendor' ? [{
       key: '6',
       label: 'Meus produtos',
       icon: <SkinOutlined />,
-    },
+    }] : []),
+
     {
       key: '7',
       label: (
