@@ -814,3 +814,21 @@ def dashboard_data(request):
         'vendas_dia': vendas_dia,
     }
     return Response(data)
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def vendor_order_list(request):
+    user = request.user
+    # Verifica se o usuário é um vendedor
+    if hasattr(user, 'vendor'):
+        # Filtra os pedidos associados ao vendedor
+        orders = Order.objects.filter(vendor=user.vendor)
+        # Serializa os pedidos
+        serializer = OrderSerializer(orders, many=True)
+        # Retorna os pedidos em formato JSON
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        # Caso o usuário não seja um vendedor, retorna uma mensagem de erro
+        return Response({'detail': 'Você não tem permissão para ver essas vendas.'}, status=status.HTTP_403_FORBIDDEN)
