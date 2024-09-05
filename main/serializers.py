@@ -140,11 +140,11 @@ class ProductConditionSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     endereco_destino = serializers.PrimaryKeyRelatedField(queryset=CustomerAddress.objects.all())
+    produtos = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Order
-        fields = ['id', 'customer', 'order_time', 'status', 'total', 'endereco_destino', 'endereco_origem', 'produtos']
-
+        fields = ['id', 'customer', 'vendor', 'order_time', 'status', 'total', 'endereco_destino', 'endereco_origem', 'produtos']
 class CustomerAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerAddress
