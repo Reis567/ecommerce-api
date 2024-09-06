@@ -821,14 +821,18 @@ def dashboard_data(request):
 @permission_classes([IsAuthenticated])
 def vendor_order_list(request):
     user = request.user
-    # Verifica se o usuário é um vendedor
-    if hasattr(user, 'vendor'):
-        # Filtra os pedidos associados ao vendedor
-        orders = Order.objects.filter(vendor=user.vendor)
-        # Serializa os pedidos
-        serializer = OrderSerializer(orders, many=True)
-        # Retorna os pedidos em formato JSON
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    else:
-        # Caso o usuário não seja um vendedor, retorna uma mensagem de erro
-        return Response({'detail': 'Você não tem permissão para ver essas vendas.'}, status=status.HTTP_403_FORBIDDEN)
+    
+    # Tenta obter o vendedor associado ao usuário autenticado
+    try:
+        vendor = Vendor.objects.get(user=user)
+    except Vendor.DoesNotExist:
+        return Response({'error': 'Vendedor não encontrado'}, status=status.HTTP_404_NOT_FOUND)
+
+    # Filtra os pedidos associados ao vendedor
+    orders = Order.objects.filter(vendor=vendor)
+    
+    # Serializa os pedidos
+    serializer = OrderSerializer(orders, many=True)
+    
+    # Retorna os pedidos em formato JSON
+    return Response(serializer.data, status=status.HTTP_200_OK)
