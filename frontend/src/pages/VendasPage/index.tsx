@@ -1,66 +1,106 @@
-import React from 'react';
-import {
-  Compra,
-  Container,
-  Header,
-  Imagem,
-  ListaCompras,
-  ValorCP,
-  NumeroCompra,
-  Status,
-  ComprasContent,
-  NotaFiscalButton,
-  Informacoes,
-  Acoes,
-  BackButton
-} from './index.styles';
-import { useNavigate } from 'react-router-dom';
-
-
+import React, { useEffect, useState } from 'react';
+import DataTable from 'react-data-table-component';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { saveAs } from 'file-saver';
+import * as XLSX from 'xlsx';
+import axios from 'axios';
 
 const VendasVendedor: React.FC = () => {
-  const navigate = useNavigate();
+  const [vendas, setVendas] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
+  const fetchVendas = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/v1/vendedor/orders/', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      });
+      setVendas(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Erro ao buscar vendas:', error);
+      setLoading(false);
+    }
+  };
 
-  const vendas = [
+  useEffect(() => {
+    fetchVendas();
+  }, []);
+
+  // Função para exportar para PDF
+  const exportPDF = () => {
+    const doc = new jsPDF();
+    const tableColumn = ["Número", "Produto", "Valor", "Status"];
+    const tableRows: any[] = [];
+
+    vendas.forEach((venda) => {
+      const vendaData = [
+        venda.id,
+        venda.produtos.map((produto: any) => produto.nome).join(", "),
+        `R$ ${venda.total}`,
+        venda.status,
+      ];
+      tableRows.push(vendaData);
+    });
+
+    doc.autoTable(tableColumn, tableRows, { startY: 20 });
+    doc.text("Vendas do Vendedor", 14, 15);
+    doc.save(`vendas_vendedor.pdf`);
+  };
+
+  // Função para exportar para Excel
+  const exportExcel = () => {
+    const ws = XLSX.utils.json_to_sheet(vendas.map(venda => ({
+      Número: venda.id,
+      Produto: venda.produtos.map((produto: any) => produto.nome).join(", "),
+      Valor: venda.total,
+      Status: venda.status,
+    })));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Vendas");
+    XLSX.writeFile(wb, "vendas_vendedor.xlsx");
+  };
+
+  const columns = [
     {
-      numero: '54321',
-      produto: 'Produto C',
-      imagem: 'https://via.placeholder.com/150',
-      valor: '200,00',
-      status: 'Entregue'
+      name: 'Número',
+      selector: (row: any) => row.id,
+      sortable: true,
     },
     {
-      numero: '54322',
-      produto: 'Produto D',
-      imagem: 'https://via.placeholder.com/150',
-      valor: '250,00',
-      status: 'Aguardando Pagamento'
-    }
+      name: 'Produto',
+      selector: (row: any) => row.produtos.map((produto: any) => produto.nome).join(", "),
+      sortable: false,
+    },
+    {
+      name: 'Valor',
+      selector: (row: any) => `R$ ${row.total}`,
+      sortable: true,
+    },
+    {
+      name: 'Status',
+      selector: (row: any) => row.status,
+      sortable: true,
+    },
   ];
 
   return (
-    <ComprasContent>
-      
-      <Container>
-        <Header>Minhas Vendas</Header>
-        <ListaCompras>
-          {vendas.map((venda, index) => (
-            <Compra key={index}>
-              <Informacoes>
-                <NumeroCompra>#{venda.numero}</NumeroCompra>
-                <Imagem src={venda.imagem} alt={venda.produto} />
-                <ValorCP>R$ {venda.valor}</ValorCP>
-              </Informacoes>
-              <Acoes>
-                <NotaFiscalButton>Nota Fiscal</NotaFiscalButton>
-                <Status>{venda.status}</Status>
-              </Acoes>
-            </Compra>
-          ))}
-        </ListaCompras>
-      </Container>
-    </ComprasContent>
+    <div>
+      <h2>Minhas Vendas</h2>
+      <div style={{ marginBottom: '20px' }}>
+        <button onClick={exportPDF}>Exportar PDF</button>
+        <button onClick={exportExcel}>Exportar Excel</button>
+      </div>
+      <DataTable
+        columns={columns}
+        data={vendas}
+        progressPending={loading}
+        pagination
+        highlightOnHover
+      />
+    </div>
   );
 };
 
