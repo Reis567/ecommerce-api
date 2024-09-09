@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Compra,
   Container,
@@ -11,43 +11,60 @@ import {
   ComprasContent,
   NotaFiscalButton,
   Informacoes,
-  Acoes,
-  BackButton
+  Acoes
 } from './index.styles';
 import { useNavigate } from 'react-router-dom';
 
-const ComprasUsuario: React.FC = () => {
+interface Compra {
+  id: number;
+  customer: number;
+  order_time: string;
+  status: string;
+  total: string;
+  produtos: { nome: string; imagem: string }[];
+}
 
-       
-  const compras = [
-    {
-      numero: '12345',
-      produto: 'Produto A',
-      imagem: 'https://via.placeholder.com/150',
-      valor: '100,00',
-      status: 'Enviado'
-    },
-    {
-      numero: '12346',
-      produto: 'Produto B',
-      imagem: 'https://via.placeholder.com/150',
-      valor: '150,00',
-      status: 'Em Processamento'
+const ComprasUsuario: React.FC = () => {
+  const [compras, setCompras] = useState<Compra[]>([]);
+  const customerId = 1; // Defina o customer_id conforme necessário ou obtenha de algum lugar (ex: auth, params)
+
+  // Função para buscar compras do cliente na API
+  const fetchCompras = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/api/v1/customers/${customerId}/orders/`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}` // Supondo que o token esteja no localStorage
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Erro ao buscar compras');
+      }
+      const data = await response.json();
+      setCompras(data); // Atualiza o estado com os dados das compras
+    } catch (error) {
+      console.error('Erro:', error);
     }
-  ];
+  };
+
+  useEffect(() => {
+    fetchCompras(); // Faz o fetch das compras quando o componente é montado
+  }, []);
 
   return (
     <ComprasContent>
       <Container>
-
         <Header>Minhas Compras</Header>
         <ListaCompras>
           {compras.map((compra, index) => (
             <Compra key={index}>
               <Informacoes>
-                <NumeroCompra>#{compra.numero}</NumeroCompra>
-                <Imagem src={compra.imagem} alt={compra.produto} />
-                <ValorCP>R$ {compra.valor}</ValorCP>
+                <NumeroCompra>Pedido #{compra.id}</NumeroCompra>
+                {compra.produtos.map((produto, idx) => (
+                  <React.Fragment key={idx}>
+                    <Imagem src={produto.imagem || 'https://via.placeholder.com/150'} alt={produto.nome} />
+                  </React.Fragment>
+                ))}
+                <ValorCP>R$ {compra.total}</ValorCP>
               </Informacoes>
               <Acoes>
                 <NotaFiscalButton>Nota Fiscal</NotaFiscalButton>
