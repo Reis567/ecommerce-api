@@ -241,16 +241,19 @@ def category_detail(request, pk):
     return JsonResponse(response_data)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def customer_order_list(request, customer_id):
-    """
-    Retrieve a list of orders from a specific customer.
-    """
+def customer_order_list(request):
+    user_id = request.user
+    print(user_id)
+    if user_id:
+        try:
+            customer = Customer.objects.get(user=user_id)
+            print(str(customer))
+        except Customer.DoesNotExist:
+            return Response([], status=status.HTTP_200_OK)
     try:
-        # Filtra os pedidos pelo ID do cliente
-        orders = Order.objects.filter(customer_id=customer_id)
-        # Serializa os pedidos
+        orders = Order.objects.filter(customer_id=customer)
+        print(str(orders))
         serializer = OrderSerializer(orders, many=True)
-        # Retorna os pedidos em formato JSON
         return Response(serializer.data, status=status.HTTP_200_OK)
     except Order.DoesNotExist:
         return Response({'error': 'Cliente não encontrado'}, status=status.HTTP_404_NOT_FOUND)

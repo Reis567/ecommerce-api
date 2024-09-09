@@ -31,7 +31,7 @@ const ComprasUsuario: React.FC = () => {
   // Função para buscar compras do cliente na API
   const fetchCompras = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/v1/customers/${customerId}/orders/`, {
+      const response = await fetch(`http://localhost:8000/api/v1/customer/orders/`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('accessToken')}` // Supondo que o token esteja no localStorage
         }

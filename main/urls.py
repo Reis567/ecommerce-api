@@ -19,7 +19,7 @@ urlpatterns = [
     path('vendedor/orders/', vendor_order_list, name='vendedor-orders'),
 
     ## CUSTOMERS
-    path('customers/<int:customer_id>/orders/', customer_order_list, name='customer-order-list'),
+    path('customer/orders/', customer_order_list, name='customer-order-list'),
 
     
     #Products

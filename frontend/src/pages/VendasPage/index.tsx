@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import { saveAs } from 'file-saver';
+
 import * as XLSX from 'xlsx';
 import axios from 'axios';
 
