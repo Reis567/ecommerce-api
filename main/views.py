@@ -239,22 +239,21 @@ def category_detail(request, pk):
     }
     
     return JsonResponse(response_data)
-
-class CustomerOrderListView(generics.ListAPIView):
-    serializer_class = OrderSerializer
-
-    @extend_schema(
-        description='Retrieve a List of orders from a especific customer',
-        tags=['Orders'],
-        responses={200: OrderSerializer()},
-    )
-    def get_queryset(self):
-        # Obtenha o ID do cliente da URL
-        customer_id = self.kwargs['customer_id']
-        # Filtrar os pedidos pelo ID do cliente
-        queryset = Order.objects.filter(customer_id=customer_id)
-        return queryset
-    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def customer_order_list(request, customer_id):
+    """
+    Retrieve a list of orders from a specific customer.
+    """
+    try:
+        # Filtra os pedidos pelo ID do cliente
+        orders = Order.objects.filter(customer_id=customer_id)
+        # Serializa os pedidos
+        serializer = OrderSerializer(orders, many=True)
+        # Retorna os pedidos em formato JSON
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Order.DoesNotExist:
+        return Response({'error': 'Cliente não encontrado'}, status=status.HTTP_404_NOT_FOUND)
 
 class OrderCreateView(generics.CreateAPIView):
     serializer_class = OrderSerializer
