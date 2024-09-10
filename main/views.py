@@ -424,21 +424,29 @@ def order_detail_view(request, order_id):
     # Retorna os dados serializados
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-class OrderUpdateView(generics.UpdateAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+@api_view(['PUT', 'PATCH'])
+@permission_classes([IsAuthenticated])
+def order_update_view(request, order_id):
+    try:
+        # Obtém a instância do pedido pelo ID
+        order = Order.objects.get(id=order_id)
+    except Order.DoesNotExist:
+        # Retorna erro 404 se o pedido não for encontrado
+        return Response({'error': 'Pedido não encontrado'}, status=status.HTTP_404_NOT_FOUND)
 
-    @extend_schema(
-        description="Update an existing order (full or partial update)",
-        tags=["Orders"],
-        responses={200: OrderSerializer()},
-    )
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=True)  # Permitir atualização parcial
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data)
+    # Verifica se a requisição é um PUT (atualização completa) ou PATCH (atualização parcial)
+    partial = request.method == 'PATCH'
+
+    # Serializa a instância com os novos dados (total ou parcial)
+    serializer = OrderSerializer(order, data=request.data, partial=partial)
+
+    if serializer.is_valid():
+        # Salva as alterações se os dados forem válidos
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        # Retorna erros de validação
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
 
