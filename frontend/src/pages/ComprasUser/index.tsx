@@ -13,7 +13,6 @@ import {
   Informacoes,
   Acoes
 } from './index.styles';
-import { useNavigate } from 'react-router-dom';
 
 interface Compra {
   id: number;

@@ -408,20 +408,21 @@ class CustomerAddressCreateViewSet(GenericViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-class OrderDetailView(generics.RetrieveAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def order_detail_view(request, order_id):
+    try:
+        # Obtém a instância da ordem pelo ID fornecido na URL
+        order = Order.objects.get(id=order_id)
+    except Order.DoesNotExist:
+        # Retorna um erro 404 se o pedido não for encontrado
+        return Response({'error': 'Pedido não encontrado'}, status=status.HTTP_404_NOT_FOUND)
 
-    @extend_schema(
-        description="Retrieve details of a specific order",
-        tags=["Orders"],
-        responses={200: OrderSerializer()},
-    )
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
+    # Serializa a instância do pedido
+    serializer = OrderSerializer(order)
     
+    # Retorna os dados serializados
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 class OrderUpdateView(generics.UpdateAPIView):
     queryset = Order.objects.all()
