@@ -258,29 +258,25 @@ def customer_order_list(request):
     except Order.DoesNotExist:
         return Response({'error': 'Cliente não encontrado'}, status=status.HTTP_404_NOT_FOUND)
 
-class OrderCreateView(generics.CreateAPIView):
-    serializer_class = OrderSerializer
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def order_create_view(request):
+    """
+    Cria um novo pedido.
+    
+    Este endpoint permite criar um novo pedido fornecendo os dados necessários.
+    """
+    # Cria uma instância do serializer com os dados da requisição
+    serializer = OrderSerializer(data=request.data)
 
-    @extend_schema(
-        description="Create a new order",
-        tags=['Orders'],
-        request=OrderSerializer,
-        responses={
-            201: OrderSerializer,
-            400: "Bad Request - Invalid data provided"
-        },
-    )
-    def create(self, request, *args, **kwargs):
-        """
-        Create a new order.
-
-        This endpoint allows you to create a new order by providing the required data.
-        """
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # Valida os dados
+    if serializer.is_valid():
+        # Salva o pedido se os dados forem válidos
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    # Retorna erros de validação, se houver
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
 @api_view(['GET'])
