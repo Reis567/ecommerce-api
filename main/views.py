@@ -765,10 +765,19 @@ def product_condition_list_view(request):
     # Retorna a lista de condições de produtos
     return Response(serializer.data)
 
-class ProductTagListView(generics.ListAPIView):
-    queryset = ProductTag.objects.all()
-    serializer_class = ProductTagSerializer
+@api_view(['GET'])
+def product_tag_list_view(request):
+    """
+    Lista todas as tags de produtos.
+    """
+    # Obtém todas as instâncias de ProductTag
+    product_tags = ProductTag.objects.all()
 
+    # Serializa os dados
+    serializer = ProductTagSerializer(product_tags, many=True)
+
+    # Retorna a lista de tags de produtos
+    return Response(serializer.data)
 
 
 
