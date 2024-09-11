@@ -35,7 +35,7 @@ urlpatterns = [
 
     # Products category, condition, and tags
     path('categories/', ProductCategoryListView.as_view(), name='category-list'),
-    path('conditions/', ProductConditionListView.as_view(), name='condition-list'),
+    path('conditions/', product_condition_list_view, name='condition-list'),
     path('tags/', ProductTagListView.as_view(), name='tag-list'),
     path('categories/<int:pk>/',category_detail , name='category-detail'),
 
