@@ -751,9 +751,19 @@ class ProductCategoryListView(generics.ListAPIView):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
 
-class ProductConditionListView(generics.ListAPIView):
-    queryset = ProductCondition.objects.all()
-    serializer_class = ProductConditionSerializer
+@api_view(['GET'])
+def product_condition_list_view(request):
+    """
+    Lista todas as condições de produtos.
+    """
+    # Obtém todas as instâncias de ProductCondition
+    product_conditions = ProductCondition.objects.all()
+
+    # Serializa os dados
+    serializer = ProductConditionSerializer(product_conditions, many=True)
+
+    # Retorna a lista de condições de produtos
+    return Response(serializer.data)
 
 class ProductTagListView(generics.ListAPIView):
     queryset = ProductTag.objects.all()
