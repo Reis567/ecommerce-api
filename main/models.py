@@ -153,6 +153,7 @@ class Order(models.Model):
     endereco_origem = models.CharField(max_length=255, null=True, blank=True)
     produtos = models.ManyToManyField('Product')
     frete = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    desconto = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     def __str__(self):
         return f'Order {self.id} - {self.order_time}'
